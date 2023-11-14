@@ -5,10 +5,34 @@
  */
 package mybatis;
 
+import java.io.Reader;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
 /**
  *
  * @author Oscar
  */
 public class MyBatisUtil {
-    
+    //Recursos para realizar la conexion con la base de datos
+
+    public static final String RESOURCE = "mybatis/mybatis-config.xml";
+    public static final String ENVIRONMENT = "development";
+
+    //Método para la conexion con la base de datos
+    public static SqlSession getSession() {
+        SqlSession session = null;
+        try {
+
+            Reader reader = Resources.getResourceAsReader(RESOURCE);
+            SqlSessionFactory sqlMapper = new SqlSessionFactoryBuilder().build(reader, ENVIRONMENT);
+            session = sqlMapper.openSession();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return session;
+    }
 }
