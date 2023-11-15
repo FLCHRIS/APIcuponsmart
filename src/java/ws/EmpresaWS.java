@@ -34,20 +34,20 @@ public class EmpresaWS {
      */
     public EmpresaWS() {
     }
-
-    /**
-     * Retrieves representation of an instance of ws.EmpresaWS
-     * @return an instance of java.lang.String
-     */
+    
     @GET
+    @Path("buscarEmpresa/{parametro}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getJson() {
-       return "hola";
+    public String buscarEmpresaBy_Name_RFC_REPRESENTANTENAME(@PathParam("parametro") String parametro) {
+
+        if (parametro.length() == 8) {
+            //validaciones para el tipo de consulta
+        }
+
+        return parametro;
     }
 
-    
-
-    @PUT
+    @POST
     @Path("registroEmpresa")
     @Produces(MediaType.APPLICATION_JSON)
     public String registroEmpresa() {
@@ -55,7 +55,7 @@ public class EmpresaWS {
         return "put";
     }
 
-    @POST
+    @PUT
     @Path("edicionEmpresa/{idEmpresa}")
     @Produces(MediaType.APPLICATION_JSON)
     public String edicionEmpresa(@PathParam("idEmpresa") Integer idEmpresa) {
@@ -70,18 +70,5 @@ public class EmpresaWS {
 
         return "" + idEmpresa;
     }
-
-    @GET
-    @Path("buscarEmpresa/{parametro}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String buscarEmpresaBy_Name_RFC_REPRESENTANTENAME(@PathParam("parametro") String parametro) {
-
-        if (parametro.length() == 8) {
-            //validaciones para el tipo de consulta
-        }
-
-        return parametro;
-    }
-    
-    
+  
 }
