@@ -47,7 +47,7 @@ public class EmpresaWS {
 
     
 
-    @PUT
+    @POST
     @Path("registroEmpresa")
     @Produces(MediaType.APPLICATION_JSON)
     public String registroEmpresa() {
@@ -55,7 +55,7 @@ public class EmpresaWS {
         return "put";
     }
 
-    @POST
+    @PUT
     @Path("edicionEmpresa/{idEmpresa}")
     @Produces(MediaType.APPLICATION_JSON)
     public String edicionEmpresa(@PathParam("idEmpresa") Integer idEmpresa) {
