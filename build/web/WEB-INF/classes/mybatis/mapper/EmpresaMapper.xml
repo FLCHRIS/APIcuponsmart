@@ -6,6 +6,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="empresa">
     <insert id="registrar" parameterType="map" >
-        INSERT INTO empresa(nombreComercial, logo, nombreRepresentanteLegal, email, calle, numero, codigoPostal, ciudad, telefono, paginaWeb, RFC, estatus) VALUES (#{nombreComercial}, #{logo}, #{nombreRepresentanteLegal}, #{email}, #{calle}, #{numero}, #{codigoPostal}, #{ciudad}, #{telefono}, #{paginaWeb}, #{RFC}, #{estatus});
+        INSERT INTO empresa(nombreComercial, nombreRepresentanteLegal, email, calle, numero, codigoPostal, ciudad, telefono, paginaWeb, RFC) VALUES (#{nombreComercial}, #{nombreRepresentanteLegal}, #{email}, #{calle}, #{numero}, #{codigoPostal}, #{ciudad}, #{telefono}, #{paginaWeb}, #{RFC});
     </insert>
 </mapper>
