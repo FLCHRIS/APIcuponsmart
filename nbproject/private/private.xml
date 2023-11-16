@@ -2,9 +2,13 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group>
             <file>file:/D:/copia/7MO%20SEMESTRE/INTEGRACIÓN%20DE%20SOLUCIONES/PROYECTO/APIcuponsmart/src/java/ws/EmpresaWS.java</file>
             <file>file:/D:/copia/7MO%20SEMESTRE/INTEGRACIÓN%20DE%20SOLUCIONES/PROYECTO/APIcuponsmart/src/java/modelo/pojo/Empresa.java</file>
         </group>
+=======
+        <group/>
+>>>>>>> 75a2abe498e24472696fcb222493fb5b0f0040af
     </open-files>
 </project-private>
