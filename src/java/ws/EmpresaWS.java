@@ -31,8 +31,7 @@ public class EmpresaWS {
     @Produces(MediaType.APPLICATION_JSON)
     public String buscarEmpresaBy_Name_RFC_REPRESENTANTENAME(@PathParam("parametro") String parametro) {
 
-<<<<<<< HEAD
-=======
+
         if (parametro.length() == 8) {
             //validaciones para el tipo de consulta
         }
@@ -40,7 +39,7 @@ public class EmpresaWS {
         return parametro;
     }
     
->>>>>>> 75a2abe498e24472696fcb222493fb5b0f0040af
+
     @POST
     @Path("registroEmpresa")
     @Produces(MediaType.APPLICATION_JSON)
