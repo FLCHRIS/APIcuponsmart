@@ -212,8 +212,15 @@ public class EmpresaWS {
     @DELETE
     @Path("eliminarEmpresa/{idEmpresa}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String eliminarEmpresa(@PathParam("idEmpresa") Integer idEmpresa) {
-
-        return "" + idEmpresa;
+    public Mensaje eliminarEmpresa(@PathParam("idEmpresa") Integer idEmpresa) {
+        Mensaje msj = new Mensaje();
+        
+        if(idEmpresa == null || idEmpresa<0){
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);    
+        }else{
+            msj = EmpresaDAO.eliminarEmpresa(idEmpresa);
+        }
+        return msj;
     }
+
 }

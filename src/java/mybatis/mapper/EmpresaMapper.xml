@@ -26,4 +26,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         UPDATE empresa SET nombre = #{nombre}, nombreComercial = #{nombreComercial}, email = #{email}, telefono = #{telefono}, paginaWeb = #{paginaWeb}, estatus = #{estatus} WHERE idEmpresa = #{idEmpresa};
     </update>
     
+    <delete id="eliminar"   parameterType="int">
+        DELETE FROM empresa WHERE idEmpresa = #{idEmpresa};
+    </delete>
+
+    
 </mapper>

@@ -177,4 +177,33 @@ public class EmpresaDAO {
 
         return mensaje;
     }
+    
+    
+    
+public static Mensaje eliminarEmpresa(int idEmpresa){
+        Mensaje msj= new Mensaje();
+        msj.setError(Boolean.TRUE);
+        SqlSession conexinBD = mybatis.MyBatisUtil.getSession();
+        
+        if (conexinBD != null){
+            try {
+                int numeroAfectadas = conexinBD.delete("empresa.eliminar", idEmpresa);
+                conexinBD.commit();
+                if (numeroAfectadas != 0){
+                    msj.setError(Boolean.FALSE);
+                    msj.setContenido("La eliminación de la empreas con id: "+idEmpresa+" se realizo satisfactoriamente");
+                
+                }else{
+                    msj.setContenido("Hubo un error en la operación de eliminar la empresa con id: "+ idEmpresa);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                msj.setContenido("Erroe de tipo: "+e);
+            }finally{
+            conexinBD.close();
+            }     
+        }
+        return msj;
+        }
+
 }
