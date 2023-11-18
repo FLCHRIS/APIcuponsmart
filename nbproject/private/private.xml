@@ -3,11 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/APIcuponsmart/src/java/modelo/pojo/Empresa.java</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/APIcuponsmart/src/java/ws/EmpresaWS.java</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/APIcuponsmart/src/java/mybatis/mapper/EmpresaMapper.xml</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/APIcuponsmart/src/java/modelo/EmpresaDAO.java</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/APIcuponsmart/src/java/modelo/pojo/Mensaje.java</file>
+            <file>file:/D:/copia/7MO%20SEMESTRE/INTEGRACIÓN%20DE%20SOLUCIONES/PROYECTO/APIcuponsmart/src/java/modelo/pojo/Sucursal.java</file>
+            <file>file:/D:/copia/7MO%20SEMESTRE/INTEGRACIÓN%20DE%20SOLUCIONES/PROYECTO/APIcuponsmart/src/java/utils/Utilidades.java</file>
+            <file>file:/D:/copia/7MO%20SEMESTRE/INTEGRACIÓN%20DE%20SOLUCIONES/PROYECTO/APIcuponsmart/src/java/ws/EmpresaWS.java</file>
+            <file>file:/D:/copia/7MO%20SEMESTRE/INTEGRACIÓN%20DE%20SOLUCIONES/PROYECTO/APIcuponsmart/src/java/ws/SucursalWS.java</file>
+            <file>file:/D:/copia/7MO%20SEMESTRE/INTEGRACIÓN%20DE%20SOLUCIONES/PROYECTO/APIcuponsmart/src/java/modelo/EmpresaDAO.java</file>
+            <file>file:/D:/copia/7MO%20SEMESTRE/INTEGRACIÓN%20DE%20SOLUCIONES/PROYECTO/APIcuponsmart/src/java/mybatis/mapper/SucursalMapper.xml</file>
+            <file>file:/D:/copia/7MO%20SEMESTRE/INTEGRACIÓN%20DE%20SOLUCIONES/PROYECTO/APIcuponsmart/src/java/modelo/SucursalDAO.java</file>
         </group>
     </open-files>
 </project-private>

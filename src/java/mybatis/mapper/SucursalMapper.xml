@@ -7,10 +7,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="sucursal">
     
 <insert id="registrar" parameterType="modelo.pojo.Sucursal">
-        
         INSERT INTO sucursal (idEmpresa, nombre, telefono, latitud, longitud) VALUES 
         (#{idEmpresa}, #{nombre}, #{telefono}, #{latitud,}, #{longitud})
-        
-    </insert>
+</insert>
     
 </mapper>
