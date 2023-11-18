@@ -27,17 +27,18 @@ public class EmpresaWS {
     }
 
     @GET
-    @Path("buscarEmpresa/{parametro}")
+    @Path("buscarEmpresaPorNombre/{nombre}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String buscarEmpresaBy_Name_RFC_REPRESENTANTENAME(@PathParam("parametro") String parametro) {
-
-        if (parametro.length() == 8) {
-            //validaciones para el tipo de consulta
-        }
-
-        return parametro;
+    public Mensaje buscarEmpresaPorNombre(
+            @PathParam("nombre") String nombre) {
+        Mensaje mensaje = null;
+        if (nombre == null || nombre.isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+       }
+        mensaje = EmpresaDAO.buscarEmpresaPorNombre(nombre);
+        return mensaje;
     }
-
+    
     @GET
     @Path("buscarEmpresaPorRFC/{RFC}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -250,10 +251,10 @@ public class EmpresaWS {
     @Produces(MediaType.APPLICATION_JSON)
     public Mensaje eliminarEmpresa(@PathParam("idEmpresa") Integer idEmpresa) {
         Mensaje msj = new Mensaje();
-        
-        if(idEmpresa == null || idEmpresa<0){
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);    
-        }else{
+
+        if (idEmpresa == null || idEmpresa < 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        } else {
             msj = EmpresaDAO.eliminarEmpresa(idEmpresa);
         }
         return msj;
