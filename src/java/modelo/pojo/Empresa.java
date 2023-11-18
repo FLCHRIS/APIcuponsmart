@@ -23,13 +23,17 @@ public class Empresa {
     private String RFC;
     private String estatus;
     private String logoBase64;
-
+    private String nombreRepresentante;
+    private String direccion;
+    private String ciudad;
+    
     public Empresa() {
     }
 
-    public Empresa(Integer idEmpresa, Integer idRepresentanteLegal, String nombre, String nombreComercial, byte[] logo, String email, String telefono, String paginaWeb, String RFC, String estatus, String logoBase64) {
+    public Empresa(Integer idEmpresa, Integer idRepresentanteLegal, Integer idUbicacion, String nombre, String nombreComercial, byte[] logo, String email, String telefono, String paginaWeb, String RFC, String estatus, String logoBase64, String nombreRepresentante, String direccion, String ciudad) {
         this.idEmpresa = idEmpresa;
         this.idRepresentanteLegal = idRepresentanteLegal;
+        this.idUbicacion = idUbicacion;
         this.nombre = nombre;
         this.nombreComercial = nombreComercial;
         this.logo = logo;
@@ -39,6 +43,25 @@ public class Empresa {
         this.RFC = RFC;
         this.estatus = estatus;
         this.logoBase64 = logoBase64;
+        this.nombreRepresentante = nombreRepresentante;
+        this.direccion = direccion;
+        this.ciudad = ciudad;
+    }
+
+    public Integer getIdUbicacion() {
+        return idUbicacion;
+    }
+
+    public void setIdUbicacion(Integer idUbicacion) {
+        this.idUbicacion = idUbicacion;
+    }
+
+    public String getNombreRepresentante() {
+        return nombreRepresentante;
+    }
+
+    public void setNombreRepresentante(String nombreRepresentante) {
+        this.nombreRepresentante = nombreRepresentante;
     }
 
     public Integer getIdEmpresa() {
@@ -127,6 +150,22 @@ public class Empresa {
 
     public void setLogoBase64(String logoBase64) {
         this.logoBase64 = logoBase64;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
     }
     
 }
