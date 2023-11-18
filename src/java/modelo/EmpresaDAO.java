@@ -10,6 +10,38 @@ import org.apache.ibatis.session.SqlSession;
 
 public class EmpresaDAO {
     
+    public static Mensaje obtenerEmpresaPorRepresentante(
+            String nombre, String apellidoPaterno, String apellidoMaterno) {
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(Boolean.TRUE);
+        
+        RepresentanteLegal representanteLegal = new RepresentanteLegal();
+        representanteLegal.setNombre(nombre);
+        representanteLegal.setApellidoPaterno(apellidoPaterno);
+        representanteLegal.setApellidoMaterno(apellidoMaterno);
+        
+        try (SqlSession conexionDB = MyBatisUtil.getSession()){
+            if (conexionDB == null) {
+                mensaje.setContenido("No hay conexion con la base de datos");
+                return mensaje;
+            }
+            
+            List<Empresa> empresas = conexionDB.selectList("empresa.obtenerEmpresaPorRepresentante", representanteLegal);
+            mensaje.setEmpresas(empresas);
+            
+            if (!empresas.isEmpty()) {
+                mensaje.setError(Boolean.FALSE);
+                mensaje.setContenido("Respuesta exitosa");
+            } else {
+                mensaje.setContenido("No hay empresas con el representante proporcionado.");
+            }
+        } catch (Exception e) {
+            mensaje.setContenido("Error: " + e.getMessage());
+        }
+        
+        return mensaje;
+    }
+    
     public static Mensaje obtenerEmpresaPorRFC(String RFC) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(Boolean.TRUE);
