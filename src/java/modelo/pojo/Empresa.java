@@ -10,15 +10,13 @@ package modelo.pojo;
  * @author Oscar
  */
 public class Empresa {
+    
     private Integer idEmpresa;
+    private Integer idRepresentanteLegal;
+    private String nombre;
     private String nombreComercial;
     private byte [] logo;
-    private String nombreRepresentanteLegal;
     private String email;
-    private String calle;
-    private Integer numero;
-    private String codigoPostal;
-    private String ciudad;
     private String telefono;
     private String paginaWeb;
     private String RFC;
@@ -28,16 +26,13 @@ public class Empresa {
     public Empresa() {
     }
 
-    public Empresa(Integer idEmpresa, String nombreComercial, byte[] logo, String nombreRepresentanteLegal, String email, String calle, Integer numero, String codigoPostal, String ciudad, String telefono, String paginaWeb, String RFC, String estatus, String logoBase64) {
+    public Empresa(Integer idEmpresa, Integer idRepresentanteLegal, String nombre, String nombreComercial, byte[] logo, String email, String telefono, String paginaWeb, String RFC, String estatus, String logoBase64) {
         this.idEmpresa = idEmpresa;
+        this.idRepresentanteLegal = idRepresentanteLegal;
+        this.nombre = nombre;
         this.nombreComercial = nombreComercial;
         this.logo = logo;
-        this.nombreRepresentanteLegal = nombreRepresentanteLegal;
         this.email = email;
-        this.calle = calle;
-        this.numero = numero;
-        this.codigoPostal = codigoPostal;
-        this.ciudad = ciudad;
         this.telefono = telefono;
         this.paginaWeb = paginaWeb;
         this.RFC = RFC;
@@ -51,6 +46,22 @@ public class Empresa {
 
     public void setIdEmpresa(Integer idEmpresa) {
         this.idEmpresa = idEmpresa;
+    }
+
+    public Integer getIdRepresentanteLegal() {
+        return idRepresentanteLegal;
+    }
+
+    public void setIdRepresentanteLegal(Integer idRepresentanteLegal) {
+        this.idRepresentanteLegal = idRepresentanteLegal;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getNombreComercial() {
@@ -69,52 +80,12 @@ public class Empresa {
         this.logo = logo;
     }
 
-    public String getNombreRepresentanteLegal() {
-        return nombreRepresentanteLegal;
-    }
-
-    public void setNombreRepresentanteLegal(String nombreRepresentanteLegal) {
-        this.nombreRepresentanteLegal = nombreRepresentanteLegal;
-    }
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getCalle() {
-        return calle;
-    }
-
-    public void setCalle(String calle) {
-        this.calle = calle;
-    }
-
-    public Integer getNumero() {
-        return numero;
-    }
-
-    public void setNumero(Integer numero) {
-        this.numero = numero;
-    }
-
-    public String getCodigoPostal() {
-        return codigoPostal;
-    }
-
-    public void setCodigoPostal(String codigoPostal) {
-        this.codigoPostal = codigoPostal;
-    }
-
-    public String getCiudad() {
-        return ciudad;
-    }
-
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
     }
 
     public String getTelefono() {
@@ -156,6 +127,5 @@ public class Empresa {
     public void setLogoBase64(String logoBase64) {
         this.logoBase64 = logoBase64;
     }
-    
     
 }
