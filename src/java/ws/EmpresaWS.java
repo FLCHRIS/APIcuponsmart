@@ -31,14 +31,16 @@ public class EmpresaWS {
     @Produces(MediaType.APPLICATION_JSON)
     public Mensaje buscarEmpresaPorNombre(
             @PathParam("nombre") String nombre) {
-        Mensaje mensaje = null;
+        
         if (nombre == null || nombre.isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
-       }
-        mensaje = EmpresaDAO.buscarEmpresaPorNombre(nombre);
+        }
+
+        Mensaje mensaje = EmpresaDAO.buscarEmpresaPorNombre(nombre);
+
         return mensaje;
     }
-    
+
     @GET
     @Path("buscarEmpresaPorRFC/{RFC}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -130,17 +132,14 @@ public class EmpresaWS {
         }
 
         if (nombre == null || nombre.isEmpty()) {
-            System.out.println("1");
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
         if (apellidoPaterno == null || apellidoPaterno.isEmpty()) {
-            System.out.println("2");
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
         if (apellidoMaterno == null || apellidoMaterno.isEmpty()) {
-            System.out.println("3");
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
@@ -210,32 +209,26 @@ public class EmpresaWS {
         }
 
         if (nombreComercial == null || nombreComercial.isEmpty()) {
-            System.out.println("2");
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
         if (nombre == null || nombre.isEmpty()) {
-            System.out.println("3");
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
         if (email == null || email.isEmpty() || !Utilidades.validarCadena(email, Utilidades.EMAIL_PATTERN)) {
-            System.out.println("4");
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
         if (telefono == null || telefono.isEmpty() || !Utilidades.validarCadena(telefono, Utilidades.TELEFONO_PATTERN)) {
-            System.out.println("5");
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
         if (paginaWeb == null || paginaWeb.isEmpty()) {
-            System.out.println("6");
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
         if (estatus == null || estatus.isEmpty() || (!estatus.equals("activo") && !estatus.equals("inactivo"))) {
-            System.out.println("8");
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
@@ -249,14 +242,14 @@ public class EmpresaWS {
     @DELETE
     @Path("eliminarEmpresa/{idEmpresa}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje eliminarEmpresa(@PathParam("idEmpresa") Integer idEmpresa) {
-        Mensaje msj = new Mensaje();
+    public Mensaje eliminarEmpresa(
+            @PathParam("idEmpresa") Integer idEmpresa) {
 
-        if (idEmpresa == null || idEmpresa < 0) {
+        if (idEmpresa == null || idEmpresa <= 0) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        } else {
-            msj = EmpresaDAO.eliminarEmpresa(idEmpresa);
         }
+        
+        Mensaje msj = EmpresaDAO.eliminarEmpresa(idEmpresa);
         return msj;
     }
 
