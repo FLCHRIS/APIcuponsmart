@@ -44,40 +44,22 @@ public class EmpresaWS {
     @Path("registroEmpresa")
     @Produces(MediaType.APPLICATION_JSON)
     public Mensaje registroEmpresa(
-            @FormParam("nombreComercial") String nombreComercial, @FormParam("nombreRepresentanteLegal") String nombreRepresentanteLegal, 
-            @FormParam("email") String email, @FormParam("calle") String calle, @FormParam("numero") Integer numero, 
-            @FormParam("codigoPostal") String codigoPostal, @FormParam("ciudad") String ciudad, @FormParam("telefono") String telefono, 
-            @FormParam("paginaWeb") String paginaWeb,@FormParam("RFC") String RFC) {
-
+            @FormParam("nombreComercial") String nombreComercial, @FormParam("nombre") String nombre, 
+            @FormParam("email") String email, @FormParam("telefono") String telefono, 
+            @FormParam("paginaWeb") String paginaWeb, @FormParam("RFC") String RFC) {
         if (nombreComercial == null || nombreComercial.isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         
-        if (nombreRepresentanteLegal == null || nombreRepresentanteLegal.isEmpty()) {
+        if (nombre == null || nombre.isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         
-        if (email == null || email.isEmpty() || !Utilidades.validarEmail(email)) {
+        if (email == null || email.isEmpty() || !Utilidades.validarCadena(email, Utilidades.EMAIL_PATTERN)) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         
-        if (calle == null || calle.isEmpty()) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-        
-        if (numero == null) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-        
-        if (codigoPostal == null || codigoPostal.isEmpty() || !Utilidades.validarCodigoPostal(codigoPostal)) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-        
-        if (ciudad == null || ciudad.isEmpty()) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-        
-        if (telefono == null || telefono.isEmpty() || !Utilidades.validarTelefono(telefono)) {
+        if (telefono == null || telefono.isEmpty() || !Utilidades.validarCadena(telefono, Utilidades.TELEFONO_PATTERN)) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         
@@ -85,24 +67,146 @@ public class EmpresaWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         
-        if (RFC == null || RFC.isEmpty() || !Utilidades.validarRfcEmpresa(RFC)) {
+        if (RFC == null || RFC.isEmpty() || !Utilidades.validarCadena(RFC, Utilidades.RFC_EMPRESA_PATTERN)) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         
         Mensaje mensaje = EmpresaDAO.registrar(
-                nombreComercial, nombreRepresentanteLegal, 
-                email, calle, numero, codigoPostal, 
-                ciudad, telefono, paginaWeb, RFC);
+                nombre, nombreComercial, email, 
+                telefono, paginaWeb, RFC);
+        
+        return mensaje;
+    }
+    
+    @POST
+    @Path("registroRepresentante")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje registroEmpresa(
+            @FormParam("nombre") String nombre, @FormParam("apellidoPaterno") String apellidoPaterno, 
+            @FormParam("apellidoMaterno") String apellidoMaterno, @FormParam("idEmpresa") Integer idEmpresa) {
+        
+        if (idEmpresa == null || idEmpresa <= 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        if (nombre == null || nombre.isEmpty()) {
+            System.out.println("1");
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        if (apellidoPaterno == null || apellidoPaterno.isEmpty()) {
+            System.out.println("2");
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        if (apellidoMaterno == null || apellidoMaterno.isEmpty()) {
+            System.out.println("3");
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        Mensaje mensaje = EmpresaDAO.registrarRepresentante(nombre, apellidoPaterno, apellidoMaterno, idEmpresa);
+        
+        return mensaje;
+    }
+    
+    @PUT
+    @Path("registrarLogo/{idEmpresa}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje registrarLogo(
+            @PathParam("idEmpresa") Integer idEmpresa, byte[] logo) {
+        if (idEmpresa == null || idEmpresa <= 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        if (logo == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        Mensaje mensaje = EmpresaDAO.subirLogo(idEmpresa, logo);
+        return mensaje;
+    }
+    
+    @PUT
+    @Path("edicionRepresentante")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje editarRepresentanteLegal(
+            @FormParam("idRepresentanteLegal") Integer idRepresentanteLegal, @FormParam("nombre") String nombre, 
+            @FormParam("apellidoPaterno") String apellidoPaterno, @FormParam("apellidoMaterno") String apellidoMaterno) {
+        
+        
+        if (idRepresentanteLegal == null || idRepresentanteLegal <= 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        if (nombre == null || nombre.isEmpty()) {
+            System.out.println("1");
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        if (apellidoPaterno == null || apellidoPaterno.isEmpty()) {
+            System.out.println("2");
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        if (apellidoMaterno == null || apellidoMaterno.isEmpty()) {
+            System.out.println("3");
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        Mensaje mensaje = EmpresaDAO.editarRepresentante(
+                nombre, apellidoPaterno, apellidoMaterno, idRepresentanteLegal);
         
         return mensaje;
     }
 
     @PUT
-    @Path("edicionEmpresa/{idEmpresa}")
+    @Path("edicionEmpresa")
     @Produces(MediaType.APPLICATION_JSON)
-    public String edicionEmpresa(@PathParam("idEmpresa") Integer idEmpresa) {
+    public Mensaje edicionEmpresa(
+            @FormParam("nombre") String nombre, @FormParam("nombreComercial") String nombreComercial, 
+            @FormParam("email") String email, @FormParam("telefono") String telefono, 
+            @FormParam("paginaWeb") String paginaWeb, 
+            @FormParam("estatus") String estatus, @FormParam("idEmpresa") Integer idEmpresa) {
 
-        return "" + idEmpresa;
+        if (idEmpresa == null || idEmpresa <= 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        if (nombreComercial == null || nombreComercial.isEmpty()) {
+            System.out.println("2");
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        if (nombre == null || nombre.isEmpty()) {
+            System.out.println("3");
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        if (email == null || email.isEmpty() || !Utilidades.validarCadena(email, Utilidades.EMAIL_PATTERN)) {
+            System.out.println("4");
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        if (telefono == null || telefono.isEmpty() || !Utilidades.validarCadena(telefono, Utilidades.TELEFONO_PATTERN)) {
+            System.out.println("5");
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        if (paginaWeb == null || paginaWeb.isEmpty()) {
+            System.out.println("6");
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+    
+        if (estatus == null || estatus.isEmpty() || (!estatus.equals("activo") && !estatus.equals("inactivo"))) {
+            System.out.println("8");
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        Mensaje mensaje = EmpresaDAO.editarEmpresa(
+                nombre, nombreComercial, email, 
+                telefono, paginaWeb, estatus, idEmpresa);
+        
+        return mensaje;
     }
 
     @DELETE
