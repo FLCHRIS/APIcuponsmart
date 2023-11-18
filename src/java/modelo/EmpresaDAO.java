@@ -1,6 +1,7 @@
 package modelo;
 
 import java.util.HashMap;
+import java.util.List;
 import modelo.pojo.Empresa;
 import modelo.pojo.Mensaje;
 import modelo.pojo.RepresentanteLegal;
@@ -8,6 +9,33 @@ import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 
 public class EmpresaDAO {
+    
+    public static Mensaje obtenerEmpresaPorRFC(String RFC) {
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(Boolean.TRUE);
+        
+        try (SqlSession conexionDB = MyBatisUtil.getSession()){
+            if (conexionDB == null) {
+                mensaje.setContenido("No hay conexion con la base de datos");
+                return mensaje;
+            }
+            
+            List<Empresa> empresas = conexionDB.selectList("empresa.obtenerEmpresaPorRFC", RFC);
+            mensaje.setEmpresas(empresas);
+            
+            if (!empresas.isEmpty()) {
+                mensaje.setError(Boolean.FALSE);
+                mensaje.setContenido("Respuesta exitosa");
+            } else {
+                mensaje.setContenido("No hay empresas con el RFC proporcionado.");
+            }
+        } catch (Exception e) {
+            mensaje.setContenido("Error: " + e.getMessage());
+        }
+        
+        return mensaje;
+    }
+    
     public static Mensaje registrar(
             String nombre, String nombreComercial, String email, String telefono, 
             String paginaWeb, String RFC) {
