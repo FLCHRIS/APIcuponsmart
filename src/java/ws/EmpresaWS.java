@@ -39,6 +39,20 @@ public class EmpresaWS {
         return parametro;
     }
     
+    @GET
+    @Path("buscarEmpresaPorRFC/{RFC}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje buscarEmpresaPorRFC(
+            @PathParam("RFC") String RFC) {
+        
+        if (RFC == null || RFC.isEmpty() || !Utilidades.validarCadena(RFC, Utilidades.RFC_EMPRESA_PATTERN)) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        Mensaje mensaje = EmpresaDAO.obtenerEmpresaPorRFC(RFC);
+        
+        return mensaje;
+    }
 
     @POST
     @Path("registroEmpresa")
@@ -47,6 +61,7 @@ public class EmpresaWS {
             @FormParam("nombreComercial") String nombreComercial, @FormParam("nombre") String nombre, 
             @FormParam("email") String email, @FormParam("telefono") String telefono, 
             @FormParam("paginaWeb") String paginaWeb, @FormParam("RFC") String RFC) {
+        
         if (nombreComercial == null || nombreComercial.isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
@@ -114,6 +129,7 @@ public class EmpresaWS {
     @Produces(MediaType.APPLICATION_JSON)
     public Mensaje registrarLogo(
             @PathParam("idEmpresa") Integer idEmpresa, byte[] logo) {
+        
         if (idEmpresa == null || idEmpresa <= 0) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
@@ -133,23 +149,19 @@ public class EmpresaWS {
             @FormParam("idRepresentanteLegal") Integer idRepresentanteLegal, @FormParam("nombre") String nombre, 
             @FormParam("apellidoPaterno") String apellidoPaterno, @FormParam("apellidoMaterno") String apellidoMaterno) {
         
-        
         if (idRepresentanteLegal == null || idRepresentanteLegal <= 0) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         
         if (nombre == null || nombre.isEmpty()) {
-            System.out.println("1");
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         
         if (apellidoPaterno == null || apellidoPaterno.isEmpty()) {
-            System.out.println("2");
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         
         if (apellidoMaterno == null || apellidoMaterno.isEmpty()) {
-            System.out.println("3");
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         
