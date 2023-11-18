@@ -40,7 +40,8 @@ public class SucursalDAO {
         return msj;
     }
 
-    public static Mensaje agregarUbicación(String calle, int numero, String codigoPostal, String ciudad) {
+   public static Mensaje agregarUbicación(String calle, int numero, String codigoPostal, String ciudad, int idSucursal) {
+
         Mensaje msj = new Mensaje();
         msj.setError(Boolean.TRUE);
         SqlSession conexionBD = mybatis.MyBatisUtil.getSession();
@@ -53,6 +54,17 @@ public class SucursalDAO {
         if (conexionBD != null) {
             try {
 
+                 int filasAfectadas = conexionBD.insert("ubicacion.registrar", ubicacion);
+                 
+                 int idUbicacion = ubicacion.getIdUbicacion();
+                 
+                 Sucursal sucursal = new Sucursal();
+                 sucursal.setIdEmpresa(idSucursal);
+                 sucursal.setIdUbicacion(idUbicacion);
+                 
+                 
+
+
             } catch (Exception e) {
             } finally {
             }
@@ -60,4 +72,5 @@ public class SucursalDAO {
 
         return msj;
     }
+
 }
