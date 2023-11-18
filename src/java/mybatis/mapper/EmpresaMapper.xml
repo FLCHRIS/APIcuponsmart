@@ -5,7 +5,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="empresa">
-    <insert id="registrar" parameterType="map" >
-        INSERT INTO empresa(nombreComercial, nombreRepresentanteLegal, email, calle, numero, codigoPostal, ciudad, telefono, paginaWeb, RFC) VALUES (#{nombreComercial}, #{nombreRepresentanteLegal}, #{email}, #{calle}, #{numero}, #{codigoPostal}, #{ciudad}, #{telefono}, #{paginaWeb}, #{RFC});
+    <insert id="registrar" parameterType="modelo.pojo.Empresa" >
+        INSERT INTO empresa (nombre, nombreComercial, email, telefono, paginaWeb, RFC) 
+        VALUES (#{nombre}, #{nombreComercial}, #{email}, #{telefono}, #{paginaWeb}, #{RFC});
     </insert>
+    <insert id="registrarRepresentanteLegal" parameterType="modelo.pojo.RepresentanteLegal" useGeneratedKeys="true" keyProperty="idRepresentanteLegal" >
+        INSERT INTO representanteLegal (nombre, apellidoPaterno, apellidoMaterno) 
+        VALUES (#{nombre}, #{apellidoPaterno}, #{apellidoMaterno});
+    </insert>
+    <update id="subirLogo" parameterType="modelo.pojo.Empresa" >
+        UPDATE empresa SET logo = #{logo} WHERE idEmpresa = #{idEmpresa}
+    </update>
+    <update id="registrarRepresentanteAEmpresa" parameterType="modelo.pojo.Empresa" >
+        UPDATE empresa SET idRepresentanteLegal = #{idRepresentanteLegal} WHERE idEmpresa = #{idEmpresa};
+    </update>
+    <update id="editarRepresentanteLegal" parameterType="modelo.pojo.RepresentanteLegal">
+        UPDATE representanteLegal SET nombre = #{nombre}, apellidoPaterno = #{apellidoPaterno}, apellidoMaterno = #{apellidoMaterno} WHERE idRepresentanteLegal = #{idRepresentanteLegal};
+    </update>
+    <update id="editarEmpresa" parameterType="modelo.pojo.Empresa" >
+        UPDATE empresa SET nombre = #{nombre}, nombreComercial = #{nombreComercial}, email = #{email}, telefono = #{telefono}, paginaWeb = #{paginaWeb}, estatus = #{estatus} WHERE idEmpresa = #{idEmpresa};
+    </update>
+    
 </mapper>
