@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ON e.idRepresentanteLegal = r.idRepresentanteLegal 
         INNER JOIN ubicacion u 
         ON e.idUbicacion = u.idUbicacion 
-        WHERE nombre = #{nombre};
+        WHERE e.nombre = #{nombre};
     </select>
     <select id="obtenerEmpresaPorRFC" parameterType="string" resultType="modelo.pojo.Empresa">
         SELECT e.idEmpresa, e.idUbicacion, e.idRepresentanteLegal, e.nombre, e.nombreComercial, e.email, e.telefono, e.paginaWeb, e.RFC, e.estatus, 
