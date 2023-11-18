@@ -14,6 +14,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT idEmpresa, idUbicacion, idRepresentanteLegal, nombre, nombreComercial, email, telefono, 
         paginaWeb, RFC, estatus FROM empresa WHERE RFC = #{RFC};
     </select>
+    <select id="obtenerEmpresaPorRepresentante" parameterType="modelo.pojo.RepresentanteLegal" resultType="modelo.pojo.Empresa">
+        SELECT e.idEmpresa, e.idUbicacion, e.idRepresentanteLegal, e.nombre, e.nombreComercial, e.email, e.telefono, 
+        e.paginaWeb, e.RFC, e.estatus 
+        FROM empresa e 
+        JOIN representanteLegal r ON e.idRepresentanteLegal = r.idRepresentanteLegal 
+        WHERE r.nombre = #{nombre} AND r.apellidoPaterno = #{apellidoPaterno} AND r.apellidoMaterno = #{apellidoMaterno};
+    </select>
     <insert id="registrar" parameterType="modelo.pojo.Empresa" >
         INSERT INTO empresa (nombre, nombreComercial, email, telefono, paginaWeb, RFC) 
         VALUES (#{nombre}, #{nombreComercial}, #{email}, #{telefono}, #{paginaWeb}, #{RFC});
@@ -34,5 +41,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="editarEmpresa" parameterType="modelo.pojo.Empresa" >
         UPDATE empresa SET nombre = #{nombre}, nombreComercial = #{nombreComercial}, email = #{email}, telefono = #{telefono}, paginaWeb = #{paginaWeb}, estatus = #{estatus} WHERE idEmpresa = #{idEmpresa};
     </update>
+    
+    <delete id="eliminar"   parameterType="int">
+        DELETE FROM empresa WHERE idEmpresa = #{idEmpresa};
+    </delete>
+
     
 </mapper>

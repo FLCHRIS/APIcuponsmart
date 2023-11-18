@@ -9,7 +9,43 @@ import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 
 public class EmpresaDAO {
+<<<<<<< HEAD
 
+=======
+    
+    public static Mensaje obtenerEmpresaPorRepresentante(
+            String nombre, String apellidoPaterno, String apellidoMaterno) {
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(Boolean.TRUE);
+        
+        RepresentanteLegal representanteLegal = new RepresentanteLegal();
+        representanteLegal.setNombre(nombre);
+        representanteLegal.setApellidoPaterno(apellidoPaterno);
+        representanteLegal.setApellidoMaterno(apellidoMaterno);
+        
+        try (SqlSession conexionDB = MyBatisUtil.getSession()){
+            if (conexionDB == null) {
+                mensaje.setContenido("No hay conexion con la base de datos");
+                return mensaje;
+            }
+            
+            List<Empresa> empresas = conexionDB.selectList("empresa.obtenerEmpresaPorRepresentante", representanteLegal);
+            mensaje.setEmpresas(empresas);
+            
+            if (!empresas.isEmpty()) {
+                mensaje.setError(Boolean.FALSE);
+                mensaje.setContenido("Respuesta exitosa");
+            } else {
+                mensaje.setContenido("No hay empresas con el representante proporcionado.");
+            }
+        } catch (Exception e) {
+            mensaje.setContenido("Error: " + e.getMessage());
+        }
+        
+        return mensaje;
+    }
+    
+>>>>>>> 4538332b8b034100f2bf8285d402c088038c3dd7
     public static Mensaje obtenerEmpresaPorRFC(String RFC) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(Boolean.TRUE);
@@ -205,6 +241,7 @@ public class EmpresaDAO {
 
         return mensaje;
     }
+<<<<<<< HEAD
 
     public static Mensaje buscarEmpresaPorNombre(String nombre) {
         Mensaje mensaje = new Mensaje();
@@ -232,4 +269,35 @@ public class EmpresaDAO {
         }
         return mensaje;
     }
+=======
+    
+    
+    
+public static Mensaje eliminarEmpresa(int idEmpresa){
+        Mensaje msj= new Mensaje();
+        msj.setError(Boolean.TRUE);
+        SqlSession conexinBD = mybatis.MyBatisUtil.getSession();
+        
+        if (conexinBD != null){
+            try {
+                int numeroAfectadas = conexinBD.delete("empresa.eliminar", idEmpresa);
+                conexinBD.commit();
+                if (numeroAfectadas != 0){
+                    msj.setError(Boolean.FALSE);
+                    msj.setContenido("La eliminación de la empreas con id: "+idEmpresa+" se realizo satisfactoriamente");
+                
+                }else{
+                    msj.setContenido("Hubo un error en la operación de eliminar la empresa con id: "+ idEmpresa);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                msj.setContenido("Erroe de tipo: "+e);
+            }finally{
+            conexinBD.close();
+            }     
+        }
+        return msj;
+        }
+
+>>>>>>> 4538332b8b034100f2bf8285d402c088038c3dd7
 }

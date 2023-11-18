@@ -29,15 +29,26 @@ public class EmpresaWS {
     @GET
     @Path("buscarEmpresaPorNombre/{nombre}")
     @Produces(MediaType.APPLICATION_JSON)
+<<<<<<< HEAD
     public Mensaje registroEmpresa(@PathParam("nombre") String nombre) {
         Mensaje mensaje = null;
         if (nombre == null || nombre.isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
+=======
+    public String buscarEmpresaBy_Name_RFC_REPRESENTANTENAME(@PathParam("parametro") String parametro) {
+
+        if (parametro.length() == 8) {
+            //validaciones para el tipo de consulta
+>>>>>>> 4538332b8b034100f2bf8285d402c088038c3dd7
         }
         mensaje = EmpresaDAO.buscarEmpresaPorNombre(nombre);
         return mensaje;
     }
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 4538332b8b034100f2bf8285d402c088038c3dd7
     @GET
     @Path("buscarEmpresaPorRFC/{RFC}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -50,6 +61,34 @@ public class EmpresaWS {
 
         Mensaje mensaje = EmpresaDAO.obtenerEmpresaPorRFC(RFC);
 
+<<<<<<< HEAD
+=======
+        return mensaje;
+    }
+
+    @GET
+    @Path("buscarEmpresaPorRepresentante/{nombre}/{apellidoPaterno}/{apellidoMaterno}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje buscarEmpresaPorRepresentante(
+            @PathParam("nombre") String nombre,
+            @PathParam("apellidoPaterno") String apellidoPaterno,
+            @PathParam("apellidoMaterno") String apellidoMaterno) {
+
+        if (nombre == null || nombre.isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (apellidoPaterno == null || apellidoPaterno.isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (apellidoMaterno == null || apellidoMaterno.isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        Mensaje mensaje = EmpresaDAO.obtenerEmpresaPorRepresentante(nombre, apellidoPaterno, apellidoMaterno);
+
+>>>>>>> 4538332b8b034100f2bf8285d402c088038c3dd7
         return mensaje;
     }
 
@@ -223,8 +262,15 @@ public class EmpresaWS {
     @DELETE
     @Path("eliminarEmpresa/{idEmpresa}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String eliminarEmpresa(@PathParam("idEmpresa") Integer idEmpresa) {
-
-        return "" + idEmpresa;
+    public Mensaje eliminarEmpresa(@PathParam("idEmpresa") Integer idEmpresa) {
+        Mensaje msj = new Mensaje();
+        
+        if(idEmpresa == null || idEmpresa<0){
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);    
+        }else{
+            msj = EmpresaDAO.eliminarEmpresa(idEmpresa);
+        }
+        return msj;
     }
+
 }
