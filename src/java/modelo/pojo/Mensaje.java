@@ -5,6 +5,8 @@
  */
 package modelo.pojo;
 
+import java.util.List;
+
 /**
  *
  * @author Admin
@@ -12,10 +14,12 @@ package modelo.pojo;
 public class Mensaje {
     private Boolean error;
     private String contenido;
+    private List<Empresa> empresas;
 
-    public Mensaje(Boolean error, String contenido) {
+    public Mensaje(Boolean error, String contenido, List<Empresa> empresas) {
         this.error = error;
         this.contenido = contenido;
+        this.empresas = empresas;
     }
 
     public Mensaje() {
@@ -35,6 +39,14 @@ public class Mensaje {
 
     public void setContenido(String contenido) {
         this.contenido = contenido;
+    }
+
+    public List<Empresa> getEmpresas() {
+        return empresas;
+    }
+
+    public void setEmpresas(List<Empresa> empresas) {
+        this.empresas = empresas;
     }
     
 }
