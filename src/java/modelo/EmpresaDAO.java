@@ -10,6 +10,34 @@ import org.apache.ibatis.session.SqlSession;
 
 public class EmpresaDAO {
     
+   public static Mensaje buscarEmpresaPorNombre(String nombre) {
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(Boolean.TRUE);
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if (conexionBD != null) {
+            try {
+                List<Empresa> empresas
+                        = conexionBD.selectList("empresa.obtenerEmpresaPorNombre", nombre);
+
+                if (!empresas.isEmpty()) {
+                    mensaje.setError(false);
+                    mensaje.setContenido("Respuesta exitosa");
+                    mensaje.setEmpresas(empresas);
+                } else {
+                    mensaje.setContenido("No se encontro ninguna empresa con el nombre seleccionado");
+                }
+            } catch (Exception e) {
+                mensaje.setContenido("Error: " + e.getMessage());
+            } finally {
+                conexionBD.close();
+            }
+        } else {
+            mensaje.setContenido("Error: Por el momento no hay conexion en la base de datos");
+        }
+        return mensaje;
+    }
+ 
+    
     public static Mensaje obtenerEmpresaPorRepresentante(
             String nombre, String apellidoPaterno, String apellidoMaterno) {
         Mensaje mensaje = new Mensaje();
