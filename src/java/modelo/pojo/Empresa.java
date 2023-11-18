@@ -13,6 +13,7 @@ public class Empresa {
     
     private Integer idEmpresa;
     private Integer idRepresentanteLegal;
+    private Integer idUbicacion;
     private String nombre;
     private String nombreComercial;
     private byte [] logo;
