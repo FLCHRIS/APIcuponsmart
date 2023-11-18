@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ubicacion">
+    <insert id="registrarR" parameterType="modelo.pojo.RepresentanteLegal">
+        INSERT INTO ubicacion (calle, numero, codigoPostal, ciudad) VALUES 
+        (#{calle}, #{numero}, #{codigoPostal}, #{ciudad})
+    </insert>
+</mapper>
