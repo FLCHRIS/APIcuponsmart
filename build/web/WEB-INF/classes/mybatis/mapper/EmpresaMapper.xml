@@ -5,6 +5,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="empresa">
+    
+    <select id="obtenerEmpresaPorNombre" parameterType="string" resultType="modelo.pojo.Empresa">
+        SELECT idEmpresa, idUbicacion, idRepresentanteLegal, nombre, nombreComercial, email, telefono, 
+        paginaWeb, RFC, estatus FROM empresa WHERE nombre = #{nombre};
+    </select>    
     <select id="obtenerEmpresaPorRFC" parameterType="string" resultType="modelo.pojo.Empresa">
         SELECT idEmpresa, idUbicacion, idRepresentanteLegal, nombre, nombreComercial, email, telefono, 
         paginaWeb, RFC, estatus FROM empresa WHERE RFC = #{RFC};
