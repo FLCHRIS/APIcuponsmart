@@ -70,7 +70,7 @@ public class SucursalWS {
             @FormParam("idSucursal")int idSucursal) {
         Mensaje msj = new Mensaje();
 
-       /* if (calle == null || calle.isEmpty()) {
+        if (calle == null || calle.isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
@@ -85,7 +85,7 @@ public class SucursalWS {
         
         if (ciudad == null || ciudad.isEmpty()){
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }*/
+        }
         
         
        msj = SucursalDAO.agregarUbicacion( calle,  numero,  codigoPostal,  ciudad,  idSucursal);

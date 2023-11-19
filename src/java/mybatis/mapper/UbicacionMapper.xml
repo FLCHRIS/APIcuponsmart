@@ -7,11 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="ubicacion">
     
     <insert id="registrar" parameterType="modelo.pojo.Ubicacion" useGeneratedKeys="true" keyProperty="idUbicacion">
-<<<<<<< HEAD
-        INSERT INTO ubicacion (calle , numero , codigoPostal , ciudad) VALUES 
-=======
         INSERT INTO ubicacion (calle, numero, codigoPostal, ciudad) VALUES 
->>>>>>> 191cd408a7aa15af4204ed7faa4806cd4f2c06b9
         (#{calle}, #{numero}, #{codigoPostal}, #{ciudad})
     </insert>
     <update id="editar" parameterType="modelo.pojo.Ubicacion">

@@ -56,16 +56,16 @@ public class SucursalDAO {
 
                  int filasAfectadas = conexionBD.insert("ubicacion.registrar", ubicacion);
                  
-                 //int idUbicacion = ubicacion.getIdUbicacion();
+                 int idUbicacion = ubicacion.getIdUbicacion();
                  
-                 //Sucursal sucursal = new Sucursal();
-                 //sucursal.setIdSucursal(idSucursal);
-                 //sucursal.setIdUbicacion(idUbicacion);
+                 Sucursal sucursal = new Sucursal();
+                 sucursal.setIdSucursal(idSucursal);
+                 sucursal.setIdUbicacion(idUbicacion);
                  
-                 //int actualizacionSucursal = conexionBD.update("sucursal.actualizar", sucursal);
+                 int actualizacionSucursal = conexionBD.update("sucursal.actualizar", sucursal);
                  conexionBD.commit();
                  
-                 if (filasAfectadas != 0 ){
+                 if (filasAfectadas != 0 && actualizacionSucursal != 0){
                      msj.setError(Boolean.FALSE);
                      msj.setContenido("Se registro la ubicación de la sucursal correctamente");
    
