@@ -11,9 +11,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         (#{idEmpresa}, #{nombre}, #{telefono}, #{latitud,}, #{longitud})
     </insert>
     
-    <insert id="actualizar" parameterType="modelo.pojo.Sucursal">
+    <insert id="actualizarUbicacion" parameterType="modelo.pojo.Sucursal">
         UPDATE sucursal SET idUbicacion = #{idUbicacion} WHERE idSucursal= #{idSucursal}
     </insert>
-
+    
+    <update id="actualizar" parameterType="modelo.pojo.Sucursal">
+        UPDATE sucursal SET nombre = #{nombre}, telefono = #{telefono}, latitud = #{latitud} 
+        ,longitud = #{longitud} WHERE idSucursal = #{idSucursal}
+    </update>
     
 </mapper>

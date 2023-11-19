@@ -40,7 +40,7 @@ public class SucursalDAO {
         return msj;
     }
 
-   public static Mensaje agregarUbicacion(String calle, int numero, String codigoPostal, String ciudad, int idSucursal) {
+    public static Mensaje agregarUbicacion(String calle, int numero, String codigoPostal, String ciudad, int idSucursal) {
 
         Mensaje msj = new Mensaje();
         msj.setError(Boolean.TRUE);
@@ -54,30 +54,67 @@ public class SucursalDAO {
         if (conexionBD != null) {
             try {
 
-                 int filasAfectadas = conexionBD.insert("ubicacion.registrar", ubicacion);
-                 
-                 int idUbicacion = ubicacion.getIdUbicacion();
-                 
-                 Sucursal sucursal = new Sucursal();
-                 sucursal.setIdSucursal(idSucursal);
-                 sucursal.setIdUbicacion(idUbicacion);
-                 
-                 int actualizacionSucursal = conexionBD.update("sucursal.actualizar", sucursal);
-                 conexionBD.commit();
-                 
-                 if (filasAfectadas != 0 && actualizacionSucursal != 0){
-                     msj.setError(Boolean.FALSE);
-                     msj.setContenido("Se registro la ubicación de la sucursal correctamente");
-   
-                 }else{
-                     msj.setContenido("Hubo un error al querer agregar la ubicación ala sucursal");
-                 }
+                int filasAfectadas = conexionBD.insert("ubicacion.registrar", ubicacion);
+
+                int idUbicacion = ubicacion.getIdUbicacion();
+
+                Sucursal sucursal = new Sucursal();
+                sucursal.setIdSucursal(idSucursal);
+                sucursal.setIdUbicacion(idUbicacion);
+
+                int actualizacionSucursal = conexionBD.update("sucursal.actualizarUbicacion", sucursal);
+                conexionBD.commit();
+
+                if (filasAfectadas != 0 && actualizacionSucursal != 0) {
+                    msj.setError(Boolean.FALSE);
+                    msj.setContenido("Se registro la ubicación de la sucursal correctamente");
+
+                } else {
+                    msj.setContenido("Hubo un error al querer agregar la ubicación ala sucursal");
+                }
             } catch (Exception e) {
                 e.printStackTrace();
-                msj.setContenido("Error:" + e+"esta es");
+                msj.setContenido("Error:" + e + "esta es");
             } finally {
                 conexionBD.close();
             }
+        }
+
+        return msj;
+    }
+
+    public static Mensaje actualizarSucursal(int idSucursal, String nombre, String telefono, float latitud, float longitud) {
+        Mensaje msj = new Mensaje();
+        msj.setError(Boolean.TRUE);
+        SqlSession conexionBD = mybatis.MyBatisUtil.getSession();
+        Sucursal sucursal = new Sucursal();
+        sucursal.setIdSucursal(idSucursal);
+        sucursal.setNombre(nombre);
+        sucursal.setTelefono(telefono);
+        sucursal.setLatitud(latitud);
+        sucursal.setLongitud(longitud);
+        
+        
+        
+        if (conexionBD != null) {
+            try {
+                
+                int filasAfectadas = conexionBD.update("sucursal.actualizar", sucursal);
+                conexionBD.commit();
+
+                if (filasAfectadas != 0) {
+                    msj.setError(Boolean.FALSE);
+                    msj.setContenido("Los datos de la empresa se actualizarón correctamente");
+                } else {
+                    msj.setContenido("No se pudo realizar la actualización"+filasAfectadas);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                msj.setContenido("Error:" + e);
+            } finally {
+                conexionBD.close();
+            }
+
         }
 
         return msj;

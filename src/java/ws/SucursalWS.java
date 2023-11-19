@@ -2,6 +2,7 @@ package ws;
 
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
@@ -67,7 +68,7 @@ public class SucursalWS {
             @FormParam("numero") int numero,
             @FormParam("codigoPostal") String codigoPostal,
             @FormParam("ciudad") String ciudad,
-            @FormParam("idSucursal")int idSucursal) {
+            @FormParam("idSucursal") int idSucursal) {
         Mensaje msj = new Mensaje();
 
         if (calle == null || calle.isEmpty()) {
@@ -78,17 +79,53 @@ public class SucursalWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
 
         }
-        
-        if (codigoPostal.length() < 5 || codigoPostal.isEmpty() || codigoPostal == null){
+
+        if (codigoPostal.length() < 5 || codigoPostal.isEmpty() || codigoPostal == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (ciudad == null || ciudad.isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        msj = SucursalDAO.agregarUbicacion(calle, numero, codigoPostal, ciudad, idSucursal);
+
+        return msj;
+    }
+
+    @PUT
+    @Path("actualizarSucursal")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje actualizarEmpresa(@FormParam("idSucursal") Integer idSucursal,
+            @FormParam("nombre") String nombre,
+            @FormParam("telefono") String telefono,
+            @FormParam("latitud") float latitud,
+            @FormParam("longitud") float longitud) {
+        Mensaje msj = new Mensaje();
+
+        if (idSucursal <= 0 || idSucursal == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (nombre == null || nombre.isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (telefono == null || telefono.isEmpty() || !Utilidades.validarCadena(telefono, Utilidades.TELEFONO_PATTERN)) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (latitud < 0 || Utilidades.esDecimal(Float.toString(latitud)) != true) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+
+        }
+
+        if (longitud < 0 || Utilidades.esDecimal(Float.toString(longitud)) != true) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         
-        if (ciudad == null || ciudad.isEmpty()){
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
         
-        
-       msj = SucursalDAO.agregarUbicacion( calle,  numero,  codigoPostal,  ciudad,  idSucursal);
+        msj = SucursalDAO.actualizarSucursal(idSucursal, nombre, telefono, latitud, longitud);
         
         return msj;
     }
