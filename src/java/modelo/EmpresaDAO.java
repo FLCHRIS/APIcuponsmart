@@ -5,6 +5,7 @@ import java.util.List;
 import modelo.pojo.Empresa;
 import modelo.pojo.Mensaje;
 import modelo.pojo.RepresentanteLegal;
+import modelo.pojo.Ubicacion;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 
@@ -260,6 +261,79 @@ public class EmpresaDAO {
             mensaje.setContenido("Lo sentimos, no hay conexión para guardar el logo.");
         }
 
+        return mensaje;
+    }
+
+    public static Mensaje registrarUbicacion(
+            String calle, Integer numero, String codigoPostal,
+            String ciudad, Integer idEmpresa) {
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(Boolean.TRUE);
+
+        Ubicacion ubicacionEmpresa = new Ubicacion();
+        ubicacionEmpresa.setCalle(calle);
+        ubicacionEmpresa.setNumero(numero);
+        ubicacionEmpresa.setCodigoPostal(codigoPostal);
+        ubicacionEmpresa.setCiudad(ciudad);
+
+        try (SqlSession conexionDB = MyBatisUtil.getSession()) {
+            if (conexionDB == null) {
+                mensaje.setContenido("No hay conexión a la base de datos");
+            }
+
+            int filasRegistroUbicacion = conexionDB.insert("ubicacion.registrar", ubicacionEmpresa);
+            int idUbicacion = ubicacionEmpresa.getIdUbicacion();
+
+            Empresa empresa = new Empresa();
+            empresa.setIdEmpresa(idEmpresa);
+            empresa.setIdUbicacion(idUbicacion);
+
+            int filasRegistroUbicacionEmpresa = conexionDB.update("empresa.registrarUbicacionAEmpresa", empresa);
+            conexionDB.commit();
+
+            if (filasRegistroUbicacion > 0 && filasRegistroUbicacionEmpresa > 0) {
+                mensaje.setError(Boolean.FALSE);
+                mensaje.setContenido("Ubicación registrada con éxito");
+            } else {
+                mensaje.setContenido("No se pudo registrar la ubicación");
+            }
+        } catch (Exception e) {
+            mensaje.setContenido("Error: " + e.getMessage());
+        }
+        return mensaje;
+    }
+    
+    public static Mensaje editarUbicacion(
+            String calle, Integer numero, String codigoPostal,
+            String ciudad, Integer idUbicacion) {
+        
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(Boolean.TRUE);
+        
+        Ubicacion ubicacion = new Ubicacion();
+        ubicacion.setCalle(calle);
+        ubicacion.setNumero(numero);
+        ubicacion.setCodigoPostal(codigoPostal);
+        ubicacion.setCiudad(ciudad);
+        ubicacion.setIdUbicacion(idUbicacion);
+        
+        try (SqlSession conexionDB = MyBatisUtil.getSession()) {
+            if (conexionDB == null) {
+                mensaje.setContenido("No hay conexión a la base de datos");
+            }
+
+            int filasAfectadas = conexionDB.update("ubicacion.editar", ubicacion);
+            conexionDB.commit();
+
+            if (filasAfectadas > 0) {
+                mensaje.setError(Boolean.FALSE);
+                mensaje.setContenido("Ubicación actualizada con éxito");
+            } else {
+                mensaje.setContenido("No se pudo actualizar la ubicación");
+            }
+        } catch (Exception e) {
+            mensaje.setContenido("Error: " + e.getMessage());
+        }
         return mensaje;
     }
 

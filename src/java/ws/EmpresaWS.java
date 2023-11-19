@@ -123,7 +123,7 @@ public class EmpresaWS {
     @POST
     @Path("registroRepresentante")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje registroEmpresa(
+    public Mensaje registroRepresentanteEmpresa(
             @FormParam("nombre") String nombre, @FormParam("apellidoPaterno") String apellidoPaterno,
             @FormParam("apellidoMaterno") String apellidoMaterno, @FormParam("idEmpresa") Integer idEmpresa) {
 
@@ -144,6 +144,73 @@ public class EmpresaWS {
         }
 
         Mensaje mensaje = EmpresaDAO.registrarRepresentante(nombre, apellidoPaterno, apellidoMaterno, idEmpresa);
+
+        return mensaje;
+    }
+
+    @POST
+    @Path("registroUbicacion")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje registroUbicacionEmpresa(
+            @FormParam("calle") String calle, @FormParam("numero") Integer numero,
+            @FormParam("codigoPostal") String codigoPostal, @FormParam("ciudad") String ciudad,
+            @FormParam("idEmpresa") Integer idEmpresa) {
+
+        if (idEmpresa == null || idEmpresa <= 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (calle == null || calle.isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (numero == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (ciudad == null || ciudad.isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (codigoPostal == null || codigoPostal.isEmpty() || !Utilidades.validarCadena(codigoPostal, Utilidades.CODIGO_POSTAL_PATTERN)) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        Mensaje mensaje = EmpresaDAO.registrarUbicacion(
+                calle, numero, codigoPostal, ciudad, idEmpresa);
+
+        return mensaje;
+    }
+
+    @PUT
+    @Path("edicionUbicacion")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje editarUbicacionEmpresa(
+            @FormParam("calle") String calle, @FormParam("numero") Integer numero,
+            @FormParam("codigoPostal") String codigoPostal, @FormParam("ciudad") String ciudad,
+            @FormParam("idUbicacion") Integer idUbicacion) {
+
+        if (idUbicacion == null || idUbicacion <= 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (calle == null || calle.isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (numero == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (ciudad == null || ciudad.isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (codigoPostal == null || codigoPostal.isEmpty() || !Utilidades.validarCadena(codigoPostal, Utilidades.CODIGO_POSTAL_PATTERN)) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        Mensaje mensaje = EmpresaDAO.editarUbicacion(calle, numero, codigoPostal, ciudad, idUbicacion);
 
         return mensaje;
     }
