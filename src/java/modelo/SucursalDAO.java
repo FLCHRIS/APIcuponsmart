@@ -40,7 +40,7 @@ public class SucursalDAO {
         return msj;
     }
 
-   public static Mensaje agregarUbicación(String calle, int numero, String codigoPostal, String ciudad, int idSucursal) {
+   public static Mensaje agregarUbicacion(String calle, int numero, String codigoPostal, String ciudad, int idSucursal) {
 
         Mensaje msj = new Mensaje();
         msj.setError(Boolean.TRUE);
@@ -56,17 +56,27 @@ public class SucursalDAO {
 
                  int filasAfectadas = conexionBD.insert("ubicacion.registrar", ubicacion);
                  
-                 int idUbicacion = ubicacion.getIdUbicacion();
+                 //int idUbicacion = ubicacion.getIdUbicacion();
                  
-                 Sucursal sucursal = new Sucursal();
-                 sucursal.setIdEmpresa(idSucursal);
-                 sucursal.setIdUbicacion(idUbicacion);
+                 //Sucursal sucursal = new Sucursal();
+                 //sucursal.setIdSucursal(idSucursal);
+                 //sucursal.setIdUbicacion(idUbicacion);
                  
+                 //int actualizacionSucursal = conexionBD.update("sucursal.actualizar", sucursal);
+                 conexionBD.commit();
                  
-
-
+                 if (filasAfectadas != 0 ){
+                     msj.setError(Boolean.FALSE);
+                     msj.setContenido("Se registro la ubicación de la sucursal correctamente");
+   
+                 }else{
+                     msj.setContenido("Hubo un error al querer agregar la ubicación ala sucursal");
+                 }
             } catch (Exception e) {
+                e.printStackTrace();
+                msj.setContenido("Error:" + e+"esta es");
             } finally {
+                conexionBD.close();
             }
         }
 

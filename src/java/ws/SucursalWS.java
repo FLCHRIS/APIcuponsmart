@@ -59,4 +59,38 @@ public class SucursalWS {
 
         return msj;
     }
+
+    @POST
+    @Path("registrarUbicacion")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje registrarUbicacionSucursal(@FormParam("calle") String calle,
+            @FormParam("numero") int numero,
+            @FormParam("codigoPostal") String codigoPostal,
+            @FormParam("ciudad") String ciudad,
+            @FormParam("idSucursal")int idSucursal) {
+        Mensaje msj = new Mensaje();
+
+       /* if (calle == null || calle.isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (numero <= 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+
+        }
+        
+        if (codigoPostal.length() < 5 || codigoPostal.isEmpty() || codigoPostal == null){
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        if (ciudad == null || ciudad.isEmpty()){
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }*/
+        
+        
+       msj = SucursalDAO.agregarUbicacion( calle,  numero,  codigoPostal,  ciudad,  idSucursal);
+        
+        return msj;
+    }
+
 }

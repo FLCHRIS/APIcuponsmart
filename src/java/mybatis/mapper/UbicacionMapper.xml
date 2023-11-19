@@ -6,9 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="ubicacion">
     
-    <insert id="registrar" parameterType="modelo.pojo.RepresentanteLegal" useGeneratedKeys="true" keyProperty="idUbicacion">
-
-        INSERT INTO ubicacion (calle, numero, codigoPostal, ciudad) VALUES 
+    <insert id="registrar" parameterType="modelo.pojo.Ubicacion" useGeneratedKeys="true" keyProperty="idUbicacion">
+        INSERT INTO ubicacion (calle , numero , codigoPostal , ciudad) VALUES 
         (#{calle}, #{numero}, #{codigoPostal}, #{ciudad})
     </insert>
     
