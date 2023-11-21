@@ -5,19 +5,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="sucursal">
-    
     <insert id="registrar" parameterType="modelo.pojo.Sucursal">
         INSERT INTO sucursal (idEmpresa, nombre, telefono, latitud, longitud) VALUES 
         (#{idEmpresa}, #{nombre}, #{telefono}, #{latitud,}, #{longitud})
     </insert>
-    
     <insert id="actualizarUbicacion" parameterType="modelo.pojo.Sucursal">
         UPDATE sucursal SET idUbicacion = #{idUbicacion} WHERE idSucursal= #{idSucursal}
     </insert>
-    
     <update id="actualizar" parameterType="modelo.pojo.Sucursal">
-        UPDATE sucursal SET nombre = #{nombre}, telefono = #{telefono}, latitud = #{latitud} 
-        ,longitud = #{longitud} WHERE idSucursal = #{idSucursal}
+        UPDATE sucursal SET nombre = #{nombre}, telefono = #{telefono}, latitud = #{latitud}, 
+        longitud = #{longitud} WHERE idSucursal = #{idSucursal}
     </update>
-    
 </mapper>
