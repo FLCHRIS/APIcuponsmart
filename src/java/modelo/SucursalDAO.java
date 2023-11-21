@@ -93,12 +93,10 @@ public class SucursalDAO {
         sucursal.setTelefono(telefono);
         sucursal.setLatitud(latitud);
         sucursal.setLongitud(longitud);
-        
-        
-        
+
         if (conexionBD != null) {
             try {
-                
+
                 int filasAfectadas = conexionBD.update("sucursal.actualizar", sucursal);
                 conexionBD.commit();
 
@@ -106,7 +104,7 @@ public class SucursalDAO {
                     msj.setError(Boolean.FALSE);
                     msj.setContenido("Los datos de la empresa se actualizarón correctamente");
                 } else {
-                    msj.setContenido("No se pudo realizar la actualización"+filasAfectadas);
+                    msj.setContenido("No se pudo realizar la actualización" + filasAfectadas);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -117,6 +115,73 @@ public class SucursalDAO {
 
         }
 
+        return msj;
+    }
+
+    public static Mensaje actualizarDomicilioSucursal(String calle, Integer numero, String codigoPostal,
+            String ciudad, Integer idUbicacion) {
+
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(Boolean.TRUE);
+
+        Ubicacion ubicacion = new Ubicacion();
+        ubicacion.setCalle(calle);
+        ubicacion.setNumero(numero);
+        ubicacion.setCodigoPostal(codigoPostal);
+        ubicacion.setCiudad(ciudad);
+        ubicacion.setIdUbicacion(idUbicacion);
+
+        SqlSession conexionBD = mybatis.MyBatisUtil.getSession();
+
+        if (conexionBD != null) {
+            mensaje.setContenido("No hay conexión a la base de datos");
+
+            try {
+                int filasAfectadas = conexionBD.update("ubicacion.editar", ubicacion);
+                conexionBD.commit();
+
+                if (filasAfectadas > 0) {
+                    mensaje.setError(Boolean.FALSE);
+                    mensaje.setContenido("Ubicación actualizada con éxito");
+                } else {
+                    mensaje.setContenido("No se pudo actualizar la ubicación");
+                }
+            } catch (Exception e) {
+                mensaje.setContenido("Error: " + e.getMessage());
+            }
+        }
+
+        return mensaje;
+    }
+
+    public static Mensaje eliminarSucursal(Integer idSucursal) {
+        Mensaje msj = new Mensaje();
+        msj.setError(Boolean.TRUE);
+        SqlSession conexionBD = mybatis.MyBatisUtil.getSession();
+        
+        if (conexionBD != null){
+            try {
+                
+                int filasAfectadas = conexionBD.delete("sucursal.eliminar", idSucursal);
+                conexionBD.commit();
+                
+                if (filasAfectadas != 0){
+                    msj.setError(Boolean.FALSE);
+                    msj.setContenido("La sucursal seleccionada se elimino correctamente del sistema");
+                }else{
+                    msj.setContenido("Ocurrio un error en el proceso de eliminación de esta sucursal");
+                }
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+                msj.setContenido("Error de servidor: "+e);
+            }finally{
+                conexionBD.close();
+            
+            }
+    
+        }
+        
         return msj;
     }
 
