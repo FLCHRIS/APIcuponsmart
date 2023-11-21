@@ -9,6 +9,7 @@ public class Utilidades {
     public static final String CODIGO_POSTAL_PATTERN = "^\\d{5}$";
     public static final String TELEFONO_PATTERN = "^\\d{10}$";
     public static final String RFC_EMPRESA_PATTERN = "^[A-Z&Ñ]{3}(\\d{6})[A-Z0-9]{3}$";
+    public static final String FECHA_PATTERN = "^\\d{4}-\\d{2}-\\d{2}$";
 
     public static boolean validarCadena(String cadena, String expresionRegular) {
         Pattern pattern = Pattern.compile(expresionRegular);
