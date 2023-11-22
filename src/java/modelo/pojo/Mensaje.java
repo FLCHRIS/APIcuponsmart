@@ -16,14 +16,16 @@ public class Mensaje {
     private Boolean error;
     private String contenido;
     private List<Empresa> empresas;
+    private List<Sucursal> sucursales;
 
-    public Mensaje(Boolean error, String contenido, List<Empresa> empresas) {
+    public Mensaje() {
+    }
+
+    public Mensaje(Boolean error, String contenido, List<Empresa> empresas, List<Sucursal> sucursales) {
         this.error = error;
         this.contenido = contenido;
         this.empresas = empresas;
-    }
-
-    public Mensaje() {
+        this.sucursales = sucursales;
     }
 
     public Boolean getError() {
@@ -49,5 +51,15 @@ public class Mensaje {
     public void setEmpresas(List<Empresa> empresas) {
         this.empresas = empresas;
     }
+
+    public List<Sucursal> getSucursales() {
+        return sucursales;
+    }
+
+    public void setSucursales(List<Sucursal> sucursales) {
+        this.sucursales = sucursales;
+    }
+
+   
 
 }

@@ -1,5 +1,7 @@
 package modelo;
 
+import java.util.HashMap;
+import java.util.List;
 import modelo.pojo.Mensaje;
 import modelo.pojo.RepresentanteLegal;
 import modelo.pojo.Sucursal;
@@ -8,6 +10,66 @@ import org.apache.ibatis.session.SqlSession;
 
 public class SucursalDAO {
 
+    public static Mensaje buscarPorNombre(String nombre){
+        Mensaje msj = new Mensaje();
+        msj.setError(Boolean.TRUE);
+        
+        SqlSession conexionBD = mybatis.MyBatisUtil.getSession();
+        
+        if (conexionBD != null){
+            try {
+                List<Sucursal> consulta = conexionBD.selectList("sucursal.buscarPorNombre", nombre);
+                
+                if (!consulta.isEmpty()){
+                msj.setSucursales(consulta);
+                msj.setContenido("La sucursal que buscas si existe");
+                msj.setError(Boolean.FALSE);
+                }else{
+                msj.setContenido("Error en la busqueda de la sucursal");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                msj.setContenido("Error:"+e);
+            }finally{
+            conexionBD.close();
+            }   
+        }   
+        return msj;
+    }
+    
+    public static Mensaje buscarPorDireccion(String ciudad, String calle, Integer numero){
+        Mensaje msj = new Mensaje();
+        msj.setError(Boolean.TRUE);
+        
+        SqlSession conexionBD = mybatis.MyBatisUtil.getSession();
+       
+        
+        if (conexionBD != null){
+            try {
+                HashMap<String, Object> consulta = new HashMap<>();
+                consulta.put("cuidad", ciudad);
+                consulta.put("calle", calle);
+                consulta.put("numero", numero);
+                
+                List<Sucursal> consultasql = conexionBD.selectList("sucursal.buscarPorDireccion",consulta);
+                
+                if (!consultasql.isEmpty()){
+                msj.setSucursales(consultasql);
+                msj.setContenido("Busqueda de sucursal Exitosa");
+                msj.setError(Boolean.FALSE);
+                }else{
+                msj.setContenido("Error en la busqueda de la sucursal por direccion");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                msj.setContenido("Error:"+e);
+            }finally{
+            conexionBD.close();
+            }   
+        }   
+        return msj;
+    }
+    
     public static Mensaje agregarSucursal(int idEmpresa, String nombre, String telefono, float latitud, float longitud) {
         Mensaje msj = new Mensaje();
         msj.setError(Boolean.TRUE);
@@ -118,8 +180,8 @@ public class SucursalDAO {
         return msj;
     }
 
-    public static Mensaje actualizarDomicilioSucursal(String calle, Integer numero, String codigoPostal,
-            String ciudad, Integer idUbicacion) {
+    public static Mensaje actualizarUbicacionSucursal(Integer idUbicacion,String calle, Integer numero, String codigoPostal,
+            String ciudad, Integer idSucursal) {
 
         Mensaje mensaje = new Mensaje();
         mensaje.setError(Boolean.TRUE);
