@@ -16,14 +16,16 @@ public class Mensaje {
     private Boolean error;
     private String contenido;
     private List<Empresa> empresas;
+    private Usuario usuarioSesion;
 
-    public Mensaje(Boolean error, String contenido, List<Empresa> empresas) {
+    public Mensaje() {
+    }
+
+    public Mensaje(Boolean error, String contenido, List<Empresa> empresas, Usuario usuarioSesion) {
         this.error = error;
         this.contenido = contenido;
         this.empresas = empresas;
-    }
-
-    public Mensaje() {
+        this.usuarioSesion = usuarioSesion;
     }
 
     public Boolean getError() {
@@ -48,6 +50,14 @@ public class Mensaje {
 
     public void setEmpresas(List<Empresa> empresas) {
         this.empresas = empresas;
+    }
+
+    public Usuario getUsuarioSesion() {
+        return usuarioSesion;
+    }
+
+    public void setUsuarioSesion(Usuario usuarioSesion) {
+        this.usuarioSesion = usuarioSesion;
     }
 
 }
