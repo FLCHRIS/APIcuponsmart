@@ -19,4 +19,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <delete id="eliminar" parameterType="int">
         DELETE FROM sucursal WHERE idSucursal = #{idSucursal};
     </delete>
+    
+    <delete id="eliminar" parameterType="int">
+        DELETE FROM sucursal WHERE idSucursal = #{idSucursal};
+    </delete>
+    
+    <select id="buscarPorNombre" parameterType="String" resultType="modelo.pojo.Sucursal">
+        SELECT s.nombre, s.telefono, 
+        CONCAT('Ciudad: ',u.ciudad,' calle: ', u.calle,' NO.', u.numero) AS direccion,
+        u.codigoPostal
+        FROM sucursal s
+        INNER JOIN ubicacion u
+        ON s.idUbicacion = u.idUbicacion
+        WHERE nombre= #{nombre};
+    </select>
+    
+    <select id="buscarPorDireccion" parameterType="map" resultType="modelo.pojo.Sucursal">
+        SELECT s.nombre, s.telefono,
+        CONCAT('Ciudad: ',u.ciudad,' calle: ', u.calle,' NO.', u.numero) AS direccion,
+        u.codigoPostal
+        FROM sucursal s
+        INNER JOIN ubicacion u
+        ON s.idUbicacion = u.idUbicacion
+        WHERE u.ciudad = #{ciudad} AND u.calle = #{calle,} AND u.numero = #{numero};
+
+    </select>
+    
 </mapper>

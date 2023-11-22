@@ -17,6 +17,7 @@ public class Mensaje {
     private String contenido;
     private List<Empresa> empresas;
     private Usuario usuarioSesion;
+    private List<Sucursal> sucursales;
 
     public Mensaje() {
     }
@@ -26,6 +27,7 @@ public class Mensaje {
         this.contenido = contenido;
         this.empresas = empresas;
         this.usuarioSesion = usuarioSesion;
+
     }
 
     public Boolean getError() {
@@ -58,6 +60,14 @@ public class Mensaje {
 
     public void setUsuarioSesion(Usuario usuarioSesion) {
         this.usuarioSesion = usuarioSesion;
+    }
+
+    public List<Sucursal> getSucursales() {
+        return sucursales;
+    }
+
+    public void setSucursales(List<Sucursal> sucursales) {
+        this.sucursales = sucursales;
     }
 
 }
