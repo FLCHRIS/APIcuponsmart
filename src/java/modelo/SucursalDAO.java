@@ -42,16 +42,19 @@ public class SucursalDAO {
         msj.setError(Boolean.TRUE);
         
         SqlSession conexionBD = mybatis.MyBatisUtil.getSession();
-       
+        Ubicacion ubicacion = new Ubicacion();
+        ubicacion.setCiudad(ciudad);
+        ubicacion.setCalle(calle);
+        ubicacion.setNumero(numero);
         
         if (conexionBD != null){
             try {
-                HashMap<String, Object> consulta = new HashMap<>();
+              /*  HashMap<String, Object> consulta = new HashMap<>();
                 consulta.put("cuidad", ciudad);
                 consulta.put("calle", calle);
-                consulta.put("numero", numero);
+                consulta.put("numero", numero);*/
                 
-                List<Sucursal> consultasql = conexionBD.selectList("sucursal.buscarPorDireccion",consulta);
+                List<Sucursal> consultasql = conexionBD.selectList("sucursal.buscarPorDireccion",ubicacion);
                 
                 if (!consultasql.isEmpty()){
                 msj.setSucursales(consultasql);

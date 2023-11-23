@@ -31,13 +31,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE nombre= #{nombre};
     </select>
     
-    <select id="buscarPorDireccion" parameterType="map" resultType="modelo.pojo.Sucursal">
-        SELECT s.nombre, s.telefono,
-        CONCAT('Ciudad: ',u.ciudad,' calle: ', u.calle,' NO.', u.numero) AS direccion,
-        u.codigoPostal
-        FROM sucursal s
-        INNER JOIN ubicacion u
-        ON s.idUbicacion = u.idUbicacion
+    <select id="buscarPorDireccion" parameterType="modelo.pojo.Ubicacion" resultType="modelo.pojo.Sucursal">
+        SELECT s.nombre, s.telefono, 
+        CONCAT('Ciudad: ',u.ciudad,' calle: ', u.calle,' NO.', u.numero) AS direccion, 
+        u.codigoPostal 
+        FROM sucursal s 
+        INNER JOIN ubicacion u 
+        ON s.idUbicacion = u.idUbicacion 
         WHERE u.ciudad = #{ciudad} AND u.calle = #{calle,} AND u.numero = #{numero};
 
     </select>
