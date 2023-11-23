@@ -16,6 +16,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         UPDATE sucursal SET nombre = #{nombre}, telefono = #{telefono}, latitud = #{latitud}, 
         longitud = #{longitud} WHERE idSucursal = #{idSucursal}
     </update>
+    <delete id="eliminar" parameterType="int">
+        DELETE FROM sucursal WHERE idSucursal = #{idSucursal};
+    </delete>
     
     <delete id="eliminar" parameterType="int">
         DELETE FROM sucursal WHERE idSucursal = #{idSucursal};

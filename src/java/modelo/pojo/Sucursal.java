@@ -27,8 +27,6 @@ public class Sucursal {
         this.codigoPostal = codigoPostal;
     }
 
-    
-
     public Integer getIdSucursal() {
         return idSucursal;
     }
@@ -100,6 +98,5 @@ public class Sucursal {
     public void setCodigoPostal(String codigoPostal) {
         this.codigoPostal = codigoPostal;
     }
-    
-    
+
 }

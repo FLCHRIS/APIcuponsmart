@@ -16,16 +16,18 @@ public class Mensaje {
     private Boolean error;
     private String contenido;
     private List<Empresa> empresas;
+    private Usuario usuarioSesion;
     private List<Sucursal> sucursales;
 
     public Mensaje() {
     }
 
-    public Mensaje(Boolean error, String contenido, List<Empresa> empresas, List<Sucursal> sucursales) {
+    public Mensaje(Boolean error, String contenido, List<Empresa> empresas, Usuario usuarioSesion) {
         this.error = error;
         this.contenido = contenido;
         this.empresas = empresas;
-        this.sucursales = sucursales;
+        this.usuarioSesion = usuarioSesion;
+
     }
 
     public Boolean getError() {
@@ -52,6 +54,14 @@ public class Mensaje {
         this.empresas = empresas;
     }
 
+    public Usuario getUsuarioSesion() {
+        return usuarioSesion;
+    }
+
+    public void setUsuarioSesion(Usuario usuarioSesion) {
+        this.usuarioSesion = usuarioSesion;
+    }
+
     public List<Sucursal> getSucursales() {
         return sucursales;
     }
@@ -59,7 +69,5 @@ public class Mensaje {
     public void setSucursales(List<Sucursal> sucursales) {
         this.sucursales = sucursales;
     }
-
-   
 
 }

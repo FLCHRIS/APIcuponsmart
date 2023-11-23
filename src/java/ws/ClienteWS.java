@@ -76,15 +76,15 @@ public class ClienteWS {
 
         return mensaje;
     }
-    
+
     @PUT
     @Path("actualizarCliente")
     @Produces(MediaType.APPLICATION_JSON)
     public Mensaje actualizarCliente(
-            @FormParam("idCliente") Integer idCliente, @FormParam("nombre") String nombre, 
-            @FormParam("apellidoPaterno") String apellidoPaterno, @FormParam("calle") String calle, 
-            @FormParam("apellidoMaterno") String apellidoMaterno, @FormParam("telefono") String telefono, 
-            @FormParam("numero") Integer numero, @FormParam("contrasenia") String contrasenia, 
+            @FormParam("idCliente") Integer idCliente, @FormParam("nombre") String nombre,
+            @FormParam("apellidoPaterno") String apellidoPaterno, @FormParam("calle") String calle,
+            @FormParam("apellidoMaterno") String apellidoMaterno, @FormParam("telefono") String telefono,
+            @FormParam("numero") Integer numero, @FormParam("contrasenia") String contrasenia,
             @FormParam("fechaNacimiento") String fechaNacimiento) {
 
         if (idCliente == null || idCliente <= 0) {
@@ -124,10 +124,10 @@ public class ClienteWS {
         }
 
         Mensaje mensaje = ClienteDAO.actualizarCliente(
-                nombre, apellidoPaterno, apellidoMaterno, 
+                nombre, apellidoPaterno, apellidoMaterno,
                 telefono, calle, numero, contrasenia, fechaNacimiento, idCliente);
 
         return mensaje;
     }
-    
+
 }
