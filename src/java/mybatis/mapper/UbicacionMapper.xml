@@ -13,4 +13,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         UPDATE ubicacion SET calle = #{calle}, numero = #{numero}, codigoPostal = #{codigoPostal}, ciudad = #{ciudad} 
         WHERE idUbicacion = #{idUbicacion};
     </update>
+    <delete id="eliminar" parameterType="int">
+        DELETE FROM ubicacion WHERE idUbicacion = #{idUbicacion};
+    </delete>
+    
+    <update id="registrarUbicacionAEmpresa" parameterType="modelo.pojo.Empresa" >
+        UPDATE empresa SET idUbicacion = #{idUbicacion} WHERE idEmpresa = #{idEmpresa};
+    </update>
 </mapper>
