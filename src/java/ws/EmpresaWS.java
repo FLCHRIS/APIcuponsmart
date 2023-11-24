@@ -36,7 +36,7 @@ public class EmpresaWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        Mensaje mensaje = EmpresaDAO.buscarEmpresaPorNombre(nombre);
+        Mensaje mensaje = EmpresaDAO.obtenerEmpresaPorNombre(nombre);
 
         return mensaje;
     }
@@ -318,6 +318,36 @@ public class EmpresaWS {
 
         Mensaje msj = EmpresaDAO.eliminarEmpresa(idEmpresa);
         return msj;
+    }
+    
+    @DELETE
+    @Path("eliminarRepresentanteLegal/{idRepresentanteLegal}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje eliminarRepresentanteLegal(
+        @PathParam("idRepresentanteLegal") Integer idRepresentanteLegal) {
+        
+        if (idRepresentanteLegal == null || idRepresentanteLegal <= 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        Mensaje mensaje = EmpresaDAO.eliminarRepresentanteLegal(idRepresentanteLegal);
+        
+        return mensaje;
+    }
+    
+    @DELETE
+    @Path("eliminarUbicacion/{idUbicacion}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje eliminarUbicacion(
+        @PathParam("idUbicacion") Integer idUbicacion) {
+        
+        if (idUbicacion == null || idUbicacion <= 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        Mensaje mensaje = EmpresaDAO.eliminarUbicacion(idUbicacion);
+        
+        return mensaje;
     }
 
 }
