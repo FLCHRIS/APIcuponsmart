@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="usuario">
+    
+    <insert id="registrar" parameterType="modelo.pojo.Usuario">
+        INSERT INTO usuario (idEmpresa, idRollUsuario, nombre, apellidoPaterno, apellidoMaterno, curp, correo, userName, contrasenia) VALUES
+        (#{idEmpresa}, #{idRollUsuario},#{nombre,},#{apellidoPaterno,},#{apellidoMaterno,},#{curp},#{correo},#{userName},#{contrasenia}); 
+    </insert>
+
+    <update id="editar" parameterType="modelo.pojo.Usuario">
+        UPDATE usuario SET idEmpresa = #{idEmpresa}, nombre = #{nombre}, apellidoPaterno =#{apellidoPaterno}, 
+        apellidoMaterno =#{apellidoMaterno}, curp =#{curp}, correo = #{correo}, userName = #{userName}, contrasenia = #{contrasenia} WHERE idUsuario = #{idUsuario};
+    </update>
+</mapper>
