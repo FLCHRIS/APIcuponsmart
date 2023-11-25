@@ -18,6 +18,7 @@ public class Mensaje {
     private List<Empresa> empresas;
     private Usuario usuarioSesion;
     private List<Sucursal> sucursales;
+    private List<Usuario> usuarios;
 
     public Mensaje() {
     }
@@ -30,6 +31,13 @@ public class Mensaje {
 
     }
 
+    public Mensaje(Boolean error, String contenido, List<Usuario> usuarios) {
+        this.error = error;
+        this.contenido = contenido;
+        this.usuarios = usuarios;
+    }
+    
+    
     public Boolean getError() {
         return error;
     }
@@ -70,4 +78,13 @@ public class Mensaje {
         this.sucursales = sucursales;
     }
 
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
+
+    
 }
