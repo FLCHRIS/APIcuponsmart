@@ -24,9 +24,9 @@ public class ClienteWS {
     }
 
     @POST
-    @Path("registroCliente")
+    @Path("registrarCliente")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje registroCliente(
+    public Mensaje registrarCliente(
             @FormParam("nombre") String nombre, @FormParam("apellidoPaterno") String apellidoPaterno,
             @FormParam("apellidoMaterno") String apellidoMaterno, @FormParam("telefono") String telefono,
             @FormParam("correo") String correo, @FormParam("calle") String calle,
@@ -78,9 +78,9 @@ public class ClienteWS {
     }
 
     @PUT
-    @Path("actualizarCliente")
+    @Path("editarCliente")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje actualizarCliente(
+    public Mensaje editarCliente(
             @FormParam("idCliente") Integer idCliente, @FormParam("nombre") String nombre,
             @FormParam("apellidoPaterno") String apellidoPaterno, @FormParam("calle") String calle,
             @FormParam("apellidoMaterno") String apellidoMaterno, @FormParam("telefono") String telefono,
@@ -123,7 +123,7 @@ public class ClienteWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        Mensaje mensaje = ClienteDAO.actualizarCliente(
+        Mensaje mensaje = ClienteDAO.editarCliente(
                 nombre, apellidoPaterno, apellidoMaterno,
                 telefono, calle, numero, contrasenia, fechaNacimiento, idCliente);
 
