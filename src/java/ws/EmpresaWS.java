@@ -32,9 +32,9 @@ public class EmpresaWS {
     #########################    
      */
     @POST
-    @Path("registroEmpresa")
+    @Path("registrarEmpresa")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje registroEmpresa(
+    public Mensaje registrarEmpresa(
             @FormParam("nombreComercial") String nombreComercial, @FormParam("nombre") String nombre,
             @FormParam("email") String email, @FormParam("telefono") String telefono,
             @FormParam("paginaWeb") String paginaWeb, @FormParam("RFC") String RFC) {
@@ -63,7 +63,7 @@ public class EmpresaWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        Mensaje mensaje = EmpresaDAO.registrar(
+        Mensaje mensaje = EmpresaDAO.registrarEmpresa(
                 nombre, nombreComercial, email,
                 telefono, paginaWeb, RFC);
 
@@ -71,9 +71,9 @@ public class EmpresaWS {
     }
 
     @PUT
-    @Path("edicionEmpresa")
+    @Path("editarEmpresa")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje edicionEmpresa(
+    public Mensaje editarEmpresa(
             @FormParam("nombre") String nombre, @FormParam("nombreComercial") String nombreComercial,
             @FormParam("email") String email, @FormParam("telefono") String telefono,
             @FormParam("paginaWeb") String paginaWeb,
@@ -138,7 +138,7 @@ public class EmpresaWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        Mensaje mensaje = EmpresaDAO.obtenerEmpresaPorNombre(nombre);
+        Mensaje mensaje = EmpresaDAO.buscarEmpresaPorNombre(nombre);
 
         return mensaje;
     }
@@ -163,7 +163,7 @@ public class EmpresaWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        Mensaje mensaje = EmpresaDAO.obtenerEmpresaPorRepresentante(nombre, apellidoPaterno, apellidoMaterno);
+        Mensaje mensaje = EmpresaDAO.buscarEmpresaPorRepresentante(nombre, apellidoPaterno, apellidoMaterno);
 
         return mensaje;
     }
@@ -178,7 +178,7 @@ public class EmpresaWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        Mensaje mensaje = EmpresaDAO.obtenerEmpresaPorRFC(RFC);
+        Mensaje mensaje = EmpresaDAO.buscarEmpresaPorRFC(RFC);
 
         return mensaje;
     }
@@ -197,7 +197,7 @@ public class EmpresaWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        Mensaje mensaje = EmpresaDAO.subirLogo(idEmpresa, logo);
+        Mensaje mensaje = EmpresaDAO.registrarLogo(idEmpresa, logo);
         return mensaje;
     }
 
@@ -207,9 +207,9 @@ public class EmpresaWS {
     ###########################  
      */
     @POST
-    @Path("registroUbicacion")
+    @Path("registrarUbicacion")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje registroUbicacionEmpresa(
+    public Mensaje registrarUbicacion(
             @FormParam("calle") String calle, @FormParam("numero") Integer numero,
             @FormParam("codigoPostal") String codigoPostal, @FormParam("ciudad") String ciudad,
             @FormParam("idEmpresa") Integer idEmpresa) {
@@ -241,9 +241,9 @@ public class EmpresaWS {
     }
 
     @PUT
-    @Path("edicionUbicacion")
+    @Path("editarUbicacion")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje editarUbicacionEmpresa(
+    public Mensaje editarUbicacion(
             @FormParam("calle") String calle, @FormParam("numero") Integer numero,
             @FormParam("codigoPostal") String codigoPostal, @FormParam("ciudad") String ciudad,
             @FormParam("idUbicacion") Integer idUbicacion) {
@@ -294,9 +294,9 @@ public class EmpresaWS {
     #####################################
      */
     @POST
-    @Path("registroRepresentante")
+    @Path("registrarRepresentante")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje registroRepresentanteEmpresa(
+    public Mensaje registrarRepresentante(
             @FormParam("nombre") String nombre, @FormParam("apellidoPaterno") String apellidoPaterno,
             @FormParam("apellidoMaterno") String apellidoMaterno, @FormParam("idEmpresa") Integer idEmpresa) {
 
@@ -322,9 +322,9 @@ public class EmpresaWS {
     }
 
     @PUT
-    @Path("edicionRepresentante")
+    @Path("editarRepresentante")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje editarRepresentanteLegal(
+    public Mensaje editarRepresentante(
             @FormParam("idRepresentanteLegal") Integer idRepresentanteLegal, @FormParam("nombre") String nombre,
             @FormParam("apellidoPaterno") String apellidoPaterno, @FormParam("apellidoMaterno") String apellidoMaterno) {
 
@@ -351,16 +351,16 @@ public class EmpresaWS {
     }
 
     @DELETE
-    @Path("eliminarRepresentanteLegal/{idRepresentanteLegal}")
+    @Path("eliminarRepresentante/{idRepresentanteLegal}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje eliminarRepresentanteLegal(
+    public Mensaje eliminarRepresentante(
             @PathParam("idRepresentanteLegal") Integer idRepresentanteLegal) {
 
         if (idRepresentanteLegal == null || idRepresentanteLegal <= 0) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        Mensaje mensaje = EmpresaDAO.eliminarRepresentanteLegal(idRepresentanteLegal);
+        Mensaje mensaje = EmpresaDAO.eliminarRepresentante(idRepresentanteLegal);
 
         return mensaje;
     }
