@@ -16,7 +16,7 @@ public class EmpresaDAO {
     ######## EMPRESA ########
     #########################    
      */
-    public static Mensaje registrar(
+    public static Mensaje registrarEmpresa(
             String nombre, String nombreComercial, String email, String telefono,
             String paginaWeb, String RFC) {
         Mensaje mensaje = new Mensaje();
@@ -111,7 +111,7 @@ public class EmpresaDAO {
         return msj;
     }
 
-    public static Mensaje obtenerEmpresaPorNombre(String nombre) {
+    public static Mensaje buscarEmpresaPorNombre(String nombre) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(Boolean.TRUE);
 
@@ -137,7 +137,7 @@ public class EmpresaDAO {
         return mensaje;
     }
 
-    public static Mensaje obtenerEmpresaPorRepresentante(
+    public static Mensaje buscarEmpresaPorRepresentante(
             String nombre, String apellidoPaterno, String apellidoMaterno) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(Boolean.TRUE);
@@ -169,7 +169,7 @@ public class EmpresaDAO {
         return mensaje;
     }
 
-    public static Mensaje obtenerEmpresaPorRFC(String RFC) {
+    public static Mensaje buscarEmpresaPorRFC(String RFC) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(Boolean.TRUE);
 
@@ -195,7 +195,7 @@ public class EmpresaDAO {
         return mensaje;
     }
 
-    public static Mensaje subirLogo(Integer idEmpresa, byte[] logo) {
+    public static Mensaje registrarLogo(Integer idEmpresa, byte[] logo) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(Boolean.TRUE);
         SqlSession conexionBD = MyBatisUtil.getSession();
@@ -404,7 +404,7 @@ public class EmpresaDAO {
         return mensaje;
     }
 
-    public static Mensaje eliminarRepresentanteLegal(Integer idRepresentanteLegal) {
+    public static Mensaje eliminarRepresentante(Integer idRepresentanteLegal) {
 
         Mensaje mensaje = new Mensaje();
         mensaje.setError(Boolean.TRUE);
