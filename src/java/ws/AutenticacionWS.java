@@ -26,7 +26,7 @@ public class AutenticacionWS {
     }
 
     @POST
-    @Path("loginEscritorio")
+    @Path("iniciarSesionEscritorio")
     @Produces(MediaType.APPLICATION_JSON)
     public Mensaje iniciarSesionEscritorio(
             @FormParam("userName") String userName,
@@ -34,11 +34,12 @@ public class AutenticacionWS {
 
         Mensaje mensaje = null;
         if (!userName.isEmpty() && !contrasenia.isEmpty()) {
-            mensaje = AutenticacionDAO.verificarSesionEscritorio(userName, contrasenia);
+            mensaje = AutenticacionDAO.iniciarSesionEscritorio(userName, contrasenia);
         } else {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
         return mensaje;
     }
+
 }
