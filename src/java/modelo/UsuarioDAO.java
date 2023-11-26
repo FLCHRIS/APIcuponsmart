@@ -7,7 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 
 public class UsuarioDAO {
     
-    public static Mensaje registrar(Integer idEmpresa, Integer idRollUsuario, String nombre, String apellidoPaterno,
+    public static Mensaje registrarUsuario(Integer idEmpresa, Integer idRollUsuario, String nombre, String apellidoPaterno,
             String apellidoMaterno, String curp, String correo, String userName, String contrasenia) {
         Mensaje msj = new Mensaje();
         msj.setError(Boolean.TRUE);
@@ -47,7 +47,7 @@ public class UsuarioDAO {
         
     }
     
-    public static Mensaje editar(Integer idEmpresa, Integer idUsuario, String nombre, String apellidoPaterno,
+    public static Mensaje editarUsuario(Integer idEmpresa, Integer idUsuario, String nombre, String apellidoPaterno,
             String apellidoMaterno, String curp, String correo, String userName, String contrasenia) {
         Mensaje msj = new Mensaje();
         msj.setError(Boolean.TRUE);
@@ -86,7 +86,7 @@ public class UsuarioDAO {
         return msj;
     }
     
-    public static Mensaje eliminar(Integer idUsuario) {
+    public static Mensaje eliminarUsuario(Integer idUsuario) {
         Mensaje msj = new Mensaje();
         msj.setError(Boolean.TRUE);
         SqlSession conexioBD = mybatis.MyBatisUtil.getSession();
@@ -114,7 +114,7 @@ public class UsuarioDAO {
         return msj;
     }
     
-    public static Mensaje busquedaPorNombre(String nombre) {
+    public static Mensaje buscarPorNombre(String nombre) {
         Mensaje msj = new Mensaje();
         msj.setError(Boolean.TRUE);
         SqlSession conexionBD = mybatis.MyBatisUtil.getSession();
@@ -143,7 +143,7 @@ public class UsuarioDAO {
         return msj;
     }
 
-    public static Mensaje busquedaPorUserName(String username) {
+    public static Mensaje buscarPorUserName(String username) {
         Mensaje msj = new Mensaje();
         msj.setError(Boolean.TRUE);
         SqlSession conexionBD = mybatis.MyBatisUtil.getSession();
@@ -172,7 +172,7 @@ public class UsuarioDAO {
         return msj;
     }
 
-    public static Mensaje busquedaPorUserName(Integer idRollUsuario) {
+    public static Mensaje buscarPorRol(Integer idRollUsuario) {
         Mensaje msj = new Mensaje();
         msj.setError(Boolean.TRUE);
         SqlSession conexionBD = mybatis.MyBatisUtil.getSession();
