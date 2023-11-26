@@ -24,9 +24,9 @@ public class UsuarioWS {
     private UriInfo context;
 
     @POST
-    @Path("registrar")
+    @Path("registrarUsuario")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje registrar(@FormParam("idEmpresa") Integer idEmpresa,
+    public Mensaje registrarUsuario(@FormParam("idEmpresa") Integer idEmpresa,
             @FormParam("idRollUsuario") Integer idRollUsuario,
             @FormParam("nombre") String nombre,
             @FormParam("apellidoPaterno") String apellidoPaterno,
@@ -77,15 +77,15 @@ public class UsuarioWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        msj = UsuarioDAO.registrar(idEmpresa, idRollUsuario, nombre, apellidoPaterno, apellidoMaterno, curp, correo, userName, contrasenia);
+        msj = UsuarioDAO.registrarUsuario(idEmpresa, idRollUsuario, nombre, apellidoPaterno, apellidoMaterno, curp, correo, userName, contrasenia);
 
         return msj;
     }
 
     @PUT
-    @Path("editar")
+    @Path("editarUsuario")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje editar(@FormParam("idEmpresa") Integer idEmpresa,
+    public Mensaje editarUsuario(@FormParam("idEmpresa") Integer idEmpresa,
             @FormParam("idUsuario") Integer idUsuario,
             @FormParam("nombre") String nombre,
             @FormParam("apellidoPaterno") String apellidoPaterno,
@@ -136,15 +136,15 @@ public class UsuarioWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        msj = UsuarioDAO.editar(idEmpresa, idUsuario, nombre, apellidoPaterno, apellidoMaterno, curp, correo, userName, contrasenia);
+        msj = UsuarioDAO.editarUsuario(idEmpresa, idUsuario, nombre, apellidoPaterno, apellidoMaterno, curp, correo, userName, contrasenia);
 
         return msj;
     }
 
     @DELETE
-    @Path("eliminar/{idUsuario}")
+    @Path("eliminarUsuario/{idUsuario}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje eliminar(@PathParam("idUsuario") Integer idUsuario) {
+    public Mensaje eliminarUsuario(@PathParam("idUsuario") Integer idUsuario) {
         Mensaje msj = new Mensaje();
 
         if (idUsuario <= 0) {
@@ -152,55 +152,52 @@ public class UsuarioWS {
 
         }
 
-        msj = UsuarioDAO.eliminar(idUsuario);
+        msj = UsuarioDAO.eliminarUsuario(idUsuario);
 
         return msj;
     }
 
     @GET
-    @Path("busquedaPorNombre/{nombre}")
+    @Path("buscarPorNombre/{nombre}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje busquedaPorNombre(@PathParam("nombre") String nombre) {
+    public Mensaje buscarPorNombre(@PathParam("nombre") String nombre) {
         Mensaje msj = new Mensaje();
 
         if (nombre == null || nombre.isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        msj = UsuarioDAO.busquedaPorNombre(nombre);
+        msj = UsuarioDAO.buscarPorNombre(nombre);
         
         return msj;
     }
     
     @GET
-    @Path("busquedaPorUserName/{username}")
+    @Path("buscarPorUserName/{username}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje busquedaPorUserName(@PathParam("username") String username) {
+    public Mensaje buscarPorUserName(@PathParam("username") String username) {
         Mensaje msj = new Mensaje();
 
         if (username == null || username.isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        msj = UsuarioDAO.busquedaPorUserName(username);
+        msj = UsuarioDAO.buscarPorUserName(username);
         
         return msj;
     }
     
-    
-    
-     
     @GET
-    @Path("busquedaPorRol/{idRollUsuario}")
+    @Path("buscarPorRol/{idRollUsuario}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje busquedaPorRol(@PathParam("idRollUsuario") Integer idRollUsuario) {
+    public Mensaje buscarPorRol(@PathParam("idRollUsuario") Integer idRollUsuario) {
         Mensaje msj = new Mensaje();
 
         if (idRollUsuario == null || idRollUsuario <= 0) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        msj = UsuarioDAO.busquedaPorUserName(idRollUsuario);
+        msj = UsuarioDAO.buscarPorRol(idRollUsuario);
         
         return msj;
     }
