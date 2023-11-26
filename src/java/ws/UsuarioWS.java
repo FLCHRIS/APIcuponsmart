@@ -47,22 +47,18 @@ public class UsuarioWS {
 
         if (nombre == null || nombre.isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
-
         }
 
         if (apellidoPaterno == null || apellidoPaterno.isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
-
         }
 
         if (apellidoMaterno == null || apellidoMaterno.isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
-
         }
 
-        if (curp == null || curp.isEmpty() || curp.length() != 18) {
+        if (curp == null || curp.isEmpty() || !Utilidades.validarCadena(curp, Utilidades.CURP_PATTERN)) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
-
         }
 
         if (correo == null || correo.isEmpty() || !Utilidades.validarCadena(correo, Utilidades.EMAIL_PATTERN)) {
