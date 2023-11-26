@@ -1,6 +1,5 @@
 package ws;
 
-import java.util.List;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -27,9 +26,15 @@ public class SucursalWS {
 
     public SucursalWS() {
     }
+    
+    /* 
+    ##########################
+    ######## SUCURSAL ########
+    ##########################  
+     */
 
     @POST
-    @Path("registrar")
+    @Path("registrarSucursal")
     @Produces(MediaType.APPLICATION_JSON)
     public Mensaje registrarSucursal(@FormParam("idEmpresa") Integer idEmpresa,
             @FormParam("nombre") String nombre,
@@ -60,47 +65,15 @@ public class SucursalWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        msj = SucursalDAO.agregarSucursal(idEmpresa, nombre, telefono, latitud, longitud);
+        msj = SucursalDAO.registrarSucursal(idEmpresa, nombre, telefono, latitud, longitud);
 
         return msj;
     }
-
-    @POST
-    @Path("registrarUbicacion")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje registrarUbicacionSucursal(@FormParam("calle") String calle,
-            @FormParam("numero") int numero,
-            @FormParam("codigoPostal") String codigoPostal,
-            @FormParam("ciudad") String ciudad,
-            @FormParam("idSucursal") int idSucursal) {
-        Mensaje msj = new Mensaje();
-
-        if (calle == null || calle.isEmpty()) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-
-        if (numero <= 0) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-
-        }
-
-        if (codigoPostal.length() < 5 || codigoPostal.isEmpty() || codigoPostal == null) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-
-        if (ciudad == null || ciudad.isEmpty()) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-
-        msj = SucursalDAO.agregarUbicacion(calle, numero, codigoPostal, ciudad, idSucursal);
-
-        return msj;
-    }
-
+    
     @PUT
-    @Path("actualizarSucursal")
+    @Path("editarSucursal")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje actualizarSucursal(
+    public Mensaje editarSucursal(
             @FormParam("idSucursal") Integer idSucursal,
             @FormParam("nombre") String nombre,
             @FormParam("telefono") String telefono,
@@ -129,45 +102,13 @@ public class SucursalWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        msj = SucursalDAO.actualizarSucursal(idSucursal, nombre, telefono, latitud, longitud);
+        msj = SucursalDAO.editarSucursal(idSucursal, nombre, telefono, latitud, longitud);
 
         return msj;
     }
-
-    @PUT
-    @Path("actualizarUbicacion")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje editarUbicacionSucursal(@FormParam("calle") String calle,
-            @FormParam("numero") int numero,
-            @FormParam("codigoPostal") String codigoPostal,
-            @FormParam("ciudad") String ciudad,
-            @FormParam("idUicación") int idUbicacion) {
-        Mensaje msj = new Mensaje();
-
-        if (calle == null || calle.isEmpty()) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-
-        if (numero <= 0) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-
-        }
-
-        if (codigoPostal.length() < 5 || codigoPostal.isEmpty() || codigoPostal == null) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-
-        if (ciudad == null || ciudad.isEmpty()) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-
-        msj = SucursalDAO.agregarUbicacion(calle, numero, codigoPostal, ciudad, idUbicacion);
-
-        return msj;
-    }
-
+    
     @DELETE
-    @Path("eliminar/{idSucursal}")
+    @Path("eliminarSucursal/{idSucursal}")
     @Produces(MediaType.APPLICATION_JSON)
     public Mensaje eliminarSucursal(@PathParam("idSucursal") Integer idSucursal) {
         Mensaje msj = new Mensaje();
@@ -220,5 +161,84 @@ public class SucursalWS {
         msj = SucursalDAO.buscarPorDireccion(cuidad, calle, numero);
         return msj;
     }
+    
+    /* 
+    ###########################
+    ######## UBICACIÓN ########
+    ###########################  
+     */
+    
+    @POST
+    @Path("registrarUbicacion")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje registrarUbicacion(@FormParam("calle") String calle,
+            @FormParam("numero") int numero,
+            @FormParam("codigoPostal") String codigoPostal,
+            @FormParam("ciudad") String ciudad,
+            @FormParam("idSucursal") int idSucursal) {
+        Mensaje msj = new Mensaje();
 
+        if (calle == null || calle.isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (numero <= 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+
+        }
+
+        if (codigoPostal.length() < 5 || codigoPostal.isEmpty() || codigoPostal == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (ciudad == null || ciudad.isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        msj = SucursalDAO.registrarUbicacion(calle, numero, codigoPostal, ciudad, idSucursal);
+
+        return msj;
+    }
+    
+    @PUT
+    @Path("editarUbicacion")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje editarUbicacion(@FormParam("calle") String calle,
+            @FormParam("numero") int numero,
+            @FormParam("codigoPostal") String codigoPostal,
+            @FormParam("ciudad") String ciudad,
+            @FormParam("idUicación") int idUbicacion) {
+        Mensaje msj = new Mensaje();
+
+        if (calle == null || calle.isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (numero <= 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+
+        }
+
+        if (codigoPostal.length() < 5 || codigoPostal.isEmpty() || codigoPostal == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (ciudad == null || ciudad.isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        msj = SucursalDAO.editarUbicacion(idUbicacion, calle, numero, codigoPostal, ciudad);
+
+        return msj;
+    }
+    
+    // ELIMINAR UBICACION
+    
+    /* 
+    ###########################
+    ######## ENCARGADO ########
+    ###########################  
+     */
+    
+    // ELIMINAR, AGREGAR Y EDITAR
 }
