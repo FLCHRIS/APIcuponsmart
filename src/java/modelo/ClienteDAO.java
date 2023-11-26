@@ -47,7 +47,7 @@ public class ClienteDAO {
         return mensaje;
     }
     
-    public static Mensaje actualizarCliente(
+    public static Mensaje editarCliente(
             String nombre, String apellidoPaterno, String apellidoMaterno, 
             String telefono, String calle, Integer numero, 
             String contrasenia, String fechaNacimiento, Integer idCliente) {
