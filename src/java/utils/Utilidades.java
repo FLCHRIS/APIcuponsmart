@@ -10,6 +10,7 @@ public class Utilidades {
     public static final String TELEFONO_PATTERN = "^\\d{10}$";
     public static final String RFC_EMPRESA_PATTERN = "^[A-Z&Ñ]{3}(\\d{6})[A-Z0-9]{3}$";
     public static final String FECHA_PATTERN = "^\\d{4}-\\d{2}-\\d{2}$";
+    public static final String CURP_PATTERN = "^[A-Z]{4}[0-9]{6}(H|M)[A-Z]{2}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])[A-Z]{2}[A-Z0-9]{2}[0-9]{1}$";
 
     public static boolean validarCadena(String cadena, String expresionRegular) {
         Pattern pattern = Pattern.compile(expresionRegular);
