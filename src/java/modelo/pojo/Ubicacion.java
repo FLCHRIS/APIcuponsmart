@@ -4,14 +4,14 @@ public class Ubicacion {
 
     private Integer idUbicacion;
     private String calle;
-    private int numero;
+    private Integer numero;
     private String codigoPostal;
     private String ciudad;
 
     public Ubicacion() {
     }
 
-    public Ubicacion(Integer idUbicacion, String calle, int numero, String codigoPostal, String ciudad) {
+    public Ubicacion(Integer idUbicacion, String calle, Integer numero, String codigoPostal, String ciudad) {
         this.idUbicacion = idUbicacion;
         this.calle = calle;
         this.numero = numero;
@@ -35,11 +35,11 @@ public class Ubicacion {
         this.calle = calle;
     }
 
-    public int getNumero() {
+    public Integer getNumero() {
         return numero;
     }
 
-    public void setNumero(int numero) {
+    public void setNumero(Integer numero) {
         this.numero = numero;
     }
 
