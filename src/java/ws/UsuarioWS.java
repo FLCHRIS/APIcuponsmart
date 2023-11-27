@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import modelo.UsuarioDAO;
 import modelo.pojo.Mensaje;
+import utils.Constantes;
 import utils.Utilidades;
 
 @Path("usuarios")
@@ -26,22 +27,73 @@ public class UsuarioWS {
     @POST
     @Path("registrarUsuario")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje registrarUsuario(@FormParam("idEmpresa") Integer idEmpresa,
-            @FormParam("idRollUsuario") Integer idRollUsuario,
-            @FormParam("nombre") String nombre,
-            @FormParam("apellidoPaterno") String apellidoPaterno,
-            @FormParam("apellidoMaterno") String apellidoMaterno,
-            @FormParam("curp") String curp,
-            @FormParam("correo") String correo,
-            @FormParam("userName") String userName,
-            @FormParam("contrasenia") String contrasenia) {
-        Mensaje msj = new Mensaje();
+    public Mensaje registrarUsuario(
+            @FormParam("nombre") String nombre, @FormParam("apellidoPaterno") String apellidoPaterno,
+            @FormParam("apellidoMaterno") String apellidoMaterno, @FormParam("curp") String curp,
+            @FormParam("correo") String correo, @FormParam("userName") String userName,
+            @FormParam("contrasenia") String contrasenia, @FormParam("idRollUsuario") Integer idRollUsuario,
+            @FormParam("idEmpresa") Integer idEmpresa) {
+        Mensaje mensaje = null;
 
-        if (idEmpresa == null || idEmpresa <= 0) {
+        if (nombre == null || nombre.isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        if (idRollUsuario == null || idRollUsuario <= 0) {
+        if (apellidoPaterno == null || apellidoPaterno.isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (apellidoMaterno == null || apellidoMaterno.isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (curp == null || curp.isEmpty() || !Utilidades.validarCadena(curp, Utilidades.CURP_PATTERN)) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (correo == null || correo.isEmpty() || !Utilidades.validarCadena(correo, Utilidades.EMAIL_PATTERN)) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (userName == null || userName.isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (contrasenia == null || contrasenia.isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (idRollUsuario == null || (idRollUsuario != Constantes.ID_ROL_COMERCIAL && idRollUsuario != Constantes.ID_ROL_GENERAL)) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (idRollUsuario == Constantes.ID_ROL_GENERAL) {
+            mensaje = UsuarioDAO.registrarUsuario(
+                    idEmpresa, idRollUsuario, nombre, apellidoPaterno,
+                    apellidoMaterno, curp, correo, userName, contrasenia);
+        } else {
+            if (idEmpresa == null || idEmpresa <= 0) {
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+
+            mensaje = UsuarioDAO.registrarUsuario(
+                    idEmpresa, idRollUsuario, nombre, apellidoPaterno,
+                    apellidoMaterno, curp, correo, userName, contrasenia);
+        }
+
+        return mensaje;
+    }
+
+    @PUT
+    @Path("editarUsuario")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje editarUsuario(
+            @FormParam("nombre") String nombre, @FormParam("apellidoPaterno") String apellidoPaterno,
+            @FormParam("apellidoMaterno") String apellidoMaterno, @FormParam("curp") String curp,
+            @FormParam("correo") String correo, @FormParam("userName") String userName,
+            @FormParam("contrasenia") String contrasenia, @FormParam("idUsuario") Integer idUsuario) {
+
+        if (idUsuario == null || idUsuario <= 0) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
@@ -73,66 +125,9 @@ public class UsuarioWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        msj = UsuarioDAO.registrarUsuario(idEmpresa, idRollUsuario, nombre, apellidoPaterno, apellidoMaterno, curp, correo, userName, contrasenia);
-
-        return msj;
-    }
-
-    @PUT
-    @Path("editarUsuario")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje editarUsuario(@FormParam("idEmpresa") Integer idEmpresa,
-            @FormParam("idUsuario") Integer idUsuario,
-            @FormParam("nombre") String nombre,
-            @FormParam("apellidoPaterno") String apellidoPaterno,
-            @FormParam("apellidoMaterno") String apellidoMaterno,
-            @FormParam("curp") String curp,
-            @FormParam("correo") String correo,
-            @FormParam("userName") String userName,
-            @FormParam("contrasenia") String contrasenia) {
-        Mensaje msj = new Mensaje();
-
-        if (idEmpresa == null || idEmpresa <= 0) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-
-        if (idUsuario == null || idUsuario <= 0) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-
-        if (nombre == null || nombre.isEmpty()) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-
-        }
-
-        if (apellidoPaterno == null || apellidoPaterno.isEmpty()) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-
-        }
-
-        if (apellidoMaterno == null || apellidoMaterno.isEmpty()) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-
-        }
-
-        if (curp == null || curp.isEmpty() || curp.length() != 18) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-
-        }
-
-        if (correo == null || correo.isEmpty() || !Utilidades.validarCadena(correo, Utilidades.EMAIL_PATTERN)) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-
-        if (userName == null || userName.isEmpty()) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-
-        if (contrasenia == null || contrasenia.isEmpty()) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-
-        msj = UsuarioDAO.editarUsuario(idEmpresa, idUsuario, nombre, apellidoPaterno, apellidoMaterno, curp, correo, userName, contrasenia);
+        Mensaje msj = UsuarioDAO.editarUsuario(
+                nombre, apellidoPaterno, apellidoMaterno, curp,
+                correo, userName, contrasenia, idUsuario);
 
         return msj;
     }
@@ -141,60 +136,54 @@ public class UsuarioWS {
     @Path("eliminarUsuario/{idUsuario}")
     @Produces(MediaType.APPLICATION_JSON)
     public Mensaje eliminarUsuario(@PathParam("idUsuario") Integer idUsuario) {
-        Mensaje msj = new Mensaje();
-
-        if (idUsuario <= 0) {
+        if (idUsuario == null || idUsuario <= 0) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
-
         }
 
-        msj = UsuarioDAO.eliminarUsuario(idUsuario);
+        Mensaje mensaje = UsuarioDAO.eliminarUsuario(idUsuario);
 
-        return msj;
+        return mensaje;
     }
 
     @GET
     @Path("buscarPorNombre/{nombre}")
     @Produces(MediaType.APPLICATION_JSON)
     public Mensaje buscarPorNombre(@PathParam("nombre") String nombre) {
-        Mensaje msj = new Mensaje();
 
         if (nombre == null || nombre.isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        msj = UsuarioDAO.buscarPorNombre(nombre);
-        
+        Mensaje msj = UsuarioDAO.buscarPorNombre(nombre);
+
         return msj;
     }
-    
+
     @GET
     @Path("buscarPorUserName/{username}")
     @Produces(MediaType.APPLICATION_JSON)
     public Mensaje buscarPorUserName(@PathParam("username") String username) {
-        Mensaje msj = new Mensaje();
 
         if (username == null || username.isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        msj = UsuarioDAO.buscarPorUserName(username);
-        
+        Mensaje msj = UsuarioDAO.buscarPorUserName(username);
+
         return msj;
     }
-    
-    @GET
-    @Path("buscarPorRol/{idRollUsuario}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje buscarPorRol(@PathParam("idRollUsuario") Integer idRollUsuario) {
-        Mensaje msj = new Mensaje();
 
-        if (idRollUsuario == null || idRollUsuario <= 0) {
+    @GET
+    @Path("buscarPorRoll/{idRollUsuario}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje buscarPorRoll(@PathParam("idRollUsuario") Integer idRollUsuario) {
+
+        if (idRollUsuario == null || (idRollUsuario != Constantes.ID_ROL_COMERCIAL && idRollUsuario != Constantes.ID_ROL_GENERAL)) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        msj = UsuarioDAO.buscarPorRol(idRollUsuario);
-        
+        Mensaje msj = UsuarioDAO.buscarPorRoll(idRollUsuario);
+
         return msj;
     }
 
