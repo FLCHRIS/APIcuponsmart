@@ -329,7 +329,8 @@ public class SucursalDAO {
     }
 
     public static Mensaje editarEncargado(
-            String nombre, String apellidoPaterno, String apellidoMaterno, Integer idEncargadoSucursal) {
+            String nombre, String apellidoPaterno, 
+            String apellidoMaterno, Integer idEncargadoSucursal) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(Boolean.TRUE);
 
