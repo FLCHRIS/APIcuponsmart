@@ -6,15 +6,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="sucursal">
     <insert id="registrar" parameterType="modelo.pojo.Sucursal">
-        INSERT INTO sucursal (idEmpresa, nombre, telefono, latitud, longitud) VALUES 
-        (#{idEmpresa}, #{nombre}, #{telefono}, #{latitud,}, #{longitud})
-    </insert>
-    <insert id="actualizarUbicacion" parameterType="modelo.pojo.Sucursal">
-        UPDATE sucursal SET idUbicacion = #{idUbicacion} WHERE idSucursal= #{idSucursal}
+        INSERT INTO sucursal (idEmpresa, nombre, telefono, latitud, longitud, colonia) VALUES 
+        (#{idEmpresa}, #{nombre}, #{telefono}, #{latitud}, #{longitud}, #{colonia})
     </insert>
     <update id="actualizar" parameterType="modelo.pojo.Sucursal">
-        UPDATE sucursal SET nombre = #{nombre}, telefono = #{telefono}, latitud = #{latitud}, 
-        longitud = #{longitud} WHERE idSucursal = #{idSucursal}
+        UPDATE sucursal SET idEmpresa = #{idEmpresa}, nombre = #{nombre}, telefono = #{telefono}, latitud = #{latitud}, 
+        longitud = #{longitud}, colonia = #{colonia} WHERE idSucursal = #{idSucursal}
     </update>
     <delete id="eliminar" parameterType="int">
         DELETE FROM sucursal WHERE idSucursal = #{idSucursal};
@@ -35,6 +32,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM sucursal s 
         INNER JOIN ubicacion u 
         ON s.idUbicacion = u.idUbicacion 
-        WHERE u.ciudad = #{ciudad} AND u.calle = #{calle,} AND u.numero = #{numero};
+        WHERE u.ciudad = #{ciudad} AND u.calle = #{calle} AND u.numero = #{numero};
     </select>
+    
+    <insert id="registrarEncargadoSucursal" parameterType="modelo.pojo.Encargado" useGeneratedKeys="true" keyProperty="idEncargadoSucursal">
+        INSERT INTO encargadoSucursal (nombre, apellidoPaterno, apellidoMaterno) 
+        VALUES (#{nombre}, #{apellidoPaterno}, #{apellidoMaterno});
+    </insert>
+    <update id="registrarEncargadoASucursal" parameterType="modelo.pojo.Sucursal" >
+        UPDATE sucursal SET idEncargadoSucursal = #{idEncargadoSucursal} WHERE idSucursal = #{idSucursal};
+    </update>
+    <update id="editarEncargadoSucursal" parameterType="modelo.pojo.Encargado">
+        UPDATE encargadoSucursal SET nombre = #{nombre}, apellidoPaterno = #{apellidoPaterno}, apellidoMaterno = #{apellidoMaterno} 
+        WHERE idEncargadoSucursal = #{idEncargadoSucursal};
+    </update>
+    <delete id="eliminarEncargadoSucursal" parameterType="int">
+        DELETE FROM encargadoSucursal WHERE idEncargadoSucursal = #{idEncargadoSucursal};
+    </delete>
+    
 </mapper>
