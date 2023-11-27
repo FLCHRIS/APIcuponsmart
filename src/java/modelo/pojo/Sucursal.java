@@ -9,15 +9,15 @@ public class Sucursal {
     private String nombre;
     private String colonia;
     private String telefono;
-    private float latitud;
-    private float longitud;
+    private Float latitud;
+    private Float longitud;
     private String direccion;
     private String codigoPostal;
 
     public Sucursal() {
     }
 
-    public Sucursal(Integer idSucursal, Integer idEmpresa, Integer idUbicacion, Integer idEncargadoSucursal, String nombre, String colonia, String telefono, float latitud, float longitud, String direccion, String codigoPostal) {
+    public Sucursal(Integer idSucursal, Integer idEmpresa, Integer idUbicacion, Integer idEncargadoSucursal, String nombre, String colonia, String telefono, Float latitud, Float longitud, String direccion, String codigoPostal) {
         this.idSucursal = idSucursal;
         this.idEmpresa = idEmpresa;
         this.idUbicacion = idUbicacion;
@@ -29,14 +29,6 @@ public class Sucursal {
         this.longitud = longitud;
         this.direccion = direccion;
         this.codigoPostal = codigoPostal;
-    }
-
-    public Integer getIdEncargadoSucursal() {
-        return idEncargadoSucursal;
-    }
-
-    public void setIdEncargadoSucursal(Integer idEncargadoSucursal) {
-        this.idEncargadoSucursal = idEncargadoSucursal;
     }
 
     public Integer getIdSucursal() {
@@ -63,6 +55,14 @@ public class Sucursal {
         this.idUbicacion = idUbicacion;
     }
 
+    public Integer getIdEncargadoSucursal() {
+        return idEncargadoSucursal;
+    }
+
+    public void setIdEncargadoSucursal(Integer idEncargadoSucursal) {
+        this.idEncargadoSucursal = idEncargadoSucursal;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -87,19 +87,19 @@ public class Sucursal {
         this.telefono = telefono;
     }
 
-    public float getLatitud() {
+    public Float getLatitud() {
         return latitud;
     }
 
-    public void setLatitud(float latitud) {
+    public void setLatitud(Float latitud) {
         this.latitud = latitud;
     }
 
-    public float getLongitud() {
+    public Float getLongitud() {
         return longitud;
     }
 
-    public void setLongitud(float longitud) {
+    public void setLongitud(Float longitud) {
         this.longitud = longitud;
     }
 
