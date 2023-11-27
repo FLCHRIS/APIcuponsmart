@@ -149,13 +149,12 @@ public class SucursalDAO {
         return msj;
     }
 
-    public static Mensaje buscarPorDireccion(String ciudad, String calle, Integer numero) {
+    public static Mensaje buscarPorDireccion(String calle, Integer numero) {
         Mensaje msj = new Mensaje();
         msj.setError(Boolean.TRUE);
 
         SqlSession conexionBD = mybatis.MyBatisUtil.getSession();
         Ubicacion ubicacion = new Ubicacion();
-        ubicacion.setCiudad(ciudad);
         ubicacion.setCalle(calle);
         ubicacion.setNumero(numero);
 

@@ -13,11 +13,12 @@ public class Sucursal {
     private Float longitud;
     private String direccion;
     private String codigoPostal;
+    private String nombreEncargado;
 
     public Sucursal() {
     }
 
-    public Sucursal(Integer idSucursal, Integer idEmpresa, Integer idUbicacion, Integer idEncargadoSucursal, String nombre, String colonia, String telefono, Float latitud, Float longitud, String direccion, String codigoPostal) {
+    public Sucursal(Integer idSucursal, Integer idEmpresa, Integer idUbicacion, Integer idEncargadoSucursal, String nombre, String colonia, String telefono, Float latitud, Float longitud, String direccion, String codigoPostal, String nombreEncargado) {
         this.idSucursal = idSucursal;
         this.idEmpresa = idEmpresa;
         this.idUbicacion = idUbicacion;
@@ -29,7 +30,10 @@ public class Sucursal {
         this.longitud = longitud;
         this.direccion = direccion;
         this.codigoPostal = codigoPostal;
+        this.nombreEncargado = nombreEncargado;
     }
+
+    
 
     public Integer getIdSucursal() {
         return idSucursal;
@@ -119,4 +123,12 @@ public class Sucursal {
         this.codigoPostal = codigoPostal;
     }
 
+    public String getNombreEncargado() {
+        return nombreEncargado;
+    }
+
+    public void setNombreEncargado(String nombreEncargado) {
+        this.nombreEncargado = nombreEncargado;
+    }
+    
 }

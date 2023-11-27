@@ -17,22 +17,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         DELETE FROM sucursal WHERE idSucursal = #{idSucursal};
     </delete>
     <select id="buscarPorNombre" parameterType="String" resultType="modelo.pojo.Sucursal">
-        SELECT s.nombre, s.telefono, 
-        CONCAT('Ciudad: ',u.ciudad,' calle: ', u.calle,' NO.', u.numero) AS direccion,
-        u.codigoPostal
-        FROM sucursal s
-        INNER JOIN ubicacion u
-        ON s.idUbicacion = u.idUbicacion
-        WHERE nombre= #{nombre};
-    </select>
-    <select id="buscarPorDireccion" parameterType="modelo.pojo.Ubicacion" resultType="modelo.pojo.Sucursal">
-        SELECT s.nombre, s.telefono, 
+        SELECT s.*,
         CONCAT('Ciudad: ',u.ciudad,' calle: ', u.calle,' NO.', u.numero) AS direccion, 
-        u.codigoPostal 
+        u.codigoPostal, CONCAT(es.nombre,' ',es.apellidoPaterno,' ',es.apellidoPaterno) AS nombreEncargado 
         FROM sucursal s 
         INNER JOIN ubicacion u 
         ON s.idUbicacion = u.idUbicacion 
-        WHERE u.ciudad = #{ciudad} AND u.calle = #{calle} AND u.numero = #{numero};
+        INNER JOIN encargadoSucursal es 
+        ON  s.idEncargadoSucursal = es.idEncargadoSucursal 
+        WHERE s.nombre = #{nombre}
+    </select>
+    <select id="buscarPorDireccion" parameterType="modelo.pojo.Ubicacion" resultType="modelo.pojo.Sucursal">
+        SELECT s.*, 
+        CONCAT('Ciudad: ',u.ciudad,' calle: ', u.calle,' NO.', u.numero) AS direccion, 
+        u.codigoPostal, CONCAT(es.nombre,' ',es.apellidoPaterno,' ',es.apellidoPaterno) AS nombreEncargado 
+        FROM sucursal s 
+        INNER JOIN ubicacion u 
+        ON s.idUbicacion = u.idUbicacion 
+        INNER JOIN encargadoSucursal es 
+        ON  s.idEncargadoSucursal = es.idEncargadoSucursal 
+        WHERE u.calle = #{calle} AND u.numero= #{numero}
     </select>
     
     <insert id="registrarEncargadoSucursal" parameterType="modelo.pojo.Encargado" useGeneratedKeys="true" keyProperty="idEncargadoSucursal">

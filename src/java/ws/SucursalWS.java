@@ -141,16 +141,11 @@ public class SucursalWS {
     }
 
     @GET
-    @Path("buscarPorDireccion/{cuidad}/{calle}/{numero}")
+    @Path("buscarPorDireccion/{calle}/{numero}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje buscarPorDireccion(@PathParam("cuidad") String cuidad,
+    public Mensaje buscarPorDireccion(
             @PathParam("calle") String calle,
             @PathParam("numero") Integer numero) {
-
-        if (cuidad == null || cuidad.isEmpty()) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-
-        }
 
         if (calle == null || calle.isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
@@ -162,7 +157,7 @@ public class SucursalWS {
 
         }
 
-        Mensaje msj = SucursalDAO.buscarPorDireccion(cuidad, calle, numero);
+        Mensaje msj = SucursalDAO.buscarPorDireccion(calle, numero);
         return msj;
     }
 
