@@ -8,8 +8,8 @@ import org.apache.ibatis.session.SqlSession;
 
 public class AutenticacionDAO {
 
-    public static Mensaje iniciarSesionEscritorio(String userName,
-            String contrasenia) {
+    public static Mensaje iniciarSesionEscritorio(
+            String userName, String contrasenia) {
 
         Mensaje mensaje = new Mensaje();
         mensaje.setError(true);
