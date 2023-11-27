@@ -85,7 +85,7 @@ public class EmpresaDAO {
         return mensaje;
     }
 
-    public static Mensaje eliminarEmpresa(int idEmpresa) {
+    public static Mensaje eliminarEmpresa(Integer idEmpresa) {
         Mensaje msj = new Mensaje();
         msj.setError(Boolean.TRUE);
         SqlSession conexinBD = mybatis.MyBatisUtil.getSession();
