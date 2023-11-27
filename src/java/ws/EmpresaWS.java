@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import modelo.EmpresaDAO;
 import modelo.pojo.Mensaje;
+import utils.Constantes;
 import utils.Utilidades;
 
 @Path("empresas")
@@ -103,7 +104,7 @@ public class EmpresaWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        if (estatus == null || estatus.isEmpty() || (!estatus.equals("activo") && !estatus.equals("inactivo"))) {
+        if (estatus == null || estatus.isEmpty() || (!Constantes.ESTADO_ACTIVO.equals(estatus) && !Constantes.ESTADO_INACTIVO.equals(estatus))) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
