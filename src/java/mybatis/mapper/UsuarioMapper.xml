@@ -7,13 +7,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="usuario">
     
     <insert id="registrar" parameterType="modelo.pojo.Usuario">
-        INSERT INTO usuario (idEmpresa, idRollUsuario, nombre, apellidoPaterno, apellidoMaterno, curp, correo, userName, contrasenia) VALUES
-        (#{idEmpresa}, #{idRollUsuario},#{nombre,},#{apellidoPaterno,},#{apellidoMaterno,},#{curp},#{correo},#{userName},#{contrasenia}); 
+        INSERT INTO usuario (idEmpresa, idRollUsuario, nombre, apellidoPaterno, apellidoMaterno, curp, correo, userName, contrasenia) VALUES 
+        (#{idEmpresa}, #{idRollUsuario}, #{nombre}, #{apellidoPaterno}, #{apellidoMaterno}, #{curp}, #{correo}, #{userName}, #{contrasenia}); 
     </insert>
 
     <update id="editar" parameterType="modelo.pojo.Usuario">
-        UPDATE usuario SET idEmpresa = #{idEmpresa}, nombre = #{nombre}, apellidoPaterno =#{apellidoPaterno}, 
-        apellidoMaterno =#{apellidoMaterno}, curp =#{curp}, correo = #{correo}, userName = #{userName}, contrasenia = #{contrasenia} WHERE idUsuario = #{idUsuario};
+        UPDATE usuario SET nombre = #{nombre}, apellidoPaterno = #{apellidoPaterno}, 
+        apellidoMaterno = #{apellidoMaterno}, curp = #{curp}, correo = #{correo}, 
+        userName = #{userName}, contrasenia = #{contrasenia} 
+        WHERE idUsuario = #{idUsuario};
     </update>
     
     <delete id="eliminar" parameterType="int">
