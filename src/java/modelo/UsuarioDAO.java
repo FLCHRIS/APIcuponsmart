@@ -6,12 +6,15 @@ import modelo.pojo.Usuario;
 import org.apache.ibatis.session.SqlSession;
 
 public class UsuarioDAO {
-    
-    public static Mensaje registrarUsuario(Integer idEmpresa, Integer idRollUsuario, String nombre, String apellidoPaterno,
+
+    public static Mensaje registrarUsuario(
+            Integer idEmpresa, Integer idRollUsuario, String nombre, String apellidoPaterno,
             String apellidoMaterno, String curp, String correo, String userName, String contrasenia) {
         Mensaje msj = new Mensaje();
         msj.setError(Boolean.TRUE);
+
         SqlSession conexionDB = mybatis.MyBatisUtil.getSession();
+
         Usuario usuario = new Usuario();
         usuario.setIdEmpresa(idEmpresa);
         usuario.setIdRollUsuario(idRollUsuario);
@@ -21,16 +24,17 @@ public class UsuarioDAO {
         usuario.setCurp(curp);
         usuario.setCorreo(correo);
         usuario.setUserName(userName);
-        usuario.setContrasenia(contrasenia);        
+        usuario.setContrasenia(contrasenia);
+
         if (conexionDB != null) {
             try {
                 int filasAfectadas = conexionDB.insert("usuario.registrar", usuario);
                 conexionDB.commit();
-                
+
                 if (filasAfectadas != 0) {
                     msj.setError(Boolean.FALSE);
                     msj.setContenido("El usuario: " + nombre + " se agrego al sistema satisfactoriamente");
-                    
+
                 } else {
                     msj.setContenido("El usuario: " + nombre + " No se pudo dar de alta verifique los campos");
                 }
@@ -40,21 +44,23 @@ public class UsuarioDAO {
             } finally {
                 conexionDB.close();
             }
-            
+
         }
-        
+
         return msj;
-        
+
     }
-    
-    public static Mensaje editarUsuario(Integer idEmpresa, Integer idUsuario, String nombre, String apellidoPaterno,
-            String apellidoMaterno, String curp, String correo, String userName, String contrasenia) {
+
+    public static Mensaje editarUsuario(
+            String nombre, String apellidoPaterno,
+            String apellidoMaterno, String curp,
+            String correo, String userName,
+            String contrasenia, Integer idUsuario) {
         Mensaje msj = new Mensaje();
         msj.setError(Boolean.TRUE);
         SqlSession conexionDB = mybatis.MyBatisUtil.getSession();
         Usuario usuario = new Usuario();
         usuario.setIdUsuario(idUsuario);
-        usuario.setIdEmpresa(idEmpresa);
         usuario.setNombre(nombre);
         usuario.setApellidoPaterno(apellidoPaterno);
         usuario.setApellidoMaterno(apellidoMaterno);
@@ -62,12 +68,12 @@ public class UsuarioDAO {
         usuario.setCorreo(correo);
         usuario.setUserName(userName);
         usuario.setContrasenia(contrasenia);
-        
+
         if (conexionDB != null) {
             try {
                 int filasAfectadas = conexionDB.update("usuario.editar", usuario);
                 conexionDB.commit();
-                
+
                 if (filasAfectadas != 0) {
                     msj.setError(Boolean.FALSE);
                     msj.setContenido("La actualización del usuario: " + nombre + " se hizo correctamente");
@@ -80,22 +86,22 @@ public class UsuarioDAO {
             } finally {
                 conexionDB.close();
             }
-            
+
         }
-        
+
         return msj;
     }
-    
+
     public static Mensaje eliminarUsuario(Integer idUsuario) {
         Mensaje msj = new Mensaje();
         msj.setError(Boolean.TRUE);
         SqlSession conexioBD = mybatis.MyBatisUtil.getSession();
-        
+
         if (conexioBD != null) {
             try {
                 int filasAfectadas = conexioBD.delete("usuario.eliminar", idUsuario);
                 conexioBD.commit();
-                
+
                 if (filasAfectadas != 0) {
                     msj.setError(Boolean.FALSE);
                     msj.setContenido("La eliminación del usuario fue satisfactoría");
@@ -108,30 +114,30 @@ public class UsuarioDAO {
             } finally {
                 conexioBD.close();
             }
-            
+
         }
-        
+
         return msj;
     }
-    
+
     public static Mensaje buscarPorNombre(String nombre) {
         Mensaje msj = new Mensaje();
         msj.setError(Boolean.TRUE);
         SqlSession conexionBD = mybatis.MyBatisUtil.getSession();
-        
+
         if (conexionBD != null) {
             try {
                 List<Usuario> consulta = conexionBD.selectList("usuario.busquedaPorNombre", nombre);
                 conexionBD.commit();
-                
+
                 if (!consulta.isEmpty()) {
                     msj.setError(Boolean.FALSE);
-                    msj.setContenido("Consulta por Nombre existosa");
+                    msj.setContenido("Respuesta exitosa");
                     msj.setUsuarios(consulta);
-                }else{
-                    msj.setContenido("No existen usuarios con ese nombre");
+                } else {
+                    msj.setContenido("No hay usuarios con el nombre proporcionado.");
                 }
-                
+
             } catch (Exception e) {
                 e.printStackTrace();
                 msj.setContenido("Error: " + e);
@@ -139,7 +145,7 @@ public class UsuarioDAO {
                 conexionBD.close();
             }
         }
-        
+
         return msj;
     }
 
@@ -147,20 +153,20 @@ public class UsuarioDAO {
         Mensaje msj = new Mensaje();
         msj.setError(Boolean.TRUE);
         SqlSession conexionBD = mybatis.MyBatisUtil.getSession();
-        
+
         if (conexionBD != null) {
             try {
                 List<Usuario> consulta = conexionBD.selectList("usuario.busquedaPorUserName", username);
                 conexionBD.commit();
-                
+
                 if (!consulta.isEmpty()) {
                     msj.setError(Boolean.FALSE);
-                    msj.setContenido("Consulta por UserName existosa");
+                    msj.setContenido("Respuesta exitosa");
                     msj.setUsuarios(consulta);
-                }else{
-                    msj.setContenido("No existen usuarios con ese nombre de usuario");
+                } else {
+                    msj.setContenido("No hay usuarios con el userName proporcionado.");
                 }
-                
+
             } catch (Exception e) {
                 e.printStackTrace();
                 msj.setContenido("Error: " + e);
@@ -168,28 +174,28 @@ public class UsuarioDAO {
                 conexionBD.close();
             }
         }
-        
+
         return msj;
     }
 
-    public static Mensaje buscarPorRol(Integer idRollUsuario) {
+    public static Mensaje buscarPorRoll(Integer idRollUsuario) {
         Mensaje msj = new Mensaje();
         msj.setError(Boolean.TRUE);
         SqlSession conexionBD = mybatis.MyBatisUtil.getSession();
-        
+
         if (conexionBD != null) {
             try {
                 List<Usuario> consulta = conexionBD.selectList("usuario.busquedaRol", idRollUsuario);
                 conexionBD.commit();
-                
+
                 if (!consulta.isEmpty()) {
                     msj.setError(Boolean.FALSE);
-                    msj.setContenido("Consulta por roll existosa");
+                    msj.setContenido("Respuesta exitosa");
                     msj.setUsuarios(consulta);
-                }else{
-                    msj.setContenido("No existen usuarios con ese Rol dentro del sistema");
+                } else {
+                    msj.setContenido("No hay usuarios con el roll proporcionado.");
                 }
-                
+
             } catch (Exception e) {
                 e.printStackTrace();
                 msj.setContenido("Error: " + e);
@@ -197,9 +203,8 @@ public class UsuarioDAO {
                 conexionBD.close();
             }
         }
-        
-        return msj;
 
+        return msj;
     }
-    
+
 }
