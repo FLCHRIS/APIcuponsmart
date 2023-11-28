@@ -12,5 +12,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM usuario 
         WHERE userName = #{userName} AND contrasenia=#{contrasenia}
     </select>
+    <select id="loginMobile" resultType="modelo.pojo.Cliente" parameterType="map">
+        SELECT * FROM cliente 
+        WHERE correo = #{correo} AND contrasenia =#{contrasenia}
+    </select>
+    
 
 </mapper>
