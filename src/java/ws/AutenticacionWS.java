@@ -11,6 +11,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import modelo.AutenticacionDAO;
 import modelo.pojo.Mensaje;
+import utils.Utilidades;
 
 @Path("autenticacion")
 public class AutenticacionWS {
@@ -40,6 +41,24 @@ public class AutenticacionWS {
         }
 
         return mensaje;
+    }
+    
+    @POST
+    @Path("iniciarSesionMobile")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje iniciarSesionMobile(
+            @FormParam("correo") String correo,
+            @FormParam("contrasenia") String contrasenia) {
+        
+        if (correo == null || correo.isEmpty() || !Utilidades.validarCadena(correo, Utilidades.EMAIL_PATTERN)) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        if (contrasenia == null || contrasenia.isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        return AutenticacionDAO.iniciarSesionMobile(correo, contrasenia);
     }
 
 }

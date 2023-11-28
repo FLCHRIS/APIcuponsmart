@@ -12,7 +12,6 @@ package modelo.pojo;
 public class Empresa {
 
     private Integer idEmpresa;
-    private Integer idRepresentanteLegal;
     private Integer idUbicacion;
     private String nombre;
     private String nombreComercial;
@@ -30,9 +29,8 @@ public class Empresa {
     public Empresa() {
     }
 
-    public Empresa(Integer idEmpresa, Integer idRepresentanteLegal, Integer idUbicacion, String nombre, String nombreComercial, byte[] logo, String email, String telefono, String paginaWeb, String RFC, String estatus, String logoBase64, String nombreRepresentante, String direccion, String ciudad) {
+    public Empresa(Integer idEmpresa, Integer idUbicacion, String nombre, String nombreComercial, byte[] logo, String email, String telefono, String paginaWeb, String RFC, String estatus, String logoBase64, String nombreRepresentante, String direccion, String ciudad) {
         this.idEmpresa = idEmpresa;
-        this.idRepresentanteLegal = idRepresentanteLegal;
         this.idUbicacion = idUbicacion;
         this.nombre = nombre;
         this.nombreComercial = nombreComercial;
@@ -70,14 +68,6 @@ public class Empresa {
 
     public void setIdEmpresa(Integer idEmpresa) {
         this.idEmpresa = idEmpresa;
-    }
-
-    public Integer getIdRepresentanteLegal() {
-        return idRepresentanteLegal;
-    }
-
-    public void setIdRepresentanteLegal(Integer idRepresentanteLegal) {
-        this.idRepresentanteLegal = idRepresentanteLegal;
     }
 
     public String getNombre() {
