@@ -18,7 +18,7 @@ public class SucursalDAO {
     public static Mensaje registrarSucursal(
             Integer idEmpresa, String nombre,
             String colonia, String telefono,
-            Float longitud, Float latitud) {
+            Float longitud, Float latitud, String nombreEncargado) {
         Mensaje msj = new Mensaje();
         msj.setError(Boolean.TRUE);
         SqlSession conexionBD = mybatis.MyBatisUtil.getSession();
@@ -30,6 +30,7 @@ public class SucursalDAO {
         sucursal.setTelefono(telefono);
         sucursal.setLongitud(longitud);
         sucursal.setLatitud(latitud);
+        sucursal.setNombreEncargado(nombreEncargado);
 
         if (conexionBD != null) {
             try {
@@ -54,7 +55,7 @@ public class SucursalDAO {
     public static Mensaje editarSucursal(
             Integer idSucursal, Integer idEmpresa, String nombre,
             String colonia, String telefono,
-            Float longitud, Float latitud) {
+            Float longitud, Float latitud, String nombreEncargado) {
         Mensaje msj = new Mensaje();
         msj.setError(Boolean.TRUE);
         SqlSession conexionBD = mybatis.MyBatisUtil.getSession();
@@ -66,6 +67,7 @@ public class SucursalDAO {
         sucursal.setTelefono(telefono);
         sucursal.setLongitud(longitud);
         sucursal.setLatitud(latitud);
+        sucursal.setNombreEncargado(nombreEncargado);
 
         if (conexionBD != null) {
             try {
@@ -282,105 +284,5 @@ public class SucursalDAO {
 
         return mensaje;
     }
-
-    /* 
-    ###########################
-    ######## ENCARGADO ########
-    ###########################
-     */
     
-    public static Mensaje registrarEncargado(
-            Integer idSucursal, String nombre, 
-            String apellidoPaterno, String apellidoMaterno) {
-        Mensaje mensaje = new Mensaje();
-        mensaje.setError(Boolean.TRUE);
-        
-        Encargado encargado = new Encargado();
-        encargado.setNombre(nombre);
-        encargado.setApellidoPaterno(apellidoPaterno);
-        encargado.setApellidoMaterno(apellidoMaterno);
-        
-        try (SqlSession conexionDB = MyBatisUtil.getSession()) {
-            if (conexionDB == null) {
-                mensaje.setContenido("No hay conexión a la base de datos");
-            }
-
-            int filasRegistroEncargadoAfectadas = conexionDB.insert("sucursal.registrarEncargadoSucursal", encargado);
-            int IdEncargadoSucursal = encargado.getIdEncargadoSucursal();
-
-            Sucursal sucursal = new Sucursal();
-            sucursal.setIdEncargadoSucursal(IdEncargadoSucursal);
-            sucursal.setIdSucursal(idSucursal);
-
-            int filasRegistroEncargadoSucursal = conexionDB.update("sucursal.registrarEncargadoASucursal", sucursal);
-            conexionDB.commit();
-
-            if (filasRegistroEncargadoAfectadas > 0 && filasRegistroEncargadoSucursal > 0) {
-                mensaje.setError(Boolean.FALSE);
-                mensaje.setContenido("Encargado registrado con éxito");
-            } else {
-                mensaje.setContenido("No se pudo registrar el encargado");
-            }
-        } catch (Exception e) {
-            mensaje.setContenido("Error: " + e.getMessage());
-        }
-        return mensaje;
-    }
-
-    public static Mensaje editarEncargado(
-            String nombre, String apellidoPaterno, 
-            String apellidoMaterno, Integer idEncargadoSucursal) {
-        Mensaje mensaje = new Mensaje();
-        mensaje.setError(Boolean.TRUE);
-
-        Encargado encargado = new Encargado();
-        encargado.setNombre(nombre);
-        encargado.setApellidoPaterno(apellidoPaterno);
-        encargado.setApellidoMaterno(apellidoMaterno);
-        encargado.setIdEncargadoSucursal(idEncargadoSucursal);
-
-        try (SqlSession conexionDB = MyBatisUtil.getSession()) {
-            if (conexionDB == null) {
-                mensaje.setContenido("No hay conexión a la base de datos");
-            }
-
-            int filasAfectadas = conexionDB.update("sucursal.editarEncargadoSucursal", encargado);
-            conexionDB.commit();
-
-            if (filasAfectadas > 0) {
-                mensaje.setError(Boolean.FALSE);
-                mensaje.setContenido("Encargado actualizado con éxito");
-            } else {
-                mensaje.setContenido("No se pudo actualizar el encargado");
-            }
-        } catch (Exception e) {
-            mensaje.setContenido("Error: " + e.getMessage());
-        }
-        return mensaje;
-    }
-
-    public static Mensaje eliminarEncargado(Integer idEncargadoSucursal) {
-        Mensaje mensaje = new Mensaje();
-        mensaje.setError(Boolean.TRUE);
-
-        try (SqlSession conexionDB = MyBatisUtil.getSession()) {
-            if (conexionDB == null) {
-                mensaje.setContenido("No hay conexión a la base de datos");
-            }
-
-            int filasAfectadas = conexionDB.delete("sucursal.eliminarEncargadoSucursal", idEncargadoSucursal);
-            conexionDB.commit();
-
-            if (filasAfectadas > 0) {
-                mensaje.setError(Boolean.FALSE);
-                mensaje.setContenido("Encargado eliminado con éxito");
-            } else {
-                mensaje.setContenido("No se pudo eliminar el encargado");
-            }
-        } catch (Exception e) {
-            mensaje.setContenido("Error: " + e.getMessage());
-        }
-
-        return mensaje;
-    }
 }

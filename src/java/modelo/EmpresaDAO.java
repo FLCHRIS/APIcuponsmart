@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import modelo.pojo.Empresa;
 import modelo.pojo.Mensaje;
-import modelo.pojo.RepresentanteLegal;
 import modelo.pojo.Ubicacion;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
@@ -18,7 +17,7 @@ public class EmpresaDAO {
      */
     public static Mensaje registrarEmpresa(
             String nombre, String nombreComercial, String email, String telefono,
-            String paginaWeb, String RFC) {
+            String paginaWeb, String RFC, String nombreRepresentante) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(Boolean.TRUE);
 
@@ -29,6 +28,7 @@ public class EmpresaDAO {
         nuevaEmpresa.setTelefono(telefono);
         nuevaEmpresa.setPaginaWeb(paginaWeb);
         nuevaEmpresa.setRFC(RFC);
+        nuevaEmpresa.setNombreRepresentante(nombreRepresentante);
 
         try (SqlSession conexionDB = MyBatisUtil.getSession()) {
             if (conexionDB == null) {
@@ -52,7 +52,7 @@ public class EmpresaDAO {
 
     public static Mensaje editarEmpresa(
             String nombre, String nombreComercial, String email, String telefono,
-            String paginaWeb, String estatus, Integer idEmpresa) {
+            String paginaWeb, String estatus, Integer idEmpresa, String nombreRepresentante) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(Boolean.TRUE);
 
@@ -64,6 +64,7 @@ public class EmpresaDAO {
         editarEmpresa.put("telefono", telefono);
         editarEmpresa.put("paginaWeb", paginaWeb);
         editarEmpresa.put("estatus", estatus);
+        editarEmpresa.put("nombreRepresentante", nombreRepresentante);
 
         try (SqlSession conexionDB = MyBatisUtil.getSession()) {
             if (conexionDB == null) {
@@ -138,14 +139,9 @@ public class EmpresaDAO {
     }
 
     public static Mensaje buscarEmpresaPorRepresentante(
-            String nombre, String apellidoPaterno, String apellidoMaterno) {
+            String nombreRepresentante) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(Boolean.TRUE);
-
-        RepresentanteLegal representanteLegal = new RepresentanteLegal();
-        representanteLegal.setNombre(nombre);
-        representanteLegal.setApellidoPaterno(apellidoPaterno);
-        representanteLegal.setApellidoMaterno(apellidoMaterno);
 
         try (SqlSession conexionDB = MyBatisUtil.getSession()) {
             if (conexionDB == null) {
@@ -153,7 +149,7 @@ public class EmpresaDAO {
                 return mensaje;
             }
 
-            List<Empresa> empresas = conexionDB.selectList("empresa.obtenerEmpresaPorRepresentante", representanteLegal);
+            List<Empresa> empresas = conexionDB.selectList("empresa.obtenerEmpresaPorRepresentante", nombreRepresentante);
             mensaje.setEmpresas(empresas);
 
             if (!empresas.isEmpty()) {
@@ -323,105 +319,6 @@ public class EmpresaDAO {
                 mensaje.setContenido("Ubicación eliminada con éxito");
             } else {
                 mensaje.setContenido("No se pudo eliminar la ubicación");
-            }
-        } catch (Exception e) {
-            mensaje.setContenido("Error: " + e.getMessage());
-        }
-
-        return mensaje;
-    }
-
-    /* 
-    #####################################
-    ######## REPRESENTANTE LEGAL ########
-    #####################################
-     */
-    public static Mensaje registrarRepresentante(
-            String nombre, String apellidoPaterno, String apellidoMaterno, Integer idEmpresa) {
-        Mensaje mensaje = new Mensaje();
-        mensaje.setError(Boolean.TRUE);
-
-        RepresentanteLegal representanteLegal = new RepresentanteLegal();
-        representanteLegal.setNombre(nombre);
-        representanteLegal.setApellidoPaterno(apellidoPaterno);
-        representanteLegal.setApellidoMaterno(apellidoMaterno);
-
-        try (SqlSession conexionDB = MyBatisUtil.getSession()) {
-            if (conexionDB == null) {
-                mensaje.setContenido("No hay conexión a la base de datos");
-            }
-
-            int filasRegistroRepresentanteAfectadas = conexionDB.insert("empresa.registrarRepresentanteLegal", representanteLegal);
-            int idRepresentanteLegal = representanteLegal.getIdRepresentanteLegal();
-
-            Empresa empresa = new Empresa();
-            empresa.setIdEmpresa(idEmpresa);
-            empresa.setIdRepresentanteLegal(idRepresentanteLegal);
-
-            int filasRegistroRepresentanteEmpresa = conexionDB.update("empresa.registrarRepresentanteAEmpresa", empresa);
-            conexionDB.commit();
-
-            if (filasRegistroRepresentanteAfectadas > 0 && filasRegistroRepresentanteEmpresa > 0) {
-                mensaje.setError(Boolean.FALSE);
-                mensaje.setContenido("Representante registrado con éxito");
-            } else {
-                mensaje.setContenido("No se pudo registrar el representante");
-            }
-        } catch (Exception e) {
-            mensaje.setContenido("Error: " + e.getMessage());
-        }
-        return mensaje;
-    }
-
-    public static Mensaje editarRepresentante(
-            String nombre, String apellidoPaterno, String apellidoMaterno, Integer idRepresentanteLegal) {
-        Mensaje mensaje = new Mensaje();
-        mensaje.setError(Boolean.TRUE);
-
-        RepresentanteLegal representanteLegal = new RepresentanteLegal();
-        representanteLegal.setNombre(nombre);
-        representanteLegal.setApellidoPaterno(apellidoPaterno);
-        representanteLegal.setApellidoMaterno(apellidoMaterno);
-        representanteLegal.setIdRepresentanteLegal(idRepresentanteLegal);
-
-        try (SqlSession conexionDB = MyBatisUtil.getSession()) {
-            if (conexionDB == null) {
-                mensaje.setContenido("No hay conexión a la base de datos");
-            }
-
-            int filasAfectadas = conexionDB.update("empresa.editarRepresentanteLegal", representanteLegal);
-            conexionDB.commit();
-
-            if (filasAfectadas > 0) {
-                mensaje.setError(Boolean.FALSE);
-                mensaje.setContenido("Representante actualizado con éxito");
-            } else {
-                mensaje.setContenido("No se pudo actualizar el representante");
-            }
-        } catch (Exception e) {
-            mensaje.setContenido("Error: " + e.getMessage());
-        }
-        return mensaje;
-    }
-
-    public static Mensaje eliminarRepresentante(Integer idRepresentanteLegal) {
-
-        Mensaje mensaje = new Mensaje();
-        mensaje.setError(Boolean.TRUE);
-
-        try (SqlSession conexionDB = MyBatisUtil.getSession()) {
-            if (conexionDB == null) {
-                mensaje.setContenido("No hay conexión a la base de datos");
-            }
-
-            int filasAfectadas = conexionDB.delete("empresa.eliminarRepresentanteLegal", idRepresentanteLegal);
-            conexionDB.commit();
-
-            if (filasAfectadas > 0) {
-                mensaje.setError(Boolean.FALSE);
-                mensaje.setContenido("Representante legal eliminado con éxito");
-            } else {
-                mensaje.setContenido("No se pudo eliminar el representante legal");
             }
         } catch (Exception e) {
             mensaje.setContenido("Error: " + e.getMessage());

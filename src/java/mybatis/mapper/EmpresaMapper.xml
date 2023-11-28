@@ -7,67 +7,47 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="empresa">
     
     <insert id="registrar" parameterType="modelo.pojo.Empresa" >
-        INSERT INTO empresa (nombre, nombreComercial, email, telefono, paginaWeb, RFC) 
-        VALUES (#{nombre}, #{nombreComercial}, #{email}, #{telefono}, #{paginaWeb}, #{RFC});
+        INSERT INTO empresa (nombre, nombreComercial, email, telefono, paginaWeb, RFC, nombreRepresentante) 
+        VALUES (#{nombre}, #{nombreComercial}, #{email}, #{telefono}, #{paginaWeb}, #{RFC}, #{nombreRepresentante});
     </insert>
     <update id="editarEmpresa" parameterType="modelo.pojo.Empresa" >
-        UPDATE empresa SET nombre = #{nombre}, nombreComercial = #{nombreComercial}, email = #{email}, telefono = #{telefono}, paginaWeb = #{paginaWeb}, estatus = #{estatus} WHERE idEmpresa = #{idEmpresa};
+        UPDATE empresa SET nombre = #{nombre}, nombreComercial = #{nombreComercial}, email = #{email}, 
+        telefono = #{telefono}, paginaWeb = #{paginaWeb}, 
+        estatus = #{estatus}, nombreRepresentante = #{nombreRepresentante} 
+        WHERE idEmpresa = #{idEmpresa};
     </update>
     <delete id="eliminar" parameterType="int">
         DELETE FROM empresa WHERE idEmpresa = #{idEmpresa};
     </delete>
     <select id="obtenerEmpresaPorNombre" parameterType="string" resultType="modelo.pojo.Empresa">
-        SELECT e.idEmpresa, e.idUbicacion, e.idRepresentanteLegal, e.nombre, e.nombreComercial, 
-        e.email, e.telefono, e.paginaWeb, e.RFC, e.estatus, TO_BASE64(logo) AS 'logoBase64', 
-        CONCAT(r.nombre,' ', r.apellidoPaterno, ' ', r.apellidoMaterno) as nombreRepresentante, 
+        SELECT e.idEmpresa, e.idUbicacion, e.nombre, e.nombreComercial, 
+        e.email, e.telefono, e.paginaWeb, e.RFC, e.estatus, TO_BASE64(logo) AS 'logoBase64', e.nombreRepresentante, 
         u.ciudad, CONCAT(u.calle, ' numero ', u.numero) as direccion 
         FROM empresa e 
-        INNER JOIN representanteLegal r 
-        ON e.idRepresentanteLegal = r.idRepresentanteLegal 
         INNER JOIN ubicacion u 
         ON e.idUbicacion = u.idUbicacion 
         WHERE e.nombre = #{nombre};
     </select>
     <select id="obtenerEmpresaPorRFC" parameterType="string" resultType="modelo.pojo.Empresa">
-        SELECT e.idEmpresa, e.idUbicacion, e.idRepresentanteLegal, e.nombre, e.nombreComercial, 
-        e.email, e.telefono, e.paginaWeb, e.RFC, e.estatus, TO_BASE64(logo) AS 'logoBase64', 
-        CONCAT(r.nombre,' ', r.apellidoPaterno, ' ', r.apellidoMaterno) as nombreRepresentante, 
+        SELECT e.idEmpresa, e.idUbicacion, e.nombre, e.nombreComercial, 
+        e.email, e.telefono, e.paginaWeb, e.RFC, e.estatus, TO_BASE64(logo) AS 'logoBase64', e.nombreRepresentante, 
         u.ciudad, CONCAT(u.calle, ' numero ', u.numero) as direccion 
         FROM empresa e 
-        INNER JOIN representanteLegal r 
-        ON e.idRepresentanteLegal = r.idRepresentanteLegal 
         INNER JOIN ubicacion u 
-        ON e.idUbicacion = u.idUbicacion 
+        ON e.idUbicacion = u.idUbicacion
         WHERE RFC = #{RFC};
     </select>
-    <select id="obtenerEmpresaPorRepresentante" parameterType="modelo.pojo.RepresentanteLegal" resultType="modelo.pojo.Empresa">
-        SELECT e.idEmpresa, e.idUbicacion, e.idRepresentanteLegal, e.nombre, e.nombreComercial, 
-        e.email, e.telefono, e.paginaWeb, e.RFC, e.estatus, TO_BASE64(logo) AS 'logoBase64', 
-        CONCAT(r.nombre,' ', r.apellidoPaterno, ' ', r.apellidoMaterno) as nombreRepresentante, 
+    <select id="obtenerEmpresaPorRepresentante" parameterType="string" resultType="modelo.pojo.Empresa">
+        SELECT e.idEmpresa, e.idUbicacion, e.nombre, e.nombreComercial, 
+        e.email, e.telefono, e.paginaWeb, e.RFC, e.estatus, TO_BASE64(logo) AS 'logoBase64', e.nombreRepresentante, 
         u.ciudad, CONCAT(u.calle, ' numero ', u.numero) as direccion 
         FROM empresa e 
-        INNER JOIN representanteLegal r 
-        ON e.idRepresentanteLegal = r.idRepresentanteLegal 
         INNER JOIN ubicacion u 
         ON e.idUbicacion = u.idUbicacion 
-        WHERE r.nombre = #{nombre} AND r.apellidoPaterno = #{apellidoPaterno} AND r.apellidoMaterno = #{apellidoMaterno};
+        WHERE e.nombreRepresentante = #{nombreRepresentante};
     </select>
     <update id="subirLogo" parameterType="modelo.pojo.Empresa" >
         UPDATE empresa SET logo = #{logo} WHERE idEmpresa = #{idEmpresa}
     </update>
-    
-    <insert id="registrarRepresentanteLegal" parameterType="modelo.pojo.RepresentanteLegal" useGeneratedKeys="true" keyProperty="idRepresentanteLegal" >
-        INSERT INTO representanteLegal (nombre, apellidoPaterno, apellidoMaterno) 
-        VALUES (#{nombre}, #{apellidoPaterno}, #{apellidoMaterno});
-    </insert>
-    <update id="registrarRepresentanteAEmpresa" parameterType="modelo.pojo.Empresa" >
-        UPDATE empresa SET idRepresentanteLegal = #{idRepresentanteLegal} WHERE idEmpresa = #{idEmpresa};
-    </update>
-    <update id="editarRepresentanteLegal" parameterType="modelo.pojo.RepresentanteLegal">
-        UPDATE representanteLegal SET nombre = #{nombre}, apellidoPaterno = #{apellidoPaterno}, apellidoMaterno = #{apellidoMaterno} WHERE idRepresentanteLegal = #{idRepresentanteLegal};
-    </update>
-    <delete id="eliminarRepresentanteLegal" parameterType="int">
-        DELETE FROM representanteLegal WHERE idRepresentanteLegal = #{idRepresentanteLegal};
-    </delete>
     
 </mapper>

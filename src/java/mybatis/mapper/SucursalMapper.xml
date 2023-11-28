@@ -6,52 +6,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="sucursal">
     <insert id="registrar" parameterType="modelo.pojo.Sucursal">
-        INSERT INTO sucursal (idEmpresa, nombre, telefono, latitud, longitud, colonia) VALUES 
-        (#{idEmpresa}, #{nombre}, #{telefono}, #{latitud}, #{longitud}, #{colonia})
+        INSERT INTO sucursal (idEmpresa, nombre, telefono, latitud, longitud, colonia, nombreEncargado) VALUES 
+        (#{idEmpresa}, #{nombre}, #{telefono}, #{latitud}, #{longitud}, #{colonia}, #{nombreEncargado})
     </insert>
     <update id="actualizar" parameterType="modelo.pojo.Sucursal">
         UPDATE sucursal SET idEmpresa = #{idEmpresa}, nombre = #{nombre}, telefono = #{telefono}, latitud = #{latitud}, 
-        longitud = #{longitud}, colonia = #{colonia} WHERE idSucursal = #{idSucursal}
+        longitud = #{longitud}, colonia = #{colonia}, nombreEncargado = #{nombreEncargado} WHERE idSucursal = #{idSucursal}
     </update>
     <delete id="eliminar" parameterType="int">
         DELETE FROM sucursal WHERE idSucursal = #{idSucursal};
     </delete>
     <select id="buscarPorNombre" parameterType="String" resultType="modelo.pojo.Sucursal">
         SELECT s.*,
-        CONCAT('Ciudad: ',u.ciudad,' calle: ', u.calle,' NO.', u.numero) AS direccion, 
-        u.codigoPostal, CONCAT(es.nombre,' ',es.apellidoPaterno,' ',es.apellidoPaterno) AS nombreEncargado 
+        CONCAT('Ciudad: ',u.ciudad,' calle: ', u.calle,' NO.', u.numero) AS direccion, u.codigoPostal 
         FROM sucursal s 
         INNER JOIN ubicacion u 
         ON s.idUbicacion = u.idUbicacion 
-        INNER JOIN encargadoSucursal es 
-        ON  s.idEncargadoSucursal = es.idEncargadoSucursal 
         WHERE s.nombre = #{nombre}
     </select>
     <select id="buscarPorDireccion" parameterType="modelo.pojo.Ubicacion" resultType="modelo.pojo.Sucursal">
-        SELECT s.*, 
-        CONCAT('Ciudad: ',u.ciudad,' calle: ', u.calle,' NO.', u.numero) AS direccion, 
-        u.codigoPostal, CONCAT(es.nombre,' ',es.apellidoPaterno,' ',es.apellidoPaterno) AS nombreEncargado 
+        SELECT s.*,
+        CONCAT('Ciudad: ',u.ciudad,' calle: ', u.calle,' NO.', u.numero) AS direccion, u.codigoPostal 
         FROM sucursal s 
         INNER JOIN ubicacion u 
         ON s.idUbicacion = u.idUbicacion 
-        INNER JOIN encargadoSucursal es 
-        ON  s.idEncargadoSucursal = es.idEncargadoSucursal 
         WHERE u.calle = #{calle} AND u.numero= #{numero}
     </select>
-    
-    <insert id="registrarEncargadoSucursal" parameterType="modelo.pojo.Encargado" useGeneratedKeys="true" keyProperty="idEncargadoSucursal">
-        INSERT INTO encargadoSucursal (nombre, apellidoPaterno, apellidoMaterno) 
-        VALUES (#{nombre}, #{apellidoPaterno}, #{apellidoMaterno});
-    </insert>
-    <update id="registrarEncargadoASucursal" parameterType="modelo.pojo.Sucursal" >
-        UPDATE sucursal SET idEncargadoSucursal = #{idEncargadoSucursal} WHERE idSucursal = #{idSucursal};
-    </update>
-    <update id="editarEncargadoSucursal" parameterType="modelo.pojo.Encargado">
-        UPDATE encargadoSucursal SET nombre = #{nombre}, apellidoPaterno = #{apellidoPaterno}, apellidoMaterno = #{apellidoMaterno} 
-        WHERE idEncargadoSucursal = #{idEncargadoSucursal};
-    </update>
-    <delete id="eliminarEncargadoSucursal" parameterType="int">
-        DELETE FROM encargadoSucursal WHERE idEncargadoSucursal = #{idEncargadoSucursal};
-    </delete>
     
 </mapper>
