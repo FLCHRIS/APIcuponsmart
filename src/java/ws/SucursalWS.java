@@ -26,11 +26,6 @@ public class SucursalWS {
     public SucursalWS() {
     }
 
-    /* 
-    ##########################
-    ######## SUCURSAL ########
-    ##########################  
-     */
     @POST
     @Path("registrarSucursal")
     @Produces(MediaType.APPLICATION_JSON)
