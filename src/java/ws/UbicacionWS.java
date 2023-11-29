@@ -16,7 +16,7 @@ import modelo.UbicacionDAO;
 import modelo.pojo.Mensaje;
 import utils.Utilidades;
 
-@Path("ubucacion")
+@Path("ubicacion")
 public class UbicacionWS {
 
     @Context
