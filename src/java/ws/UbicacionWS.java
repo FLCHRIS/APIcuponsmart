@@ -36,8 +36,10 @@ public class UbicacionWS {
     @Path("registrarUbicacionEmpresa")
     @Produces(MediaType.APPLICATION_JSON)
     public Mensaje registrarUbicacionEmpresa(
-            @FormParam("calle") String calle, @FormParam("numero") Integer numero,
-            @FormParam("codigoPostal") String codigoPostal, @FormParam("ciudad") String ciudad,
+            @FormParam("calle") String calle, 
+            @FormParam("numero") Integer numero,
+            @FormParam("codigoPostal") String codigoPostal,
+            @FormParam("ciudad") String ciudad,
             @FormParam("idEmpresa") Integer idEmpresa) {
 
         if (idEmpresa == null || idEmpresa <= 0) {

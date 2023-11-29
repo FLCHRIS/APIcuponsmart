@@ -10,8 +10,11 @@ import org.apache.ibatis.session.SqlSession;
 public class UbicacionDAO {
 
     public static Mensaje registrarUbicacionEmpresa(
-            String calle, Integer numero, String codigoPostal,
-            String ciudad, Integer idEmpresa) {
+            String calle, 
+            Integer numero,
+            String codigoPostal,
+            String ciudad,
+            Integer idEmpresa) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(Boolean.TRUE);
 
@@ -20,6 +23,7 @@ public class UbicacionDAO {
         ubicacionEmpresa.setNumero(numero);
         ubicacionEmpresa.setCodigoPostal(codigoPostal);
         ubicacionEmpresa.setCiudad(ciudad);
+        
 
         try (SqlSession conexionDB = MyBatisUtil.getSession()) {
             if (conexionDB == null) {
