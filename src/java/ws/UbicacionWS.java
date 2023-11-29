@@ -24,14 +24,12 @@ public class UbicacionWS {
 
     public UbicacionWS() {
     }
-    
-    
+
     /* 
     ######################################################
     ######## registrar ubicación Empresa/sucursal ########
     ######################################################
      */
-    
     @POST
     @Path("registrarUbicacionEmpresa")
     @Produces(MediaType.APPLICATION_JSON)
@@ -65,9 +63,8 @@ public class UbicacionWS {
 
         return mensaje;
     }
-    
-    
-      @POST
+
+    @POST
     @Path("registrarUbicacionSucursal")
     @Produces(MediaType.APPLICATION_JSON)
     public Mensaje registrarUbicacionSucursal(
@@ -102,13 +99,12 @@ public class UbicacionWS {
 
         return mensaje;
     }
-    
+
     /* 
     ######################################################
     ######## editar/eliminar ubicación  ##################
     ######################################################
      */
-    
     @PUT
     @Path("editarUbicacion")
     @Produces(MediaType.APPLICATION_JSON)
@@ -137,7 +133,7 @@ public class UbicacionWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        Mensaje mensaje = UbicacionDAO.editarUbicacion(idUbicacion,calle, numero, codigoPostal, ciudad);
+        Mensaje mensaje = UbicacionDAO.editarUbicacion(idUbicacion, calle, numero, codigoPostal, ciudad);
 
         return mensaje;
     }
@@ -155,7 +151,6 @@ public class UbicacionWS {
         Mensaje mensaje = UbicacionDAO.eliminarUbicacion(idUbicacion);
 
         return mensaje;
-    }    
+    }
 
-    
 }
