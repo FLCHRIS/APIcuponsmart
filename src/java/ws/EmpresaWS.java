@@ -38,7 +38,7 @@ public class EmpresaWS {
     public Mensaje registrarEmpresa(
             @FormParam("nombreComercial") String nombreComercial, @FormParam("nombre") String nombre,
             @FormParam("email") String email, @FormParam("telefono") String telefono,
-            @FormParam("paginaWeb") String paginaWeb, @FormParam("RFC") String RFC, 
+            @FormParam("paginaWeb") String paginaWeb, @FormParam("RFC") String RFC,
             @FormParam("nombreRepresentante") String nombreRepresentante) {
 
         if (nombreComercial == null || nombreComercial.isEmpty()) {
@@ -52,7 +52,7 @@ public class EmpresaWS {
         if (nombreRepresentante == null || nombreRepresentante.isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        
+
         if (email == null || email.isEmpty() || !Utilidades.validarCadena(email, Utilidades.EMAIL_PATTERN)) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
@@ -82,7 +82,7 @@ public class EmpresaWS {
     public Mensaje editarEmpresa(
             @FormParam("nombre") String nombre, @FormParam("nombreComercial") String nombreComercial,
             @FormParam("email") String email, @FormParam("telefono") String telefono,
-            @FormParam("paginaWeb") String paginaWeb, @FormParam("nombreRepresentante") String nombreRepresentante, 
+            @FormParam("paginaWeb") String paginaWeb, @FormParam("nombreRepresentante") String nombreRepresentante,
             @FormParam("estatus") String estatus, @FormParam("idEmpresa") Integer idEmpresa) {
 
         if (idEmpresa == null || idEmpresa <= 0) {
@@ -92,7 +92,7 @@ public class EmpresaWS {
         if (nombreComercial == null || nombreComercial.isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        
+
         if (nombreRepresentante == null || nombreRepresentante.isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
@@ -183,6 +183,14 @@ public class EmpresaWS {
         return mensaje;
     }
 
+    @GET
+    @Path("buscarEmpresas")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje buscarEmpresas() {
+
+        return EmpresaDAO.buscarEmpresas();
+    }
+
     @PUT
     @Path("registrarLogo/{idEmpresa}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -201,5 +209,19 @@ public class EmpresaWS {
         return mensaje;
     }
 
+    @GET
+    @Path("buscarLogoEmpresa/{idEmpresa}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje buscarLogoEmpresa(
+            @PathParam("idEmpresa") Integer idEmpresa) {
+
+        if (idEmpresa == null || idEmpresa <= 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        Mensaje mensaje = EmpresaDAO.buscarLogo(idEmpresa);
+
+        return mensaje;
+    }
 
 }
