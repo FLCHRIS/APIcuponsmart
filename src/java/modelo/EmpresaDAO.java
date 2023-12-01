@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import modelo.pojo.Empresa;
 import modelo.pojo.Mensaje;
-import modelo.pojo.Ubicacion;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 
@@ -186,6 +185,32 @@ public class EmpresaDAO {
         return mensaje;
     }
 
+    public static Mensaje buscarEmpresas() {
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(Boolean.TRUE);
+
+        try (SqlSession conexionDB = MyBatisUtil.getSession()) {
+            if (conexionDB == null) {
+                mensaje.setContenido("No hay conexion con la base de datos");
+                return mensaje;
+            }
+
+            List<Empresa> empresas = conexionDB.selectList("empresa.obtenerEmpresas");
+            mensaje.setEmpresas(empresas);
+
+            if (!empresas.isEmpty()) {
+                mensaje.setError(Boolean.FALSE);
+                mensaje.setContenido("Respuesta exitosa");
+            } else {
+                mensaje.setContenido("No hay empresas registradas.");
+            }
+        } catch (Exception e) {
+            mensaje.setContenido("Error: " + e.getMessage());
+        }
+
+        return mensaje;
+    }
+    
     public static Mensaje registrarLogo(Integer idEmpresa, byte[] logo) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(Boolean.TRUE);
@@ -218,4 +243,26 @@ public class EmpresaDAO {
         return mensaje;
     }
 
+    public static Mensaje buscarLogo(Integer idEmpresa) {
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(Boolean.TRUE);
+
+        try (SqlSession conexionDB = MyBatisUtil.getSession()) {
+            if (conexionDB == null) {
+                mensaje.setContenido("No hay conexion con la base de datos");
+                return mensaje;
+            }
+
+            Empresa empresa = conexionDB.selectOne("empresa.obtenerLogo", idEmpresa);
+
+            mensaje.setEmpresa(empresa);
+            mensaje.setError(Boolean.FALSE);
+            mensaje.setContenido("Respuesta exitosa");
+
+        } catch (Exception e) {
+            mensaje.setContenido("Error: " + e.getMessage());
+        }
+
+        return mensaje;
+    }
 }
