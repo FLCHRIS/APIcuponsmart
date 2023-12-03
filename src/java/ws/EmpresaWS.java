@@ -190,6 +190,19 @@ public class EmpresaWS {
 
         return EmpresaDAO.buscarEmpresas();
     }
+    
+    @GET
+    @Path("buscarEmpresa/{idEmpresa}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje buscarEmpresa(
+            @PathParam("idEmpresa") Integer idEmpresa) {
+
+        if (idEmpresa == null || idEmpresa <= 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        return EmpresaDAO.buscarEmpresa(idEmpresa);
+    }
 
     @PUT
     @Path("registrarLogo/{idEmpresa}")
