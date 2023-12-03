@@ -186,5 +186,12 @@ public class UsuarioWS {
 
         return msj;
     }
+    
+    @GET
+    @Path("buscarUsuarios")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje buscarUsuarios() {
 
+        return UsuarioDAO.buscarUsuarios();
+    }
 }
