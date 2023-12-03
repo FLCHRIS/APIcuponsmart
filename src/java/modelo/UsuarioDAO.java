@@ -207,14 +207,14 @@ public class UsuarioDAO {
         return msj;
     }
 
-    public static Mensaje buscarUsuarios() {
+    public static Mensaje buscarUsuarios(Integer idUsuario) {
         Mensaje msj = new Mensaje();
         msj.setError(Boolean.TRUE);
         SqlSession conexionBD = mybatis.MyBatisUtil.getSession();
 
         if (conexionBD != null) {
             try {
-                List<Usuario> consulta = conexionBD.selectList("usuario.buscarUsuarios");
+                List<Usuario> consulta = conexionBD.selectList("usuario.buscarUsuarios", idUsuario);
                 conexionBD.commit();
 
                 if (!consulta.isEmpty()) {
