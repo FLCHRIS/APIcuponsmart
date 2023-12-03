@@ -141,10 +141,10 @@ public class UbicacionWS {
     }
 
     @DELETE
-    @Path("eliminarUbicacion/{idUbicacion}")
+    @Path("eliminarUbicacion")
     @Produces(MediaType.APPLICATION_JSON)
     public Mensaje eliminarUbicacion(
-            @PathParam("idUbicacion") Integer idUbicacion) {
+            @FormParam("idUbicacion") Integer idUbicacion) {
 
         if (idUbicacion == null || idUbicacion <= 0) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
