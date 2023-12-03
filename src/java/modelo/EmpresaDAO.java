@@ -254,10 +254,41 @@ public class EmpresaDAO {
             }
 
             Empresa empresa = conexionDB.selectOne("empresa.obtenerLogo", idEmpresa);
-
             mensaje.setEmpresa(empresa);
-            mensaje.setError(Boolean.FALSE);
-            mensaje.setContenido("Respuesta exitosa");
+            
+            if (empresa != null) {
+                mensaje.setError(Boolean.FALSE);
+                mensaje.setContenido("Respuesta exitosa");
+            } else {
+                mensaje.setContenido("La empresa no tiene un logo registrado.");
+            }
+            
+        } catch (Exception e) {
+            mensaje.setContenido("Error: " + e.getMessage());
+        }
+
+        return mensaje;
+    }
+    
+    public static Mensaje buscarEmpresa(Integer idEmpresa) {
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(Boolean.TRUE);
+
+        try (SqlSession conexionDB = MyBatisUtil.getSession()) {
+            if (conexionDB == null) {
+                mensaje.setContenido("No hay conexion con la base de datos");
+                return mensaje;
+            }
+
+            Empresa empresa = conexionDB.selectOne("empresa.obtenerEmpresa", idEmpresa);
+            mensaje.setEmpresa(empresa);
+            
+            if (empresa != null) {
+                mensaje.setError(Boolean.FALSE);
+                mensaje.setContenido("Respuesta exitosa");
+            } else {
+                mensaje.setContenido("No hay empresa con el ID proporcionado.");
+            }
 
         } catch (Exception e) {
             mensaje.setContenido("Error: " + e.getMessage());
