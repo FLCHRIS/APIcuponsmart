@@ -207,4 +207,32 @@ public class UsuarioDAO {
         return msj;
     }
 
+    public static Mensaje buscarUsuarios() {
+        Mensaje msj = new Mensaje();
+        msj.setError(Boolean.TRUE);
+        SqlSession conexionBD = mybatis.MyBatisUtil.getSession();
+
+        if (conexionBD != null) {
+            try {
+                List<Usuario> consulta = conexionBD.selectList("usuario.buscarUsuarios");
+                conexionBD.commit();
+
+                if (!consulta.isEmpty()) {
+                    msj.setError(Boolean.FALSE);
+                    msj.setContenido("Respuesta exitosa");
+                    msj.setUsuarios(consulta);
+                } else {
+                    msj.setContenido("No hay usuarios registrados.");
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                msj.setContenido("Error: " + e);
+            } finally {
+                conexionBD.close();
+            }
+        }
+
+        return msj;
+    }
 }
