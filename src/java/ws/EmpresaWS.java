@@ -125,10 +125,10 @@ public class EmpresaWS {
     }
 
     @DELETE
-    @Path("eliminarEmpresa/{idEmpresa}")
+    @Path("eliminarEmpresa")
     @Produces(MediaType.APPLICATION_JSON)
     public Mensaje eliminarEmpresa(
-            @PathParam("idEmpresa") Integer idEmpresa) {
+            @FormParam("idEmpresa") Integer idEmpresa) {
 
         if (idEmpresa == null || idEmpresa <= 0) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
