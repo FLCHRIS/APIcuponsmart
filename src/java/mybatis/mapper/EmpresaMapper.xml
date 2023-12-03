@@ -60,5 +60,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="obtenerLogo" resultType="modelo.pojo.Empresa" >
         SELECT TO_BASE64(logo) AS 'logoBase64' FROM empresa WHERE idEmpresa = #{idEmpresa};
     </select>
+    <select id="obtenerEmpresa" resultType="modelo.pojo.Empresa" parameterType="int" >
+        SELECT e.idEmpresa, e.idUbicacion, e.nombre, e.nombreComercial, 
+        e.email, e.telefono, e.paginaWeb, e.RFC, e.estatus, e.nombreRepresentante, 
+        u.ciudad, CONCAT(u.calle, ' numero ', u.numero) as direccion 
+        FROM empresa e 
+        INNER JOIN ubicacion u 
+        ON e.idUbicacion = u.idUbicacion 
+        WHERE e.idEmpresa = #{idEmpresa};
+    </select>
     
 </mapper>
