@@ -34,7 +34,6 @@ public class UsuarioDAO {
                 if (filasAfectadas != 0) {
                     msj.setError(Boolean.FALSE);
                     msj.setContenido("El usuario: " + nombre + " se agrego al sistema satisfactoriamente");
-
                 } else {
                     msj.setContenido("El usuario: " + nombre + " No se pudo dar de alta verifique los campos");
                 }
@@ -56,6 +55,7 @@ public class UsuarioDAO {
             String apellidoMaterno, String curp,
             String correo, String userName,
             String contrasenia, Integer idUsuario) {
+        
         Mensaje msj = new Mensaje();
         msj.setError(Boolean.TRUE);
         SqlSession conexionDB = mybatis.MyBatisUtil.getSession();
