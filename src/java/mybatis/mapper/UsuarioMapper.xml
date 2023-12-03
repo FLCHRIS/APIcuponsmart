@@ -37,4 +37,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE u.idRollUsuario = #{idRollUsuario};
     </select>
     
+    <select id="buscarUsuarios" resultType="modelo.pojo.Usuario">
+        SELECT * FROM usuario;
+    </select>
+    
 </mapper>
