@@ -121,9 +121,9 @@ public class SucursalWS {
     }
 
     @DELETE
-    @Path("eliminarSucursal/{idSucursal}")
+    @Path("eliminarSucursal")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje eliminarSucursal(@PathParam("idSucursal") Integer idSucursal) {
+    public Mensaje eliminarSucursal(@FormParam("idSucursal") Integer idSucursal) {
         if (idSucursal == null || idSucursal <= 0) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
