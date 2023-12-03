@@ -133,9 +133,9 @@ public class UsuarioWS {
     }
 
     @DELETE
-    @Path("eliminarUsuario/{idUsuario}")
+    @Path("eliminarUsuario")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje eliminarUsuario(@PathParam("idUsuario") Integer idUsuario) {
+    public Mensaje eliminarUsuario(@FormParam("idUsuario") Integer idUsuario) {
         if (idUsuario == null || idUsuario <= 0) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
@@ -188,10 +188,15 @@ public class UsuarioWS {
     }
     
     @GET
-    @Path("buscarUsuarios")
+    @Path("buscarUsuarios/{idUsuario}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje buscarUsuarios() {
+    public Mensaje buscarUsuarios(
+            @PathParam("idUsuario") Integer idUsuario) {
+        
+        if (idUsuario == null || idUsuario <= 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
 
-        return UsuarioDAO.buscarUsuarios();
+        return UsuarioDAO.buscarUsuarios(idUsuario);
     }
 }
