@@ -32,5 +32,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ON s.idUbicacion = u.idUbicacion 
         WHERE u.calle = #{calle} AND u.numero= #{numero}
     </select>
+    <select id="buscarSucursales" resultType="modelo.pojo.Sucursal">
+        SELECT s.*,
+        CONCAT('Ciudad: ',u.ciudad,' calle: ', u.calle,' NO.', u.numero) AS direccion, u.codigoPostal 
+        FROM sucursal s 
+        INNER JOIN ubicacion u 
+        ON s.idUbicacion = u.idUbicacion;
+    </select>
     
 </mapper>
