@@ -166,5 +166,11 @@ public class SucursalWS {
         return msj;
     }
 
+    @GET
+    @Path("buscarSucursales")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje buscarSucursales() {
 
+        return SucursalDAO.buscarSucursales();
+    }
 }
