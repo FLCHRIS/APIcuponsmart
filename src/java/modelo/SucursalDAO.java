@@ -1,11 +1,9 @@
 package modelo;
 
 import java.util.List;
-import modelo.pojo.Encargado;
 import modelo.pojo.Mensaje;
 import modelo.pojo.Sucursal;
 import modelo.pojo.Ubicacion;
-import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 
 public class SucursalDAO {
@@ -177,4 +175,32 @@ public class SucursalDAO {
         return msj;
     }
 
+    public static Mensaje buscarSucursales() {
+        Mensaje msj = new Mensaje();
+        msj.setError(Boolean.TRUE);
+
+        SqlSession conexionBD = mybatis.MyBatisUtil.getSession();
+
+        if (conexionBD != null) {
+            try {
+
+                List<Sucursal> sucursales = conexionBD.selectList("sucursal.buscarSucursales");
+
+                if (!sucursales.isEmpty()) {
+                    msj.setSucursales(sucursales);
+                    msj.setContenido("Respuesta exitosa");
+                    msj.setError(Boolean.FALSE);
+                } else {
+                    msj.setContenido("No hay sucursales registradas.");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                msj.setContenido("Error:" + e);
+            } finally {
+                conexionBD.close();
+            }
+        }
+        return msj;
+    }
+    
 }
