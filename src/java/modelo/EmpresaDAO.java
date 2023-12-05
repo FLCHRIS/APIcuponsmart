@@ -26,7 +26,7 @@ public class EmpresaDAO {
 
         try (SqlSession conexionDB = MyBatisUtil.getSession()) {
             if (conexionDB == null) {
-                mensaje.setContenido("No hay conexión a la base de datos");
+                mensaje.setContenido("No hay conexión a la base de datos.");
             }
 
             int filasAfectadas = conexionDB.insert("empresa.registrar", nuevaEmpresa);
@@ -34,9 +34,9 @@ public class EmpresaDAO {
 
             if (filasAfectadas > 0) {
                 mensaje.setError(Boolean.FALSE);
-                mensaje.setContenido("Empresa registrada con éxito");
+                mensaje.setContenido("Empresa registrada con éxito.");
             } else {
-                mensaje.setContenido("No se pudo registrar la empresa");
+                mensaje.setContenido("No se pudo registrar la empresa.");
             }
         } catch (Exception e) {
             mensaje.setContenido("Error: " + e.getMessage());
@@ -62,7 +62,7 @@ public class EmpresaDAO {
 
         try (SqlSession conexionDB = MyBatisUtil.getSession()) {
             if (conexionDB == null) {
-                mensaje.setContenido("No hay conexión a la base de datos");
+                mensaje.setContenido("No hay conexión a la base de datos.");
             }
 
             int filasAfectadas = conexionDB.update("empresa.editarEmpresa", editarEmpresa);
@@ -70,9 +70,9 @@ public class EmpresaDAO {
 
             if (filasAfectadas > 0) {
                 mensaje.setError(Boolean.FALSE);
-                mensaje.setContenido("Empresa actualizada con éxito");
+                mensaje.setContenido("Empresa actualizada con éxito.");
             } else {
-                mensaje.setContenido("No se pudo actualizar la empresa");
+                mensaje.setContenido("No se pudo actualizar la empresa.");
             }
         } catch (Exception e) {
             mensaje.setContenido("Error: " + e.getMessage());
@@ -91,10 +91,10 @@ public class EmpresaDAO {
                 conexinBD.commit();
                 if (numeroAfectadas != 0) {
                     msj.setError(Boolean.FALSE);
-                    msj.setContenido("Empresa eliminada con éxito");
+                    msj.setContenido("Empresa eliminada con éxito.");
 
                 } else {
-                    msj.setContenido("Hubo un error en la operación de eliminar la empresa");
+                    msj.setContenido("Hubo un error en la operación de eliminar la empresa.");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -112,7 +112,7 @@ public class EmpresaDAO {
 
         try (SqlSession conexionDB = MyBatisUtil.getSession()) {
             if (conexionDB == null) {
-                mensaje.setContenido("No hay conexion con la base de datos");
+                mensaje.setContenido("No hay conexion con la base de datos.");
                 return mensaje;
             }
 
@@ -121,7 +121,7 @@ public class EmpresaDAO {
 
             if (!empresas.isEmpty()) {
                 mensaje.setError(Boolean.FALSE);
-                mensaje.setContenido("Respuesta exitosa");
+                mensaje.setContenido("Respuesta exitosa.");
             } else {
                 mensaje.setContenido("No hay empresas con el nombre proporcionado.");
             }
@@ -139,7 +139,7 @@ public class EmpresaDAO {
 
         try (SqlSession conexionDB = MyBatisUtil.getSession()) {
             if (conexionDB == null) {
-                mensaje.setContenido("No hay conexion con la base de datos");
+                mensaje.setContenido("No hay conexion con la base de datos.");
                 return mensaje;
             }
 
@@ -148,7 +148,7 @@ public class EmpresaDAO {
 
             if (!empresas.isEmpty()) {
                 mensaje.setError(Boolean.FALSE);
-                mensaje.setContenido("Respuesta exitosa");
+                mensaje.setContenido("Respuesta exitosa.");
             } else {
                 mensaje.setContenido("No hay empresas con el representante proporcionado.");
             }
@@ -165,7 +165,7 @@ public class EmpresaDAO {
 
         try (SqlSession conexionDB = MyBatisUtil.getSession()) {
             if (conexionDB == null) {
-                mensaje.setContenido("No hay conexion con la base de datos");
+                mensaje.setContenido("No hay conexion con la base de datos.");
                 return mensaje;
             }
 
@@ -174,7 +174,7 @@ public class EmpresaDAO {
 
             if (!empresas.isEmpty()) {
                 mensaje.setError(Boolean.FALSE);
-                mensaje.setContenido("Respuesta exitosa");
+                mensaje.setContenido("Respuesta exitosa.");
             } else {
                 mensaje.setContenido("No hay empresas con el RFC proporcionado.");
             }
@@ -191,7 +191,7 @@ public class EmpresaDAO {
 
         try (SqlSession conexionDB = MyBatisUtil.getSession()) {
             if (conexionDB == null) {
-                mensaje.setContenido("No hay conexion con la base de datos");
+                mensaje.setContenido("No hay conexion con la base de datos.");
                 return mensaje;
             }
 
@@ -227,9 +227,9 @@ public class EmpresaDAO {
 
                 if (filasAfectadas > 0) {
                     mensaje.setError(false);
-                    mensaje.setContenido("Logo de la empresa guardado correctamente");
+                    mensaje.setContenido("Logo de la empresa guardado correctamente.");
                 } else {
-                    mensaje.setContenido("Hubo un error al intentar guardar el logo de la empresa");
+                    mensaje.setContenido("Hubo un error al intentar guardar el logo de la empresa.");
                 }
             } catch (Exception e) {
                 mensaje.setContenido("Error: " + e.getMessage());
@@ -249,7 +249,7 @@ public class EmpresaDAO {
 
         try (SqlSession conexionDB = MyBatisUtil.getSession()) {
             if (conexionDB == null) {
-                mensaje.setContenido("No hay conexion con la base de datos");
+                mensaje.setContenido("No hay conexion con la base de datos.");
                 return mensaje;
             }
 
@@ -258,7 +258,7 @@ public class EmpresaDAO {
             
             if (empresa != null) {
                 mensaje.setError(Boolean.FALSE);
-                mensaje.setContenido("Respuesta exitosa");
+                mensaje.setContenido("Respuesta exitosa.");
             } else {
                 mensaje.setContenido("La empresa no tiene un logo registrado.");
             }
@@ -276,7 +276,7 @@ public class EmpresaDAO {
 
         try (SqlSession conexionDB = MyBatisUtil.getSession()) {
             if (conexionDB == null) {
-                mensaje.setContenido("No hay conexion con la base de datos");
+                mensaje.setContenido("No hay conexion con la base de datos.");
                 return mensaje;
             }
 
@@ -285,7 +285,7 @@ public class EmpresaDAO {
             
             if (empresa != null) {
                 mensaje.setError(Boolean.FALSE);
-                mensaje.setContenido("Respuesta exitosa");
+                mensaje.setContenido("Respuesta exitosa.");
             } else {
                 mensaje.setContenido("No hay empresa con el ID proporcionado.");
             }
