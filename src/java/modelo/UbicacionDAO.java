@@ -27,7 +27,7 @@ public class UbicacionDAO {
 
         try (SqlSession conexionDB = MyBatisUtil.getSession()) {
             if (conexionDB == null) {
-                mensaje.setContenido("No hay conexión a la base de datos");
+                mensaje.setContenido("No hay conexión a la base de datos.");
             }
 
             int filasRegistroUbicacion = conexionDB.insert("ubicacion.registrar", ubicacionEmpresa);
@@ -42,9 +42,9 @@ public class UbicacionDAO {
 
             if (filasRegistroUbicacion > 0 && filasRegistroUbicacionEmpresa > 0) {
                 mensaje.setError(Boolean.FALSE);
-                mensaje.setContenido("Ubicación registrada con éxito");
+                mensaje.setContenido("Ubicación registrada con éxito.");
             } else {
-                mensaje.setContenido("No se pudo registrar la ubicación");
+                mensaje.setContenido("No se pudo registrar la ubicación.");
             }
         } catch (Exception e) {
             mensaje.setContenido("Error: " + e.getMessage());
@@ -66,7 +66,7 @@ public class UbicacionDAO {
 
         try (SqlSession conexionDB = MyBatisUtil.getSession()) {
             if (conexionDB == null) {
-                mensaje.setContenido("No hay conexión a la base de datos");
+                mensaje.setContenido("No hay conexión a la base de datos.");
             }
 
             int filasRegistroUbicacion = conexionDB.insert("ubicacion.registrar", ubicacionEmpresa);
@@ -81,9 +81,9 @@ public class UbicacionDAO {
 
             if (filasRegistroUbicacion > 0 && filasRegistroUbicacionEmpresa > 0) {
                 mensaje.setError(Boolean.FALSE);
-                mensaje.setContenido("Ubicación registrada con éxito");
+                mensaje.setContenido("Ubicación registrada con éxito.");
             } else {
-                mensaje.setContenido("No se pudo registrar la ubicación");
+                mensaje.setContenido("No se pudo registrar la ubicación.");
             }
         } catch (Exception e) {
             mensaje.setContenido("Error: " + e.getMessage());
@@ -106,7 +106,7 @@ public class UbicacionDAO {
 
         try (SqlSession conexionDB = MyBatisUtil.getSession()) {
             if (conexionDB == null) {
-                mensaje.setContenido("No hay conexión a la base de datos");
+                mensaje.setContenido("No hay conexión a la base de datos.");
             }
 
             int filasAfectadas = conexionDB.update("ubicacion.editar", ubicacion);
@@ -114,9 +114,9 @@ public class UbicacionDAO {
 
             if (filasAfectadas > 0) {
                 mensaje.setError(Boolean.FALSE);
-                mensaje.setContenido("Ubicación actualizada con éxito");
+                mensaje.setContenido("Ubicación actualizada con éxito.");
             } else {
-                mensaje.setContenido("No se pudo actualizar la ubicación");
+                mensaje.setContenido("No se pudo actualizar la ubicación.");
             }
         } catch (Exception e) {
             mensaje.setContenido("Error: " + e.getMessage());
@@ -131,7 +131,7 @@ public class UbicacionDAO {
 
         try (SqlSession conexionDB = MyBatisUtil.getSession()) {
             if (conexionDB == null) {
-                mensaje.setContenido("No hay conexión a la base de datos");
+                mensaje.setContenido("No hay conexión a la base de datos.");
             }
 
             int filasAfectadas = conexionDB.delete("ubicacion.eliminar", idUbicacion);
@@ -139,9 +139,9 @@ public class UbicacionDAO {
 
             if (filasAfectadas > 0) {
                 mensaje.setError(Boolean.FALSE);
-                mensaje.setContenido("Ubicación eliminada con éxito");
+                mensaje.setContenido("Ubicación eliminada con éxito.");
             } else {
-                mensaje.setContenido("No se pudo eliminar la ubicación");
+                mensaje.setContenido("No se pudo eliminar la ubicación.");
             }
         } catch (Exception e) {
             mensaje.setContenido("Error: " + e.getMessage());
