@@ -26,10 +26,10 @@ public class AutenticacionDAO {
 
                 if (usuario != null) {
                     mensaje.setError(false);
-                    mensaje.setContenido("Bienvenid(@) " + usuario.getNombre() + " al sistema de cupones.");
+                    mensaje.setContenido("¡Hola " + usuario.getNombre() + "! bienvenido/a al sistema de cupones.");
                     mensaje.setUsuarioSesion(usuario);
                 } else {
-                    mensaje.setContenido("Usuario incorrecto y/o contraseña incorrectos, favor de verificar");
+                    mensaje.setContenido("Usuario incorrecto y/o contraseña incorrectos, favor de verificar.");
                 }
             } catch (Exception e) {
                 mensaje.setContenido("Error: " + e.getMessage());
@@ -38,7 +38,7 @@ public class AutenticacionDAO {
             }
 
         } else {
-            mensaje.setContenido("Error: Por el momento no hay conexion en la base de datos");
+            mensaje.setContenido("Por el momento no hay conexion en la base de datos.");
         }
 
         return mensaje;
@@ -60,10 +60,10 @@ public class AutenticacionDAO {
 
                 if (cliente != null) {
                     mensaje.setError(false);
-                    mensaje.setContenido("Bienvenid(@) " + cliente.getNombre() + " " + cliente.getApellidoPaterno() + " al sistema de cupones.");
+                    mensaje.setContenido("¡Hola " + cliente.getNombre() + " " + cliente.getApellidoPaterno() + "! bienvenido/a.");
                     mensaje.setCliente(cliente);
                 } else {
-                    mensaje.setContenido("Correo incorrecto y/o contraseña incorrectos, favor de verificar");
+                    mensaje.setContenido("Correo incorrecto y/o contraseña incorrectos, favor de verificar.");
                 }
             } catch (Exception e) {
                 mensaje.setContenido("Error: " + e.getMessage());
@@ -72,7 +72,7 @@ public class AutenticacionDAO {
             }
 
         } else {
-            mensaje.setContenido("Error: Por el momento no hay conexion en la base de datos");
+            mensaje.setContenido("Por el momento no hay conexion en la base de datos.");
         }
 
         return mensaje;
