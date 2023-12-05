@@ -199,4 +199,11 @@ public class UsuarioWS {
 
         return UsuarioDAO.buscarUsuarios(idUsuario);
     }
+
+    @GET
+    @Path("buscarRolles")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje buscarRolles() {
+        return UsuarioDAO.buscarRolles();
+    }
 }
