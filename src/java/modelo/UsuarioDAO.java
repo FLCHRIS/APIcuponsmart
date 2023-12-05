@@ -2,6 +2,7 @@ package modelo;
 
 import java.util.List;
 import modelo.pojo.Mensaje;
+import modelo.pojo.Roll;
 import modelo.pojo.Usuario;
 import org.apache.ibatis.session.SqlSession;
 
@@ -33,9 +34,9 @@ public class UsuarioDAO {
 
                 if (filasAfectadas != 0) {
                     msj.setError(Boolean.FALSE);
-                    msj.setContenido("El usuario: " + nombre + " se agrego al sistema satisfactoriamente");
+                    msj.setContenido("Se registró correctamente el usuario.");
                 } else {
-                    msj.setContenido("El usuario: " + nombre + " No se pudo dar de alta verifique los campos");
+                    msj.setContenido("No se pudo registrar el usuario.");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -55,7 +56,7 @@ public class UsuarioDAO {
             String apellidoMaterno, String curp,
             String correo, String userName,
             String contrasenia, Integer idUsuario) {
-        
+
         Mensaje msj = new Mensaje();
         msj.setError(Boolean.TRUE);
         SqlSession conexionDB = mybatis.MyBatisUtil.getSession();
@@ -76,9 +77,9 @@ public class UsuarioDAO {
 
                 if (filasAfectadas != 0) {
                     msj.setError(Boolean.FALSE);
-                    msj.setContenido("La actualización del usuario: " + nombre + " se hizo correctamente");
+                    msj.setContenido("Se actualizó correctamente el usuario.");
                 } else {
-                    msj.setContenido("Error en la actualización del usuario");
+                    msj.setContenido("No se pudo actualizar el usuario.");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -104,9 +105,9 @@ public class UsuarioDAO {
 
                 if (filasAfectadas != 0) {
                     msj.setError(Boolean.FALSE);
-                    msj.setContenido("La eliminación del usuario fue satisfactoría");
+                    msj.setContenido("El usuario se eliminó correctamente.");
                 } else {
-                    msj.setContenido("No se pudo eliminar el usuario seleccionado");
+                    msj.setContenido("No se pudo eliminar el usuario.");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -128,11 +129,10 @@ public class UsuarioDAO {
         if (conexionBD != null) {
             try {
                 List<Usuario> consulta = conexionBD.selectList("usuario.busquedaPorNombre", nombre);
-                conexionBD.commit();
 
                 if (!consulta.isEmpty()) {
                     msj.setError(Boolean.FALSE);
-                    msj.setContenido("Respuesta exitosa");
+                    msj.setContenido("Respuesta exitosa.");
                     msj.setUsuarios(consulta);
                 } else {
                     msj.setContenido("No hay usuarios con el nombre proporcionado.");
@@ -157,7 +157,6 @@ public class UsuarioDAO {
         if (conexionBD != null) {
             try {
                 List<Usuario> consulta = conexionBD.selectList("usuario.busquedaPorUserName", username);
-                conexionBD.commit();
 
                 if (!consulta.isEmpty()) {
                     msj.setError(Boolean.FALSE);
@@ -186,11 +185,10 @@ public class UsuarioDAO {
         if (conexionBD != null) {
             try {
                 List<Usuario> consulta = conexionBD.selectList("usuario.busquedaRol", idRollUsuario);
-                conexionBD.commit();
 
                 if (!consulta.isEmpty()) {
                     msj.setError(Boolean.FALSE);
-                    msj.setContenido("Respuesta exitosa");
+                    msj.setContenido("Respuesta exitosa.");
                     msj.setUsuarios(consulta);
                 } else {
                     msj.setContenido("No hay usuarios con el roll proporcionado.");
@@ -215,11 +213,10 @@ public class UsuarioDAO {
         if (conexionBD != null) {
             try {
                 List<Usuario> consulta = conexionBD.selectList("usuario.buscarUsuarios", idUsuario);
-                conexionBD.commit();
 
                 if (!consulta.isEmpty()) {
                     msj.setError(Boolean.FALSE);
-                    msj.setContenido("Respuesta exitosa");
+                    msj.setContenido("Respuesta exitosa.");
                     msj.setUsuarios(consulta);
                 } else {
                     msj.setContenido("No hay usuarios registrados.");
@@ -234,5 +231,32 @@ public class UsuarioDAO {
         }
 
         return msj;
+    }
+
+    public static Mensaje buscarRolles() {
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(Boolean.TRUE);
+        SqlSession conexionDB = mybatis.MyBatisUtil.getSession();
+
+        if (conexionDB != null) {
+            try {
+                List<Roll> listRoll = conexionDB.selectList("usuario.buscarRolles");
+
+                if (!listRoll.isEmpty()) {
+                    mensaje.setError(Boolean.FALSE);
+                    mensaje.setContenido("Respuesta exitosa.");
+                    mensaje.setRoles(listRoll);
+                } else {
+                    mensaje.setContenido("No hay roles registrados.");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                mensaje.setContenido("Error: " + e);
+            } finally {
+                conexionDB.close();
+            }
+        }
+        
+        return mensaje;
     }
 }
