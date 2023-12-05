@@ -31,9 +31,9 @@ public class SucursalDAO {
                 conexionBD.commit();
                 if (filasAfectadas != 0) {
                     msj.setError(Boolean.FALSE);
-                    msj.setContenido("La sucursal " + sucursal.getNombre() + " esta dada de alta");
+                    msj.setContenido("Sucursal registrada correctamente.");
                 } else {
-                    msj.setContenido("Error al agregar la sucursal");
+                    msj.setContenido("No se pudo registrar la sucursal.");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -70,9 +70,9 @@ public class SucursalDAO {
 
                 if (filasAfectadas != 0) {
                     msj.setError(Boolean.FALSE);
-                    msj.setContenido("Los datos de la empresa se actualizarón correctamente");
+                    msj.setContenido("Sucursal actualizada correctamente.");
                 } else {
-                    msj.setContenido("No se pudo realizar la actualización" + filasAfectadas);
+                    msj.setContenido("No se pudo actualizar la sucursal.");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -99,9 +99,9 @@ public class SucursalDAO {
 
                 if (filasAfectadas != 0) {
                     msj.setError(Boolean.FALSE);
-                    msj.setContenido("La sucursal seleccionada se elimino correctamente del sistema");
+                    msj.setContenido("Sucursal eliminada correctamente.");
                 } else {
-                    msj.setContenido("Ocurrio un error en el proceso de eliminación de esta sucursal");
+                    msj.setContenido("No se pudo eliminar la sucursal.");
                 }
 
             } catch (Exception e) {
@@ -129,7 +129,7 @@ public class SucursalDAO {
 
                 if (!consulta.isEmpty()) {
                     msj.setSucursales(consulta);
-                    msj.setContenido("Respuesta exitosa");
+                    msj.setContenido("Respuesta exitosa.");
                     msj.setError(Boolean.FALSE);
                 } else {
                     msj.setContenido("No hay sucursales con el nombre proporcionado.");
@@ -160,7 +160,7 @@ public class SucursalDAO {
 
                 if (!consultasql.isEmpty()) {
                     msj.setSucursales(consultasql);
-                    msj.setContenido("Respuesta exitosa");
+                    msj.setContenido("Respuesta exitosa.");
                     msj.setError(Boolean.FALSE);
                 } else {
                     msj.setContenido("No hay sucursales con la dirección proporcionada.");
@@ -188,7 +188,7 @@ public class SucursalDAO {
 
                 if (!sucursales.isEmpty()) {
                     msj.setSucursales(sucursales);
-                    msj.setContenido("Respuesta exitosa");
+                    msj.setContenido("Respuesta exitosa.");
                     msj.setError(Boolean.FALSE);
                 } else {
                     msj.setContenido("No hay sucursales registradas.");
