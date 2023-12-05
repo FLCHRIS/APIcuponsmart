@@ -28,7 +28,7 @@ public class ClienteDAO {
         
         try (SqlSession conexionDB = MyBatisUtil.getSession()) {
             if (conexionDB == null) {
-                mensaje.setContenido("No hay conexión a la base de datos");
+                mensaje.setContenido("No hay conexión a la base de datos.");
             }
 
             int filasAfectadas = conexionDB.insert("cliente.registrar", cliente);
@@ -36,9 +36,9 @@ public class ClienteDAO {
 
             if (filasAfectadas > 0) {
                 mensaje.setError(Boolean.FALSE);
-                mensaje.setContenido("Cliente registrado con éxito");
+                mensaje.setContenido("Cliente registrado con éxito.");
             } else {
-                mensaje.setContenido("No se pudo registrar el cliente");
+                mensaje.setContenido("No se pudo registrar el cliente.");
             }
         } catch (Exception e) {
             mensaje.setContenido("Error: " + e.getMessage());
@@ -68,7 +68,7 @@ public class ClienteDAO {
         
         try (SqlSession conexionDB = MyBatisUtil.getSession()) {
             if (conexionDB == null) {
-                mensaje.setContenido("No hay conexión a la base de datos");
+                mensaje.setContenido("No hay conexión a la base de datos.");
             }
 
             int filasAfectadas = conexionDB.insert("cliente.actualizar", cliente);
@@ -76,9 +76,9 @@ public class ClienteDAO {
 
             if (filasAfectadas > 0) {
                 mensaje.setError(Boolean.FALSE);
-                mensaje.setContenido("Cliente actualizado con éxito");
+                mensaje.setContenido("Cliente actualizado con éxito.");
             } else {
-                mensaje.setContenido("No se pudo actualizar el cliente");
+                mensaje.setContenido("No se pudo actualizar el cliente.");
             }
         } catch (Exception e) {
             mensaje.setContenido("Error: " + e.getMessage());
