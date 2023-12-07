@@ -38,7 +38,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     
     <select id="buscarUsuarios" resultType="modelo.pojo.Usuario" parameterType="int" >
-        SELECT * FROM usuario WHERE idUsuario != #{idUsuario};
+        SELECT 
+        u.*, 
+        r.roll AS nombreRol 
+        FROM usuario u 
+        LEFT JOIN rollUsuario r ON u.idRollUsuario = r.idRollUsuario 
+        WHERE idUsuario != #{idUsuario};
     </select>
     
     <select id="buscarRolles" resultType="modelo.pojo.Roll">
