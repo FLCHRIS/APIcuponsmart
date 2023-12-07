@@ -144,48 +144,6 @@ public class UsuarioWS {
 
         return mensaje;
     }
-
-    @GET
-    @Path("buscarPorNombre/{nombre}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje buscarPorNombre(@PathParam("nombre") String nombre) {
-
-        if (nombre == null || nombre.isEmpty()) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-
-        Mensaje msj = UsuarioDAO.buscarPorNombre(nombre);
-
-        return msj;
-    }
-
-    @GET
-    @Path("buscarPorUserName/{username}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje buscarPorUserName(@PathParam("username") String username) {
-
-        if (username == null || username.isEmpty()) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-
-        Mensaje msj = UsuarioDAO.buscarPorUserName(username);
-
-        return msj;
-    }
-
-    @GET
-    @Path("buscarPorRoll/{idRollUsuario}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje buscarPorRoll(@PathParam("idRollUsuario") Integer idRollUsuario) {
-
-        if (idRollUsuario == null || (idRollUsuario != Constantes.ID_ROL_COMERCIAL && idRollUsuario != Constantes.ID_ROL_GENERAL)) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-
-        Mensaje msj = UsuarioDAO.buscarPorRoll(idRollUsuario);
-
-        return msj;
-    }
     
     @GET
     @Path("buscarUsuarios/{idUsuario}")
