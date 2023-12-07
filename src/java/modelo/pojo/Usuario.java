@@ -1,18 +1,18 @@
 package modelo.pojo;
 
-
 public class Usuario {
-  private Integer idUsuario;
-  private String nombre;
-  private String apellidoPaterno;
-  private String apellidoMaterno;
-  private String curp;
-  private String correo;
-  private String userName;
-  private String contrasenia;
-  private Integer idEmpresa;
-  private Integer idRollUsuario;
-  private String nombreRol;
+
+    private Integer idUsuario;
+    private String nombre;
+    private String apellidoPaterno;
+    private String apellidoMaterno;
+    private String curp;
+    private String correo;
+    private String userName;
+    private String contrasenia;
+    private Integer idEmpresa;
+    private Integer idRollUsuario;
+    private String nombreRol;
 
     public Usuario() {
     }
@@ -118,6 +118,5 @@ public class Usuario {
     public void setIdRollUsuario(Integer idRollUsuario) {
         this.idRollUsuario = idRollUsuario;
     }
-  
-  
+
 }
