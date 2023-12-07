@@ -22,21 +22,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         DELETE FROM usuario WHERE idUsuario = #{idUsuario}
     </delete>
     
-    <select id="busquedaPorNombre" parameterType="String" resultType="modelo.pojo.Usuario">
-        SELECT * FROM usuario WHERE nombre = #{nombre}
-    </select>
-    
-    <select id="busquedaPorUserName" parameterType="String" resultType="modelo.pojo.Usuario">
-        SELECT * FROM usuario WHERE userName = #{userName}
-    </select>
-    
-    <select id="busquedaRol" parameterType="int" resultType="modelo.pojo.Usuario">
-        SELECT u.* FROM usuario u
-        INNER JOIN rollUsuario ru
-        ON u.idRollUsuario = ru.idRollUsuario
-        WHERE u.idRollUsuario = #{idRollUsuario};
-    </select>
-    
     <select id="buscarUsuarios" resultType="modelo.pojo.Usuario" parameterType="int" >
         SELECT 
         u.*, 
