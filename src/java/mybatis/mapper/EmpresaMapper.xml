@@ -19,33 +19,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <delete id="eliminar" parameterType="int">
         DELETE FROM empresa WHERE idEmpresa = #{idEmpresa};
     </delete>
-    <select id="obtenerEmpresaPorNombre" parameterType="string" resultType="modelo.pojo.Empresa">
-        SELECT e.idEmpresa, e.idUbicacion, e.nombre, e.nombreComercial, 
-        e.email, e.telefono, e.paginaWeb, e.RFC, e.estatus, e.nombreRepresentante, 
-        u.ciudad, CONCAT(u.calle, ' numero ', u.numero) as direccion 
-        FROM empresa e 
-        INNER JOIN ubicacion u 
-        ON e.idUbicacion = u.idUbicacion 
-        WHERE e.nombre = #{nombre};
-    </select>
-    <select id="obtenerEmpresaPorRFC" parameterType="string" resultType="modelo.pojo.Empresa">
-        SELECT e.idEmpresa, e.idUbicacion, e.nombre, e.nombreComercial, 
-        e.email, e.telefono, e.paginaWeb, e.RFC, e.estatus, e.nombreRepresentante, 
-        u.ciudad, CONCAT(u.calle, ' numero ', u.numero) as direccion 
-        FROM empresa e 
-        INNER JOIN ubicacion u 
-        ON e.idUbicacion = u.idUbicacion
-        WHERE RFC = #{RFC};
-    </select>
-    <select id="obtenerEmpresaPorRepresentante" parameterType="string" resultType="modelo.pojo.Empresa">
-        SELECT e.idEmpresa, e.idUbicacion, e.nombre, e.nombreComercial, 
-        e.email, e.telefono, e.paginaWeb, e.RFC, e.estatus, e.nombreRepresentante, 
-        u.ciudad, CONCAT(u.calle, ' numero ', u.numero) as direccion 
-        FROM empresa e 
-        INNER JOIN ubicacion u 
-        ON e.idUbicacion = u.idUbicacion 
-        WHERE e.nombreRepresentante = #{nombreRepresentante};
-    </select>
     <select id="obtenerEmpresas" resultType="modelo.pojo.Empresa">
         SELECT e.idEmpresa, e.idUbicacion, e.nombre, e.nombreComercial, 
         e.email, e.telefono, e.paginaWeb, e.RFC, e.estatus, e.nombreRepresentante, 
