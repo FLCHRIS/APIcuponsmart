@@ -35,4 +35,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT * FROM rollusuario;
     </select>
     
+    <delete id="eliminarUsuariosPorEmpresa" parameterType="int">
+        DELETE FROM usuario WHERE idEmpresa = #{idEmpresa}
+    </delete>
+    
 </mapper>
