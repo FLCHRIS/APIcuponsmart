@@ -1,22 +1,23 @@
 package modelo.pojo;
 
-
 public class Usuario {
-  private Integer idUsuario;
-  private String nombre;
-  private String apellidoPaterno;
-  private String apellidoMaterno;
-  private String curp;
-  private String correo;
-  private String userName;
-  private String contrasenia;
-  private Integer idEmpresa;
-  private Integer idRollUsuario;  
+
+    private Integer idUsuario;
+    private String nombre;
+    private String apellidoPaterno;
+    private String apellidoMaterno;
+    private String curp;
+    private String correo;
+    private String userName;
+    private String contrasenia;
+    private Integer idEmpresa;
+    private Integer idRollUsuario;
+    private String nombreRol;
 
     public Usuario() {
     }
 
-    public Usuario(Integer idUsuario, String nombre, String apellidoPaterno, String apellidoMaterno, String curp, String correo, String userName, String contrasenia, Integer idEmpresa, Integer idRollUsuario) {
+    public Usuario(Integer idUsuario, String nombre, String apellidoPaterno, String apellidoMaterno, String curp, String correo, String userName, String contrasenia, Integer idEmpresa, Integer idRollUsuario, String nombreRol) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
@@ -27,6 +28,15 @@ public class Usuario {
         this.contrasenia = contrasenia;
         this.idEmpresa = idEmpresa;
         this.idRollUsuario = idRollUsuario;
+        this.nombreRol = nombreRol;
+    }
+
+    public String getNombreRol() {
+        return nombreRol;
+    }
+
+    public void setNombreRol(String nombreRol) {
+        this.nombreRol = nombreRol;
     }
 
     public Integer getIdUsuario() {
@@ -108,6 +118,5 @@ public class Usuario {
     public void setIdRollUsuario(Integer idRollUsuario) {
         this.idRollUsuario = idRollUsuario;
     }
-  
-  
+
 }

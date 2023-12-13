@@ -139,51 +139,6 @@ public class EmpresaWS {
     }
 
     @GET
-    @Path("buscarEmpresaPorNombre/{nombre}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje buscarEmpresaPorNombre(
-            @PathParam("nombre") String nombre) {
-
-        if (nombre == null || nombre.isEmpty()) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-
-        Mensaje mensaje = EmpresaDAO.buscarEmpresaPorNombre(nombre);
-
-        return mensaje;
-    }
-
-    @GET
-    @Path("buscarEmpresaPorRepresentante/{nombreRepresentante}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje buscarEmpresaPorRepresentante(
-            @PathParam("nombreRepresentante") String nombreRepresentante) {
-
-        if (nombreRepresentante == null || nombreRepresentante.isEmpty()) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-
-        Mensaje mensaje = EmpresaDAO.buscarEmpresaPorRepresentante(nombreRepresentante);
-
-        return mensaje;
-    }
-
-    @GET
-    @Path("buscarEmpresaPorRFC/{RFC}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje buscarEmpresaPorRFC(
-            @PathParam("RFC") String RFC) {
-
-        if (RFC == null || RFC.isEmpty() || !Utilidades.validarCadena(RFC, Utilidades.RFC_EMPRESA_PATTERN)) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-
-        Mensaje mensaje = EmpresaDAO.buscarEmpresaPorRFC(RFC);
-
-        return mensaje;
-    }
-
-    @GET
     @Path("buscarEmpresas")
     @Produces(MediaType.APPLICATION_JSON)
     public Mensaje buscarEmpresas() {
