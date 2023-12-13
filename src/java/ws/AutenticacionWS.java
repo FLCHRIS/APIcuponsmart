@@ -33,7 +33,7 @@ public class AutenticacionWS {
             @FormParam("userName") String userName,
             @FormParam("contrasenia") String contrasenia) {
 
-        Mensaje mensaje = null;
+        Mensaje mensaje = new Mensaje();
         if (!userName.isEmpty() && !contrasenia.isEmpty()) {
             mensaje = AutenticacionDAO.iniciarSesionEscritorio(userName, contrasenia);
         } else {
@@ -44,7 +44,7 @@ public class AutenticacionWS {
     }
     
     @POST
-    @Path("iniciarSesionMobile")
+    @Path("iniciarSesionMovile")
     @Produces(MediaType.APPLICATION_JSON)
     public Mensaje iniciarSesionMobile(
             @FormParam("correo") String correo,
