@@ -2,8 +2,10 @@ package modelo;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 import modelo.pojo.Empresa;
 import modelo.pojo.Mensaje;
+import modelo.pojo.Sucursal;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 
@@ -80,30 +82,45 @@ public class EmpresaDAO {
         return mensaje;
     }
 
-    public static Mensaje eliminarEmpresa(Integer idEmpresa) {
-        Mensaje msj = new Mensaje();
-        msj.setError(Boolean.TRUE);
-        SqlSession conexinBD = mybatis.MyBatisUtil.getSession();
+    public static Mensaje eliminarEmpresa(Integer idEmpresa, Integer idUbicacion) {
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(Boolean.TRUE);
 
-        if (conexinBD != null) {
-            try {
-                int numeroAfectadas = conexinBD.delete("empresa.eliminar", idEmpresa);
-                conexinBD.commit();
-                if (numeroAfectadas != 0) {
-                    msj.setError(Boolean.FALSE);
-                    msj.setContenido("Empresa eliminada con éxito.");
-
-                } else {
-                    msj.setContenido("Hubo un error en la operación de eliminar la empresa.");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                msj.setContenido("Erroe de tipo: " + e);
-            } finally {
-                conexinBD.close();
+        try (SqlSession conexionDB = MyBatisUtil.getSession()) {
+            if (conexionDB == null) {
+                mensaje.setContenido("No hay conexion con la base de datos.");
+                return mensaje;
             }
+
+            
+            List<Sucursal> sucursales = conexionDB.selectList("sucursal.buscarSucursales");
+            
+            // OBTIENE EN sucursalesAsociadas TODAS LAS SUCURSALES ASOCIADAS A LA EMPRESA HACIENDO UN FILTRADO
+            List<Sucursal> sucursalesAsociadas = sucursales.stream()
+                    .filter(sucursal -> sucursal.getIdEmpresa().equals(idEmpresa))
+                    .collect(Collectors.toList());
+
+            if (!sucursalesAsociadas.isEmpty()) {
+                mensaje.setContenido("No se puede eliminar la empresa porque tiene sucursales asociadas.");
+                return mensaje;
+            }
+            
+            int usuariosEliminados = conexionDB.delete("usuario.eliminarUsuariosPorEmpresa", idEmpresa);
+            int numeroAfectadas = conexionDB.delete("empresa.eliminar", idEmpresa);
+            int ubicacionEliminada = conexionDB.delete("ubicacion.eliminar", idUbicacion);
+            conexionDB.commit();
+
+            if (numeroAfectadas != 0 || usuariosEliminados != 0 || ubicacionEliminada != 0) {
+                mensaje.setError(Boolean.FALSE);
+                mensaje.setContenido("Empresa eliminada con éxito.");
+            } else {
+                mensaje.setContenido("Hubo un error en la operación de eliminar la empresa.");
+            }
+        } catch (Exception e) {
+            mensaje.setContenido("Error: " + e.getMessage());
         }
-        return msj;
+        
+        return mensaje;
     }
 
     public static Mensaje buscarEmpresas() {
@@ -131,7 +148,7 @@ public class EmpresaDAO {
 
         return mensaje;
     }
-    
+
     public static Mensaje registrarLogo(Integer idEmpresa, byte[] logo) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(Boolean.TRUE);
@@ -176,21 +193,21 @@ public class EmpresaDAO {
 
             Empresa empresa = conexionDB.selectOne("empresa.obtenerLogo", idEmpresa);
             mensaje.setEmpresa(empresa);
-            
+
             if (empresa != null) {
                 mensaje.setError(Boolean.FALSE);
                 mensaje.setContenido("Respuesta exitosa.");
             } else {
                 mensaje.setContenido("La empresa no tiene un logo registrado.");
             }
-            
+
         } catch (Exception e) {
             mensaje.setContenido("Error: " + e.getMessage());
         }
 
         return mensaje;
     }
-    
+
     public static Mensaje buscarEmpresa(Integer idEmpresa) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(Boolean.TRUE);
@@ -203,7 +220,7 @@ public class EmpresaDAO {
 
             Empresa empresa = conexionDB.selectOne("empresa.obtenerEmpresa", idEmpresa);
             mensaje.setEmpresa(empresa);
-            
+
             if (empresa != null) {
                 mensaje.setError(Boolean.FALSE);
                 mensaje.setContenido("Respuesta exitosa.");
