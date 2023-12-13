@@ -44,7 +44,7 @@ public class AutenticacionWS {
     }
     
     @POST
-    @Path("iniciarSesionMovile")
+    @Path("iniciarSesionMobile")
     @Produces(MediaType.APPLICATION_JSON)
     public Mensaje iniciarSesionMobile(
             @FormParam("correo") String correo,
