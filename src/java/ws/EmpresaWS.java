@@ -128,13 +128,18 @@ public class EmpresaWS {
     @Path("eliminarEmpresa")
     @Produces(MediaType.APPLICATION_JSON)
     public Mensaje eliminarEmpresa(
-            @FormParam("idEmpresa") Integer idEmpresa) {
+            @FormParam("idEmpresa") Integer idEmpresa,
+            @FormParam("idUbicacion") Integer idUbicacion) {
 
         if (idEmpresa == null || idEmpresa <= 0) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
+        
+        if (idUbicacion == null || idUbicacion <= 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
 
-        Mensaje msj = EmpresaDAO.eliminarEmpresa(idEmpresa);
+        Mensaje msj = EmpresaDAO.eliminarEmpresa(idEmpresa, idUbicacion);
         return msj;
     }
 
