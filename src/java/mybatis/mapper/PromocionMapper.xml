@@ -32,10 +32,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     
     <select id="buscarCodigo" parameterType="string" resultType="modelo.pojo.Promocion">
-        SELECT * FROM promocion WHERE codigo = #{codigo};
+        SELECT idPromocion FROM promocion WHERE codigo = #{codigo};
     </select>
     <select id="buscarPromociones" resultType="modelo.pojo.Promocion">
-        SELECT * FROM promocion;
+        SELECT p.idPromocion, p.idCategoria, p.nombre, 
+        p.descripcion, p.fechaInicio, p.fechaFin, p.restriccion, 
+        p.tipoPromocion, p.porcentajeDescuento, p.precioRebajado, 
+        p.noCuponesMaximo, p.codigo, p.estatus, c.categoria 
+        FROM promocion p 
+        LEFT JOIN categoria c ON c.idCategoria = p.idCategoria;
     </select>
     <select id="buscarCategorias" resultType="modelo.pojo.Categoria">
         SELECT * FROM categoria;
