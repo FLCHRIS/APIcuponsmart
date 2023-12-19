@@ -32,6 +32,7 @@ public class PromocionDAO {
         try (SqlSession conexionDB = MyBatisUtil.getSession()) {
             if (conexionDB == null) {
                 mensaje.setContenido("No hay conexión a la base de datos.");
+                return mensaje;
             }
 
             Promocion codigoExiste = conexionDB.selectOne("promocion.buscarCodigo", codigo);
@@ -107,11 +108,13 @@ public class PromocionDAO {
         try (SqlSession conexionDB = MyBatisUtil.getSession()) {
             if (conexionDB == null) {
                 mensaje.setContenido("No hay conexión a la base de datos.");
+                return mensaje;
             }
 
             Promocion codigoExiste = conexionDB.selectOne("promocion.buscarCodigo", codigo);
-            if (codigoExiste != null) {
-                mensaje.setContenido("No se puede editar porque el código ya existe.");
+
+            if (codigoExiste != null && !codigoExiste.getIdPromocion().equals(promocion.getIdPromocion())) {
+                mensaje.setContenido("No se puede editar porque el código ya existe para otra promoción.");
                 return mensaje;
             }
 
@@ -218,16 +221,16 @@ public class PromocionDAO {
     public static Mensaje buscarCategorias() {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(Boolean.TRUE);
-        
+
         try (SqlSession conexionDB = MyBatisUtil.getSession()) {
             if (conexionDB == null) {
                 mensaje.setContenido("No hay conexion con la base de datos.");
                 return mensaje;
             }
-            
+
             List<Categoria> categorias = conexionDB.selectList("promocion.buscarCategorias");
             mensaje.setCategorias(categorias);
-            
+
             if (!categorias.isEmpty()) {
                 mensaje.setError(Boolean.FALSE);
                 mensaje.setContenido("Respuesta exitosa");
@@ -237,7 +240,7 @@ public class PromocionDAO {
         } catch (Exception e) {
             mensaje.setContenido("Error: " + e.getMessage());
         }
-        
+
         return mensaje;
     }
 }
