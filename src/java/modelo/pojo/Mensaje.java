@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelo.pojo;
 
 import java.util.List;
 
-/**
- *
- * @author Admin
- */
 public class Mensaje {
 
     private Boolean error;
@@ -22,11 +13,14 @@ public class Mensaje {
     private List<Usuario> usuarios;
     private Cliente cliente;
     private List<Roll> roles;
+    private List<Promocion> promociones;
+    private Promocion promocion;
+    private List<Categoria> categorias;
 
     public Mensaje() {
     }
 
-    public Mensaje(Boolean error, String contenido, List<Empresa> empresas, Empresa empresa, Usuario usuarioSesion, List<Sucursal> sucursales, List<Usuario> usuarios, Cliente cliente, List<Roll> roles) {
+    public Mensaje(Boolean error, String contenido, List<Empresa> empresas, Empresa empresa, Usuario usuarioSesion, List<Sucursal> sucursales, List<Usuario> usuarios, Cliente cliente, List<Roll> roles, List<Promocion> promociones, Promocion promocion, List<Categoria> categorias) {
         this.error = error;
         this.contenido = contenido;
         this.empresas = empresas;
@@ -36,6 +30,33 @@ public class Mensaje {
         this.usuarios = usuarios;
         this.cliente = cliente;
         this.roles = roles;
+        this.promociones = promociones;
+        this.promocion = promocion;
+        this.categorias = categorias;
+    }
+
+    public List<Categoria> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
+    }
+
+    public Promocion getPromocion() {
+        return promocion;
+    }
+
+    public void setPromocion(Promocion promocion) {
+        this.promocion = promocion;
+    }
+
+    public List<Promocion> getPromociones() {
+        return promociones;
+    }
+
+    public void setPromociones(List<Promocion> promociones) {
+        this.promociones = promociones;
     }
 
     public List<Roll> getRoles() {
@@ -109,5 +130,5 @@ public class Mensaje {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-    
+
 }
