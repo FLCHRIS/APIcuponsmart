@@ -29,6 +29,14 @@ public class UsuarioDAO {
 
         if (conexionDB != null) {
             try {
+
+                List<Usuario> usuariosExiste = conexionDB.selectList("usuario.buscarRepetido", usuario);
+
+                if (!usuariosExiste.isEmpty()) {
+                    msj.setContenido("Ya existe un usuario con el mismo nombre de usuario, correo o CURP.");
+                    return msj;
+                }
+
                 int filasAfectadas = conexionDB.insert("usuario.registrar", usuario);
                 conexionDB.commit();
 
@@ -72,6 +80,16 @@ public class UsuarioDAO {
 
         if (conexionDB != null) {
             try {
+
+                List<Usuario> usuariosExiste = conexionDB.selectList("usuario.buscarRepetido", usuario);
+
+                for (Usuario usuarioExistente : usuariosExiste) {
+                    if (!usuarioExistente.getIdUsuario().equals(usuario.getIdUsuario())) {
+                        msj.setContenido("Ya existe un usuario con el mismo nombre de usuario, correo o CURP.");
+                        return msj;
+                    }
+                }
+
                 int filasAfectadas = conexionDB.update("usuario.editar", usuario);
                 conexionDB.commit();
 
@@ -172,7 +190,7 @@ public class UsuarioDAO {
                 conexionDB.close();
             }
         }
-        
+
         return mensaje;
     }
 }
