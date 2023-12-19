@@ -16,28 +16,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <delete id="eliminar" parameterType="int">
         DELETE FROM sucursal WHERE idSucursal = #{idSucursal};
     </delete>
-    <select id="buscarPorNombre" parameterType="String" resultType="modelo.pojo.Sucursal">
-        SELECT s.*,
-        CONCAT('Ciudad: ',u.ciudad,' calle: ', u.calle,' NO.', u.numero) AS direccion, u.codigoPostal 
-        FROM sucursal s 
-        INNER JOIN ubicacion u 
-        ON s.idUbicacion = u.idUbicacion 
-        WHERE s.nombre = #{nombre}
-    </select>
-    <select id="buscarPorDireccion" parameterType="modelo.pojo.Ubicacion" resultType="modelo.pojo.Sucursal">
-        SELECT s.*,
-        CONCAT('Ciudad: ',u.ciudad,' calle: ', u.calle,' NO.', u.numero) AS direccion, u.codigoPostal 
-        FROM sucursal s 
-        INNER JOIN ubicacion u 
-        ON s.idUbicacion = u.idUbicacion 
-        WHERE u.calle = #{calle} AND u.numero= #{numero}
-    </select>
     <select id="buscarSucursales" resultType="modelo.pojo.Sucursal">
-        SELECT s.*,
-        CONCAT('Ciudad: ',u.ciudad,' calle: ', u.calle,' NO.', u.numero) AS direccion, u.codigoPostal 
+        SELECT s.*, 
+        CONCAT('Ciudad: ',u.ciudad,' calle: ', u.calle,' NO.', u.numero) AS direccion, 
+        u.codigoPostal, u.calle, u.numero 
         FROM sucursal s 
         INNER JOIN ubicacion u 
         ON s.idUbicacion = u.idUbicacion;
+    </select>
+    <select id="buscarPromocionSucursal" resultType="modelo.pojo.PromocionSucursal">
+        SELECT * FROM promocionSucursal;
     </select>
     
 </mapper>
