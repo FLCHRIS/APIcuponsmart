@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="promocion">
+    <insert id="registrar" parameterType="modelo.pojo.Promocion">
+        INSERT INTO promocion (
+        idCategoria, nombre, descripcion, fechaInicio, fechaFin, 
+        restriccion, tipoPromocion, porcentajeDescuento, precioRebajado, noCuponesMaximo, codigo) 
+        VALUES (
+        #{idCategoria}, #{nombre}, #{descripcion}, #{fechaInicio}, #{fechaFin}, 
+        #{restriccion}, #{tipoPromocion}, #{porcentajeDescuento}, #{precioRebajado}, #{noCuponesMaximo}, #{codigo});
+    </insert>
+    <update id="editar" parameterType="modelo.pojo.Promocion" >
+        UPDATE promocion SET idCategoria = #{idCategoria}, nombre = #{nombre}, descripcion = #{descripcion}, 
+        fechaInicio = #{fechaInicio}, fechaFin = #{fechaFin}, restriccion = #{restriccion}, 
+        tipoPromocion = #{tipoPromocion}, porcentajeDescuento = #{porcentajeDescuento}, 
+        precioRebajado = #{precioRebajado}, noCuponesMaximo = #{noCuponesMaximo}, 
+        codigo = #{codigo}, estatus = #{estatus} 
+        WHERE idPromocion = #{idPromocion};
+    </update>
+    <delete id="eliminar" parameterType="int">
+        DELETE FROM promocion WHERE idPromocion = #{idPromocion};
+    </delete>
+    <update id="subirFotografia" parameterType="modelo.pojo.Promocion" >
+        UPDATE promocion SET fotografia = #{fotografia} WHERE idPromocion = #{idPromocion}
+    </update>
+    <select id="obtenerFotografia" resultType="modelo.pojo.Promocion" >
+        SELECT TO_BASE64(fotografia) AS 'fotografiaBase64' FROM promocion WHERE idPromocion = #{idPromocion};
+    </select>
+    
+    <select id="buscarCodigo" parameterType="string" resultType="modelo.pojo.Promocion">
+        SELECT * FROM promocion WHERE codigo = #{codigo};
+    </select>
+    <select id="buscarPromociones" resultType="modelo.pojo.Promocion">
+        SELECT * FROM promocion;
+    </select>
+    <select id="buscarCategorias" resultType="modelo.pojo.Categoria">
+        SELECT * FROM categoria;
+    </select>
+    <delete id="eliminarPromocionSucursal" parameterType="int">
+        DELETE FROM promocionSucursal WHERE idPromocion = #{idPromocion};
+    </delete>
+</mapper>
