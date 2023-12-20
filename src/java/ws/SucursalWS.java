@@ -122,12 +122,17 @@ public class SucursalWS {
     @DELETE
     @Path("eliminarSucursal")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje eliminarSucursal(@FormParam("idSucursal") Integer idSucursal) {
+    public Mensaje eliminarSucursal(
+            @FormParam("idSucursal") Integer idSucursal,
+            @FormParam("idUbicacion") Integer idUbicacion) {
         if (idSucursal == null || idSucursal <= 0) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
+        if (idUbicacion == null || idUbicacion <= 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
 
-        Mensaje msj = SucursalDAO.eliminarSucursal(idSucursal);
+        Mensaje msj = SucursalDAO.eliminarSucursal(idSucursal, idUbicacion);
 
         return msj;
     }
