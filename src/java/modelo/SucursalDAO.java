@@ -87,7 +87,7 @@ public class SucursalDAO {
         return msj;
     }
 
-    public static Mensaje eliminarSucursal(Integer idSucursal) {
+    public static Mensaje eliminarSucursal(Integer idSucursal, Integer idUbicacion) {
         Mensaje msj = new Mensaje();
         msj.setError(Boolean.TRUE);
         SqlSession conexionBD = mybatis.MyBatisUtil.getSession();
@@ -105,11 +105,12 @@ public class SucursalDAO {
                     msj.setContenido("No se puede eliminar la sucursal porque tiene promociones asociadas.");
                     return msj;
                 }
-
+                
                 int filasAfectadas = conexionBD.delete("sucursal.eliminar", idSucursal);
+                int ubicacionEliminada = conexionBD.delete("ubicacion.eliminar", idUbicacion);
                 conexionBD.commit();
 
-                if (filasAfectadas != 0) {
+                if (filasAfectadas != 0 || ubicacionEliminada != 0) {
                     msj.setError(Boolean.FALSE);
                     msj.setContenido("Sucursal eliminada correctamente.");
                 } else {
