@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="empresa">
     
-    <insert id="registrar" parameterType="modelo.pojo.Empresa" >
+    <insert id="registrar" parameterType="modelo.pojo.Empresa" useGeneratedKeys="true" keyProperty="idEmpresa" >
         INSERT INTO empresa (nombre, nombreComercial, email, telefono, paginaWeb, RFC, nombreRepresentante) 
         VALUES (#{nombre}, #{nombreComercial}, #{email}, #{telefono}, #{paginaWeb}, #{RFC}, #{nombreRepresentante});
     </insert>
