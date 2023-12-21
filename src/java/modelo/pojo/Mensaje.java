@@ -10,6 +10,7 @@ public class Mensaje {
     private Empresa empresa;
     private Usuario usuarioSesion;
     private List<Sucursal> sucursales;
+    private Sucursal sucursal;
     private List<Usuario> usuarios;
     private Cliente cliente;
     private List<Roll> roles;
@@ -20,19 +21,28 @@ public class Mensaje {
     public Mensaje() {
     }
 
-    public Mensaje(Boolean error, String contenido, List<Empresa> empresas, Empresa empresa, Usuario usuarioSesion, List<Sucursal> sucursales, List<Usuario> usuarios, Cliente cliente, List<Roll> roles, List<Promocion> promociones, Promocion promocion, List<Categoria> categorias) {
+    public Mensaje(Boolean error, String contenido, List<Empresa> empresas, Empresa empresa, Usuario usuarioSesion, List<Sucursal> sucursales, Sucursal sucursal, List<Usuario> usuarios, Cliente cliente, List<Roll> roles, List<Promocion> promociones, Promocion promocion, List<Categoria> categorias) {
         this.error = error;
         this.contenido = contenido;
         this.empresas = empresas;
         this.empresa = empresa;
         this.usuarioSesion = usuarioSesion;
         this.sucursales = sucursales;
+        this.sucursal = sucursal;
         this.usuarios = usuarios;
         this.cliente = cliente;
         this.roles = roles;
         this.promociones = promociones;
         this.promocion = promocion;
         this.categorias = categorias;
+    }
+
+    public Sucursal getSucursal() {
+        return sucursal;
+    }
+
+    public void setSucursal(Sucursal sucursal) {
+        this.sucursal = sucursal;
     }
 
     public List<Categoria> getCategorias() {
