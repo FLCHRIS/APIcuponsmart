@@ -30,7 +30,12 @@ public class SucursalDAO {
             try {
                 int filasAfectadas = conexionBD.insert("sucursal.registrar", sucursal);
                 conexionBD.commit();
+                
+                Sucursal sucursalRegistrada = new Sucursal();
+                sucursalRegistrada.setIdSucursal(sucursal.getIdSucursal());
+                
                 if (filasAfectadas != 0) {
+                    msj.setSucursal(sucursalRegistrada);
                     msj.setError(Boolean.FALSE);
                     msj.setContenido("Sucursal registrada correctamente.");
                 } else {
