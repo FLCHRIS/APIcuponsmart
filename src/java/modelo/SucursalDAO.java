@@ -158,5 +158,34 @@ public class SucursalDAO {
 
         return msj;
     }
+    
+    public static Mensaje buscarSucursalesUsuario(Integer idUsuario) {
+        Mensaje msj = new Mensaje();
+        msj.setError(Boolean.TRUE);
+
+        SqlSession conexionBD = mybatis.MyBatisUtil.getSession();
+
+        if (conexionBD != null) {
+            try {
+
+                List<Sucursal> sucursales = conexionBD.selectList("sucursal.buscarSucursalesUsuario", idUsuario);
+
+                if (!sucursales.isEmpty()) {
+                    msj.setSucursales(sucursales);
+                    msj.setContenido("Respuesta exitosa.");
+                    msj.setError(Boolean.FALSE);
+                } else {
+                    msj.setContenido("No hay sucursales registradas a la empresa.");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                msj.setContenido("Error:" + e);
+            } finally {
+                conexionBD.close();
+            }
+        }
+
+        return msj;
+    }
 
 }
