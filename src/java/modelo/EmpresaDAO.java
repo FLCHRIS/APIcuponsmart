@@ -34,7 +34,11 @@ public class EmpresaDAO {
             int filasAfectadas = conexionDB.insert("empresa.registrar", nuevaEmpresa);
             conexionDB.commit();
 
+            Empresa empresaRegistrada = new Empresa();
+            empresaRegistrada.setIdEmpresa(nuevaEmpresa.getIdEmpresa());
+            
             if (filasAfectadas > 0) {
+                mensaje.setEmpresa(empresaRegistrada);
                 mensaje.setError(Boolean.FALSE);
                 mensaje.setContenido("Empresa registrada con éxito.");
             } else {
