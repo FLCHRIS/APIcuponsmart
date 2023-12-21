@@ -6,6 +6,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
@@ -31,7 +32,7 @@ public class SucursalWS {
     public Mensaje registrarSucursal(
             @FormParam("idEmpresa") Integer idEmpresa, @FormParam("nombre") String nombre,
             @FormParam("colonia") String colonia, @FormParam("telefono") String telefono,
-            @FormParam("longitud") Float longitud, @FormParam("latitud") Float latitud, 
+            @FormParam("longitud") Float longitud, @FormParam("latitud") Float latitud,
             @FormParam("nombreEncargado") String nombreEncargado) {
 
         if (idEmpresa == null || idEmpresa <= 0) {
@@ -41,7 +42,7 @@ public class SucursalWS {
         if (nombre == null || nombre.isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        
+
         if (nombreEncargado == null || nombreEncargado.isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
@@ -94,7 +95,7 @@ public class SucursalWS {
         if (colonia == null || colonia.isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        
+
         if (nombreEncargado == null || nombreEncargado.isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
@@ -144,4 +145,17 @@ public class SucursalWS {
 
         return SucursalDAO.buscarSucursales();
     }
+
+    @GET
+    @Path("buscarSucursalesUsuario/{idUsuario}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje buscarSucursalesUsuario(
+            @PathParam("idUsuario") Integer idUsuario) {
+        if (idUsuario == null || idUsuario <= 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        return SucursalDAO.buscarSucursalesUsuario(idUsuario);
+    }
+    
 }
