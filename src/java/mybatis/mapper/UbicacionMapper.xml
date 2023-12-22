@@ -23,5 +23,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="registrarUbicacionASucursal" parameterType="modelo.pojo.Sucursal" >
         UPDATE sucursal SET idUbicacion = #{idUbicacion} WHERE idSucursal = #{idSucursal};
     </update>
+    <select id="buscarUbicacion" parameterType="int" resultType="modelo.pojo.Ubicacion" >
+        SELECT * FROM ubicacion WHERE idUbicacion = #{idUbicacion};
+    </select>
     
 </mapper>
