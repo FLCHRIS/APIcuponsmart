@@ -39,4 +39,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         DELETE FROM usuario WHERE idEmpresa = #{idEmpresa}
     </delete>
     
+    <select id="buscarRepetido" resultType="modelo.pojo.Usuario" parameterType="modelo.pojo.Usuario" >
+        SELECT idUsuario FROM usuario WHERE userName = #{userName} OR curp = #{curp} OR correo = #{correo};
+    </select>
+    
 </mapper>

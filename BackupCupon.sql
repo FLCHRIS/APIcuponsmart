@@ -191,3 +191,10 @@ CREATE TABLE `usuario` (
   CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`idEmpresa`) REFERENCES `empresa` (`idEmpresa`),
   CONSTRAINT `usuario_ibfk_2` FOREIGN KEY (`idRollUsuario`) REFERENCES `rollusuario` (`idRollUsuario`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 
+-- CREACIÓN DEL USUARIO
+-- 
+create user 'adminusercupon'@'%' identified by 'ewd2q123';
+grant all privileges on smartcupon.* to 'adminusercupon'@'%';
+flush privileges;

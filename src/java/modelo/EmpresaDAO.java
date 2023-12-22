@@ -34,7 +34,11 @@ public class EmpresaDAO {
             int filasAfectadas = conexionDB.insert("empresa.registrar", nuevaEmpresa);
             conexionDB.commit();
 
+            Empresa empresaRegistrada = new Empresa();
+            empresaRegistrada.setIdEmpresa(nuevaEmpresa.getIdEmpresa());
+            
             if (filasAfectadas > 0) {
+                mensaje.setEmpresa(empresaRegistrada);
                 mensaje.setError(Boolean.FALSE);
                 mensaje.setContenido("Empresa registrada con éxito.");
             } else {
@@ -92,9 +96,8 @@ public class EmpresaDAO {
                 return mensaje;
             }
 
-            
             List<Sucursal> sucursales = conexionDB.selectList("sucursal.buscarSucursales");
-            
+
             // OBTIENE EN sucursalesAsociadas TODAS LAS SUCURSALES ASOCIADAS A LA EMPRESA HACIENDO UN FILTRADO
             List<Sucursal> sucursalesAsociadas = sucursales.stream()
                     .filter(sucursal -> sucursal.getIdEmpresa().equals(idEmpresa))
@@ -104,7 +107,7 @@ public class EmpresaDAO {
                 mensaje.setContenido("No se puede eliminar la empresa porque tiene sucursales asociadas.");
                 return mensaje;
             }
-            
+
             int usuariosEliminados = conexionDB.delete("usuario.eliminarUsuariosPorEmpresa", idEmpresa);
             int numeroAfectadas = conexionDB.delete("empresa.eliminar", idEmpresa);
             int ubicacionEliminada = conexionDB.delete("ubicacion.eliminar", idUbicacion);
@@ -119,7 +122,7 @@ public class EmpresaDAO {
         } catch (Exception e) {
             mensaje.setContenido("Error: " + e.getMessage());
         }
-        
+
         return mensaje;
     }
 

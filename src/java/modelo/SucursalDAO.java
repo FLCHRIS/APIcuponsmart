@@ -1,9 +1,10 @@
 package modelo;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import modelo.pojo.Mensaje;
+import modelo.pojo.PromocionSucursal;
 import modelo.pojo.Sucursal;
-import modelo.pojo.Ubicacion;
 import org.apache.ibatis.session.SqlSession;
 
 public class SucursalDAO {
@@ -29,7 +30,12 @@ public class SucursalDAO {
             try {
                 int filasAfectadas = conexionBD.insert("sucursal.registrar", sucursal);
                 conexionBD.commit();
+                
+                Sucursal sucursalRegistrada = new Sucursal();
+                sucursalRegistrada.setIdSucursal(sucursal.getIdSucursal());
+                
                 if (filasAfectadas != 0) {
+                    msj.setSucursal(sucursalRegistrada);
                     msj.setError(Boolean.FALSE);
                     msj.setContenido("Sucursal registrada correctamente.");
                 } else {
@@ -86,7 +92,7 @@ public class SucursalDAO {
         return msj;
     }
 
-    public static Mensaje eliminarSucursal(Integer idSucursal) {
+    public static Mensaje eliminarSucursal(Integer idSucursal, Integer idUbicacion) {
         Mensaje msj = new Mensaje();
         msj.setError(Boolean.TRUE);
         SqlSession conexionBD = mybatis.MyBatisUtil.getSession();
@@ -94,10 +100,22 @@ public class SucursalDAO {
         if (conexionBD != null) {
             try {
 
+                List<PromocionSucursal> promocionSucursales = conexionBD.selectList("sucursal.buscarPromocionSucursal");
+
+                List<PromocionSucursal> promocionesAsociadas = promocionSucursales.stream()
+                        .filter(promocionSucursal -> promocionSucursal.getIdSucursal().equals(idSucursal))
+                        .collect(Collectors.toList());
+
+                if (!promocionesAsociadas.isEmpty()) {
+                    msj.setContenido("No se puede eliminar la sucursal porque tiene promociones asociadas.");
+                    return msj;
+                }
+                
                 int filasAfectadas = conexionBD.delete("sucursal.eliminar", idSucursal);
+                int ubicacionEliminada = conexionBD.delete("ubicacion.eliminar", idUbicacion);
                 conexionBD.commit();
 
-                if (filasAfectadas != 0) {
+                if (filasAfectadas != 0 || ubicacionEliminada != 0) {
                     msj.setError(Boolean.FALSE);
                     msj.setContenido("Sucursal eliminada correctamente.");
                 } else {
@@ -114,64 +132,6 @@ public class SucursalDAO {
 
         }
 
-        return msj;
-    }
-
-    public static Mensaje buscarPorNombre(String nombre) {
-        Mensaje msj = new Mensaje();
-        msj.setError(Boolean.TRUE);
-
-        SqlSession conexionBD = mybatis.MyBatisUtil.getSession();
-
-        if (conexionBD != null) {
-            try {
-                List<Sucursal> consulta = conexionBD.selectList("sucursal.buscarPorNombre", nombre);
-
-                if (!consulta.isEmpty()) {
-                    msj.setSucursales(consulta);
-                    msj.setContenido("Respuesta exitosa.");
-                    msj.setError(Boolean.FALSE);
-                } else {
-                    msj.setContenido("No hay sucursales con el nombre proporcionado.");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                msj.setContenido("Error:" + e);
-            } finally {
-                conexionBD.close();
-            }
-        }
-        return msj;
-    }
-
-    public static Mensaje buscarPorDireccion(String calle, Integer numero) {
-        Mensaje msj = new Mensaje();
-        msj.setError(Boolean.TRUE);
-
-        SqlSession conexionBD = mybatis.MyBatisUtil.getSession();
-        Ubicacion ubicacion = new Ubicacion();
-        ubicacion.setCalle(calle);
-        ubicacion.setNumero(numero);
-
-        if (conexionBD != null) {
-            try {
-
-                List<Sucursal> consultasql = conexionBD.selectList("sucursal.buscarPorDireccion", ubicacion);
-
-                if (!consultasql.isEmpty()) {
-                    msj.setSucursales(consultasql);
-                    msj.setContenido("Respuesta exitosa.");
-                    msj.setError(Boolean.FALSE);
-                } else {
-                    msj.setContenido("No hay sucursales con la dirección proporcionada.");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                msj.setContenido("Error:" + e);
-            } finally {
-                conexionBD.close();
-            }
-        }
         return msj;
     }
 
@@ -200,7 +160,37 @@ public class SucursalDAO {
                 conexionBD.close();
             }
         }
+
         return msj;
     }
     
+    public static Mensaje buscarSucursalesUsuario(Integer idUsuario) {
+        Mensaje msj = new Mensaje();
+        msj.setError(Boolean.TRUE);
+
+        SqlSession conexionBD = mybatis.MyBatisUtil.getSession();
+
+        if (conexionBD != null) {
+            try {
+
+                List<Sucursal> sucursales = conexionBD.selectList("sucursal.buscarSucursalesUsuario", idUsuario);
+
+                if (!sucursales.isEmpty()) {
+                    msj.setSucursales(sucursales);
+                    msj.setContenido("Respuesta exitosa.");
+                    msj.setError(Boolean.FALSE);
+                } else {
+                    msj.setContenido("No hay sucursales registradas a la empresa.");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                msj.setContenido("Error:" + e);
+            } finally {
+                conexionBD.close();
+            }
+        }
+
+        return msj;
+    }
+
 }
