@@ -151,7 +151,29 @@ public class UbicacionDAO {
     }
     
     public static Mensaje buscarUbicacion(Integer idUbicacion) {
-        return new Mensaje();
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(Boolean.TRUE);
+
+        try (SqlSession conexionDB = MyBatisUtil.getSession()) {
+            if (conexionDB == null) {
+                mensaje.setContenido("No hay conexion con la base de datos.");
+                return mensaje;
+            }
+            
+            Ubicacion ubicacion = conexionDB.selectOne("ubicacion.buscarUbicacion", idUbicacion);
+            mensaje.setUbicacion(ubicacion);
+            if (ubicacion != null) {
+                mensaje.setError(Boolean.FALSE);
+                mensaje.setContenido("Respuesta exitosa.");
+            } else {
+                mensaje.setContenido("No hay ubicacion con el ID proporcionado.");
+            }
+            
+        } catch (Exception e) {
+            mensaje.setContenido("Error: " + e.getMessage());
+        }
+
+        return mensaje;
     }
     
 }
