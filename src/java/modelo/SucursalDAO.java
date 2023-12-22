@@ -145,9 +145,9 @@ public class SucursalDAO {
             try {
 
                 List<Sucursal> sucursales = conexionBD.selectList("sucursal.buscarSucursales");
-
+                msj.setSucursales(sucursales);
+                
                 if (!sucursales.isEmpty()) {
-                    msj.setSucursales(sucursales);
                     msj.setContenido("Respuesta exitosa.");
                     msj.setError(Boolean.FALSE);
                 } else {
@@ -174,9 +174,9 @@ public class SucursalDAO {
             try {
 
                 List<Sucursal> sucursales = conexionBD.selectList("sucursal.buscarSucursalesUsuario", idUsuario);
-
+                msj.setSucursales(sucursales);
+                
                 if (!sucursales.isEmpty()) {
-                    msj.setSucursales(sucursales);
                     msj.setContenido("Respuesta exitosa.");
                     msj.setError(Boolean.FALSE);
                 } else {
