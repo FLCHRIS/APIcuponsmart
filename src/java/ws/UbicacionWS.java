@@ -2,6 +2,7 @@ package ws;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -34,7 +35,7 @@ public class UbicacionWS {
     @Path("registrarUbicacionEmpresa")
     @Produces(MediaType.APPLICATION_JSON)
     public Mensaje registrarUbicacionEmpresa(
-            @FormParam("calle") String calle, 
+            @FormParam("calle") String calle,
             @FormParam("numero") Integer numero,
             @FormParam("codigoPostal") String codigoPostal,
             @FormParam("ciudad") String ciudad,
@@ -153,6 +154,19 @@ public class UbicacionWS {
         Mensaje mensaje = UbicacionDAO.eliminarUbicacion(idUbicacion);
 
         return mensaje;
+    }
+
+    @GET
+    @Path("buscarUbicacion/{idUbicacion}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje buscarUbicacion(
+            @PathParam("idUbicacion") Integer idUbicacion) {
+
+        if (idUbicacion == null || idUbicacion <= 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        return UbicacionDAO.buscarUbicacion(idUbicacion);
     }
 
 }
