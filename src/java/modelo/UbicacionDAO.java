@@ -150,4 +150,8 @@ public class UbicacionDAO {
         return mensaje;
     }
     
+    public static Mensaje buscarUbicacion(Integer idUbicacion) {
+        return new Mensaje();
+    }
+    
 }
