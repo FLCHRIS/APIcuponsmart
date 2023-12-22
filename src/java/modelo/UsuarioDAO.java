@@ -147,11 +147,11 @@ public class UsuarioDAO {
         if (conexionBD != null) {
             try {
                 List<Usuario> consulta = conexionBD.selectList("usuario.buscarUsuarios", idUsuario);
-
+                msj.setUsuarios(consulta);
+                
                 if (!consulta.isEmpty()) {
                     msj.setError(Boolean.FALSE);
                     msj.setContenido("Respuesta exitosa.");
-                    msj.setUsuarios(consulta);
                 } else {
                     msj.setContenido("No hay usuarios registrados.");
                 }
@@ -175,11 +175,11 @@ public class UsuarioDAO {
         if (conexionDB != null) {
             try {
                 List<Roll> listRoll = conexionDB.selectList("usuario.buscarRolles");
-
+                mensaje.setRoles(listRoll);
+                
                 if (!listRoll.isEmpty()) {
                     mensaje.setError(Boolean.FALSE);
                     mensaje.setContenido("Respuesta exitosa.");
-                    mensaje.setRoles(listRoll);
                 } else {
                     mensaje.setContenido("No hay roles registrados.");
                 }
