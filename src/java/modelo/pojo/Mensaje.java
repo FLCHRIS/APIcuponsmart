@@ -17,11 +17,12 @@ public class Mensaje {
     private List<Promocion> promociones;
     private Promocion promocion;
     private List<Categoria> categorias;
+    private Ubicacion ubicacion;
 
     public Mensaje() {
     }
 
-    public Mensaje(Boolean error, String contenido, List<Empresa> empresas, Empresa empresa, Usuario usuarioSesion, List<Sucursal> sucursales, Sucursal sucursal, List<Usuario> usuarios, Cliente cliente, List<Roll> roles, List<Promocion> promociones, Promocion promocion, List<Categoria> categorias) {
+    public Mensaje(Boolean error, String contenido, List<Empresa> empresas, Empresa empresa, Usuario usuarioSesion, List<Sucursal> sucursales, Sucursal sucursal, List<Usuario> usuarios, Cliente cliente, List<Roll> roles, List<Promocion> promociones, Promocion promocion, List<Categoria> categorias, Ubicacion ubicacion) {
         this.error = error;
         this.contenido = contenido;
         this.empresas = empresas;
@@ -35,6 +36,15 @@ public class Mensaje {
         this.promociones = promociones;
         this.promocion = promocion;
         this.categorias = categorias;
+        this.ubicacion = ubicacion;
+    }
+
+    public Ubicacion getUbicacion() {
+        return ubicacion;
+    }
+
+    public void setUbicacion(Ubicacion ubicacion) {
+        this.ubicacion = ubicacion;
     }
 
     public Sucursal getSucursal() {
