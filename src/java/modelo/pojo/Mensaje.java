@@ -38,22 +38,6 @@ public class Mensaje {
         this.roles = roles;
     }
 
-    public List<Roll> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Roll> roles) {
-        this.roles = roles;
-    }
-
-    public Empresa getEmpresa() {
-        return empresa;
-    }
-
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
-    }
-
     public Boolean getError() {
         return error;
     }
@@ -76,6 +60,14 @@ public class Mensaje {
 
     public void setEmpresas(List<Empresa> empresas) {
         this.empresas = empresas;
+    }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
 
     public Usuario getUsuarioSesion() {
@@ -109,5 +101,17 @@ public class Mensaje {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
+    public List<Roll> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Roll> roles) {
+        this.roles = roles;
+    }
+    
+    
+
+    
     
 }

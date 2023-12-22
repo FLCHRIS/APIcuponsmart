@@ -36,9 +36,12 @@ public class EmpresaWS {
     @Path("registrarEmpresa")
     @Produces(MediaType.APPLICATION_JSON)
     public Mensaje registrarEmpresa(
-            @FormParam("nombreComercial") String nombreComercial, @FormParam("nombre") String nombre,
-            @FormParam("email") String email, @FormParam("telefono") String telefono,
-            @FormParam("paginaWeb") String paginaWeb, @FormParam("RFC") String RFC,
+            @FormParam("nombreComercial") String nombreComercial, 
+            @FormParam("nombre") String nombre,
+            @FormParam("email") String email, 
+            @FormParam("telefono") String telefono,
+            @FormParam("paginaWeb") String paginaWeb,
+            @FormParam("RFC") String RFC,
             @FormParam("nombreRepresentante") String nombreRepresentante) {
 
         if (nombreComercial == null || nombreComercial.isEmpty()) {
@@ -80,10 +83,14 @@ public class EmpresaWS {
     @Path("editarEmpresa")
     @Produces(MediaType.APPLICATION_JSON)
     public Mensaje editarEmpresa(
-            @FormParam("nombre") String nombre, @FormParam("nombreComercial") String nombreComercial,
-            @FormParam("email") String email, @FormParam("telefono") String telefono,
-            @FormParam("paginaWeb") String paginaWeb, @FormParam("nombreRepresentante") String nombreRepresentante,
-            @FormParam("estatus") String estatus, @FormParam("idEmpresa") Integer idEmpresa) {
+            @FormParam("nombre") String nombre, 
+            @FormParam("nombreComercial") String nombreComercial,
+            @FormParam("email") String email,
+            @FormParam("telefono") String telefono,
+            @FormParam("paginaWeb") String paginaWeb, 
+            @FormParam("nombreRepresentante") String nombreRepresentante,
+            @FormParam("estatus") String estatus, 
+            @FormParam("idEmpresa") Integer idEmpresa) {
 
         if (idEmpresa == null || idEmpresa <= 0) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
