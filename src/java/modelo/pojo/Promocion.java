@@ -1,5 +1,7 @@
 package modelo.pojo;
 
+import java.util.List;
+
 public class Promocion {
     
     private Integer idPromocion;
@@ -18,11 +20,12 @@ public class Promocion {
     private String estatus;
     private String fotografiaBase64;
     private String categoria;
+    private List<Integer> idSucursales;
 
     public Promocion() {
     }
 
-    public Promocion(Integer idPromocion, Integer idCategoria, String nombre, String descripcion, byte[] fotografia, String fechaInicio, String fechaFin, String restriccion, String tipoPromocion, Float porcentajeDescuento, Float precioRebajado, Integer noCuponesMaximo, String codigo, String estatus, String fotografiaBase64, String categoria) {
+    public Promocion(Integer idPromocion, Integer idCategoria, String nombre, String descripcion, byte[] fotografia, String fechaInicio, String fechaFin, String restriccion, String tipoPromocion, Float porcentajeDescuento, Float precioRebajado, Integer noCuponesMaximo, String codigo, String estatus, String fotografiaBase64, String categoria, List<Integer> idSucursales) {
         this.idPromocion = idPromocion;
         this.idCategoria = idCategoria;
         this.nombre = nombre;
@@ -39,6 +42,7 @@ public class Promocion {
         this.estatus = estatus;
         this.fotografiaBase64 = fotografiaBase64;
         this.categoria = categoria;
+        this.idSucursales = idSucursales;
     }
 
     public String getCategoria() {
@@ -167,6 +171,14 @@ public class Promocion {
 
     public void setFotografiaBase64(String fotografiaBase64) {
         this.fotografiaBase64 = fotografiaBase64;
+    }
+
+    public List<Integer> getIdSucursales() {
+        return idSucursales;
+    }
+
+    public void setIdSucursales(List<Integer> idSucursales) {
+        this.idSucursales = idSucursales;
     }
     
 }
