@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="promocion">
-    <insert id="registrar" parameterType="modelo.pojo.Promocion">
+    <insert id="registrar" parameterType="modelo.pojo.Promocion" useGeneratedKeys="true" keyProperty="idPromocion">
         INSERT INTO promocion (
         idCategoria, nombre, descripcion, fechaInicio, fechaFin, 
         restriccion, tipoPromocion, porcentajeDescuento, precioRebajado, noCuponesMaximo, codigo) 
@@ -45,6 +45,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="buscarCategorias" resultType="modelo.pojo.Categoria">
         SELECT * FROM categoria;
     </select>
+    <insert id="registrarPromocionSucursal" parameterType="map">
+        INSERT INTO promocionSucursal (idPromocion, idSucursal)
+        VALUES (#{idPromocion}, #{idSucursal});
+    </insert>
     <delete id="eliminarPromocionSucursal" parameterType="int">
         DELETE FROM promocionSucursal WHERE idPromocion = #{idPromocion};
     </delete>
