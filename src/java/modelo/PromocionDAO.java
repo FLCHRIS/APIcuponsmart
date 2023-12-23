@@ -156,6 +156,31 @@ public class PromocionDAO {
 
         return mensaje;
     }
+    
+    public static Mensaje buscarPromocionesEmpresa(Integer idEmpresa) {
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(Boolean.TRUE);
+
+        try (SqlSession conexionDB = MyBatisUtil.getSession()) {
+            if (conexionDB == null) {
+                mensaje.setContenido("No hay conexion con la base de datos.");
+                return mensaje;
+            }
+            List<Promocion> promociones = conexionDB.selectList("promocion.buscarPromocionesEmpresa", idEmpresa);
+            mensaje.setPromociones(promociones);
+
+            if (!promociones.isEmpty()) {
+                mensaje.setError(Boolean.FALSE);
+                mensaje.setContenido("Respuesta exitosa");
+            } else {
+                mensaje.setContenido("No hay promociones registradas.");
+            }
+        } catch (Exception e) {
+            mensaje.setContenido("Error: " + e.getMessage());
+        }
+
+        return mensaje;
+    }
 
     public static Mensaje registrarfotografia(Integer idPromocion, byte[] fotografia) {
         Mensaje mensaje = new Mensaje();
