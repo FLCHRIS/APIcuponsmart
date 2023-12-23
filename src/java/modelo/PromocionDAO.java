@@ -1,5 +1,6 @@
 package modelo;
 
+import java.util.HashMap;
 import java.util.List;
 import modelo.pojo.Categoria;
 import modelo.pojo.Mensaje;
@@ -9,40 +10,37 @@ import org.apache.ibatis.session.SqlSession;
 
 public class PromocionDAO {
 
-    public static Mensaje registrarPromocion(
-            Integer idCategoria, String nombre, String descripcion, String fechaInicio, String fechaFin,
-            String restriccion, String tipoPromocion, Float porcentajeDescuento, Float precioRebajado,
-            Integer noCuponesMaximo, String codigo) {
+    public static Mensaje registrarPromocion(Promocion promocion) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(Boolean.TRUE);
-
-        Promocion promocion = new Promocion();
-        promocion.setIdCategoria(idCategoria);
-        promocion.setNombre(nombre);
-        promocion.setDescripcion(descripcion);
-        promocion.setFechaInicio(fechaInicio);
-        promocion.setFechaFin(fechaFin);
-        promocion.setRestriccion(restriccion);
-        promocion.setTipoPromocion(tipoPromocion);
-        promocion.setPorcentajeDescuento(porcentajeDescuento);
-        promocion.setPrecioRebajado(precioRebajado);
-        promocion.setNoCuponesMaximo(noCuponesMaximo);
-        promocion.setCodigo(codigo);
 
         try (SqlSession conexionDB = MyBatisUtil.getSession()) {
             if (conexionDB == null) {
                 mensaje.setContenido("No hay conexión a la base de datos.");
                 return mensaje;
             }
-
-            Promocion codigoExiste = conexionDB.selectOne("promocion.buscarCodigo", codigo);
+            
+            Promocion codigoExiste = conexionDB.selectOne("promocion.buscarCodigo", promocion.getCodigo());
             if (codigoExiste != null) {
                 mensaje.setContenido("No se puede registrar porque el código ya existe.");
                 return mensaje;
             }
-
+            
             int filasAfectadas = conexionDB.insert("promocion.registrar", promocion);
+            
+            for (int idSucursal : promocion.getIdSucursales()) {
+                HashMap<String, Object> parametros = new HashMap<>();
+                parametros.put("idPromocion", promocion.getIdPromocion());
+                parametros.put("idSucursal", idSucursal);
+                
+                int filasAfectadasSucursal = conexionDB.insert("promocion.registrarPromocionSucursal", parametros);
+                if (filasAfectadasSucursal <= 0) {
+                    mensaje.setContenido("No se pudieron registrar todas las sucursales.");
+                    return mensaje;
+                }
+            }
             conexionDB.commit();
+            
             if (filasAfectadas > 0) {
                 mensaje.setError(Boolean.FALSE);
                 mensaje.setContenido("Promoción registrada con éxito.");
@@ -243,4 +241,5 @@ public class PromocionDAO {
 
         return mensaje;
     }
+
 }
