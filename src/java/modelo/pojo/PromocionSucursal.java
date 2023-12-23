@@ -1,8 +1,17 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package modelo.pojo;
 
+/**
+ *
+ * @author Admin
+ */
 public class PromocionSucursal {
     
-    private Integer idPromocion;
+     private Integer idPromocion;
     private Integer idSucursal;
 
     public PromocionSucursal() {
