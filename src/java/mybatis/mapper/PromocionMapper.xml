@@ -52,4 +52,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <delete id="eliminarPromocionSucursal" parameterType="int">
         DELETE FROM promocionSucursal WHERE idPromocion = #{idPromocion};
     </delete>
+    <select id="buscarPromocionesEmpresa" resultType="modelo.pojo.Promocion" parameterType="int" >
+        SELECT DISTINCT p.idPromocion, p.idCategoria, p.nombre, 
+        p.descripcion, p.fechaInicio, p.fechaFin, p.restriccion, 
+        p.tipoPromocion, p.porcentajeDescuento, p.precioRebajado, 
+        p.noCuponesMaximo, p.codigo, p.estatus, c.categoria 
+        FROM promocion p 
+        INNER JOIN categoria c ON c.idCategoria = p.idCategoria 
+        INNER JOIN promocionSucursal ps ON p.idPromocion = ps.idPromocion 
+        INNER JOIN sucursal s ON s.idSucursal = ps.idSucursal 
+        WHERE s.idEmpresa = #{idEmpresa};
+    </select>
 </mapper>
