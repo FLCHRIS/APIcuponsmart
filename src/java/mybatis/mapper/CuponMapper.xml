@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cupon">
+    <select id="buscarTodosLosCupones" resultType="modelo.pojo.Promocion">
+        SELECT  p.idPromocion, p.nombre, 
+        p.descripcion, p.fechaInicio, p.fechaFin, p.restriccion, 
+        p.tipoPromocion, p.porcentajeDescuento, p.precioRebajado, 
+        p.noCuponesMaximo, p.codigo, p.estatus, c.categoria 
+        FROM promocion p 
+        INNER JOIN categoria c ON c.idCategoria = p.idCategoria;
+    </select>
+    
+    <select id="buscarCuponesComercial" resultType="modelo.pojo.Promocion" parameterType="int">
+        SELECT Distinct p.idPromocion, p.nombre, 
+        p.descripcion, p.fechaInicio, p.fechaFin, p.restriccion, 
+        p.tipoPromocion, p.porcentajeDescuento, p.precioRebajado, 
+        p.noCuponesMaximo, p.codigo, p.estatus, c.categoria 
+        FROM promocion p 
+        INNER JOIN categoria c ON c.idCategoria = p.idCategoria 
+        INNER JOIN promocionSucursal ps ON p.idPromocion = ps.idPromocion 
+        INNER JOIN sucursal s ON s.idSucursal = ps.idSucursal 
+        WHERE s.idEmpresa = #{idEmpresa};
+    </select>
+</mapper>

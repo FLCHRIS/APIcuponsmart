@@ -24,5 +24,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         <mapper resource="mybatis/mapper/AutenticacionMapper.xml"/>
         <mapper resource="mybatis/mapper/UsuarioMapper.xml"/>
         <mapper resource="mybatis/mapper/PromocionMapper.xml"/>
+        <mapper resource="mybatis/mapper/CuponMapper.xml"/>
     </mappers>
 </configuration>
