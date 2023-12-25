@@ -235,6 +235,19 @@ public class PromocionWS {
 
         return PromocionDAO.buscarPromocionesEmpresa(idEmpresa);
     }
+    
+    @GET
+    @Path("buscarSucursalesEmpresa/{idEmpresa}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje buscarSucursalesEmpresa(
+        @PathParam("idEmpresa") Integer idEmpresa) {
+        
+        if (idEmpresa == null || idEmpresa <= 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        return PromocionDAO.buscarSucursalesEmpresa(idEmpresa);
+    }
 
     @GET
     @Path("buscarCategorias")

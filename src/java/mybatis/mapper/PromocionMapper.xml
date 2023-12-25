@@ -63,4 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         INNER JOIN sucursal s ON s.idSucursal = ps.idSucursal 
         WHERE s.idEmpresa = #{idEmpresa};
     </select>
+    <select id="buscarSucursalesEmpresa" resultType="modelo.pojo.Sucursal" parameterType="int" >
+        SELECT idSucursal, nombre FROM sucursal WHERE idEmpresa = #{idEmpresa};
+    </select>
 </mapper>
