@@ -5,6 +5,7 @@ import java.util.List;
 import modelo.pojo.Categoria;
 import modelo.pojo.Mensaje;
 import modelo.pojo.Promocion;
+import modelo.pojo.Sucursal;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 
@@ -264,6 +265,32 @@ public class PromocionDAO {
             mensaje.setContenido("Error: " + e.getMessage());
         }
 
+        return mensaje;
+    }
+    
+    public static Mensaje buscarSucursalesEmpresa(Integer idEmpresa) {
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(Boolean.TRUE);
+        
+        try (SqlSession conexionDB = MyBatisUtil.getSession()) {
+            if (conexionDB == null) {
+                mensaje.setContenido("No hay conexion con la base de datos.");
+                return mensaje;
+            }
+            
+            List<Sucursal> sucursales = conexionDB.selectList("promocion.buscarSucursalesEmpresa", idEmpresa);
+            mensaje.setSucursales(sucursales);
+            
+            if (!sucursales.isEmpty()) {
+                mensaje.setError(Boolean.FALSE);
+                mensaje.setContenido("Respuesta exitosa");
+            } else {
+                mensaje.setContenido("No hay sucursales registradas.");
+            }
+        } catch (Exception e) {
+            mensaje.setContenido("Error: " + e.getMessage());
+        }
+        
         return mensaje;
     }
 
