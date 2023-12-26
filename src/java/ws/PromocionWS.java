@@ -91,7 +91,7 @@ public class PromocionWS {
             if (promocion.getPrecioRebajado() == null || promocion.getPrecioRebajado() <= 0) {
                 throw new WebApplicationException(Response.Status.BAD_REQUEST);
             }
-            
+
             mensaje = PromocionDAO.registrarPromocion(promocion);
         }
 
@@ -101,74 +101,78 @@ public class PromocionWS {
     @PUT
     @Path("editarPromocion")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje editarPromocion(
-            @FormParam("idPromocion") Integer idPromocion, @FormParam("idCategoria") Integer idCategoria,
-            @FormParam("nombre") String nombre, @FormParam("descripcion") String descripcion,
-            @FormParam("fechaInicio") String fechaInicio, @FormParam("fechaFin") String fechaFin,
-            @FormParam("restriccion") String restriccion, @FormParam("tipoPromocion") String tipoPromocion,
-            @FormParam("porcentajeDescuento") Float porcentajeDescuento, @FormParam("codigo") String codigo,
-            @FormParam("noCuponesMaximo") Integer noCuponesMaximo, @FormParam("estatus") String estatus,
-            @FormParam("precioRebajado") Float precioRebajado) {
-        Mensaje mensaje = new Mensaje();
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Mensaje editarPromocion(String json) {
+        Gson gson = new Gson();
+        Promocion promocion = gson.fromJson(json, Promocion.class);
 
-        if (idPromocion == null || idPromocion <= 0) {
+        Mensaje mensaje = null;
+
+        if (promocion == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-
-        if (idCategoria == null || idCategoria <= 0) {
+        
+        if (promocion.getIdPromocion() == null || promocion.getIdPromocion() <= 0) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        if (nombre == null || nombre.isEmpty()) {
+        if (promocion.getIdCategoria() == null || promocion.getIdCategoria() <= 0) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        if (descripcion == null || descripcion.isEmpty()) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-        if (Utilidades.validarFechas(fechaInicio, fechaFin)) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-        if (restriccion == null || restriccion.isEmpty()) {
+        if (promocion.getNombre() == null || promocion.getNombre().isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        if (noCuponesMaximo == null || noCuponesMaximo <= 0) {
+        if (promocion.getDescripcion() == null || promocion.getDescripcion().isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        if (Utilidades.validarFechas(promocion.getFechaInicio(), promocion.getFechaFin())) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        if (promocion.getRestriccion() == null || promocion.getRestriccion().isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        if (codigo == null || !Utilidades.validarCadena(codigo, Utilidades.CODIGO_PATTERN)) {
+        if (promocion.getNoCuponesMaximo() == null || promocion.getNoCuponesMaximo() <= 0) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        if (estatus == null || estatus.isEmpty() || (!Constantes.ESTADO_ACTIVO.equals(estatus) && !Constantes.ESTADO_INACTIVO.equals(estatus))) {
+        if (promocion.getCodigo() == null || !Utilidades.validarCadena(promocion.getCodigo(), Utilidades.CODIGO_PATTERN)) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        if (promocion.getEstatus() == null || promocion.getEstatus().isEmpty() || (!Constantes.ESTADO_ACTIVO.equals(promocion.getEstatus()) && !Constantes.ESTADO_INACTIVO.equals(promocion.getEstatus()))) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        if (tipoPromocion == null || tipoPromocion.isEmpty() || (!Constantes.PROMOCION_DESCUENTO.equals(tipoPromocion) && !Constantes.PROMOCION_REBAJADO.equals(tipoPromocion))) {
+        if (promocion.getTipoPromocion() == null
+                || promocion.getTipoPromocion().isEmpty()
+                || (!Constantes.PROMOCION_DESCUENTO.equals(promocion.getTipoPromocion())
+                && !Constantes.PROMOCION_REBAJADO.equals(promocion.getTipoPromocion()))) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        if (tipoPromocion.equals(Constantes.PROMOCION_DESCUENTO)) {
-            if (porcentajeDescuento == null || porcentajeDescuento <= 0) {
+        if (promocion.getIdSucursales() == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (promocion.getTipoPromocion().equals(Constantes.PROMOCION_DESCUENTO)) {
+            if (promocion.getPorcentajeDescuento() == null || promocion.getPorcentajeDescuento() <= 0) {
                 throw new WebApplicationException(Response.Status.BAD_REQUEST);
             }
 
-            mensaje = PromocionDAO.editarPromocion(
-                    idPromocion, idCategoria, nombre, descripcion, fechaInicio, fechaFin,
-                    restriccion, tipoPromocion, porcentajeDescuento, precioRebajado,
-                    noCuponesMaximo, codigo, estatus);
+            mensaje = PromocionDAO.editarPromocion(promocion);
         } else {
-            if (precioRebajado == null || precioRebajado <= 0) {
+            if (promocion.getPrecioRebajado() == null || promocion.getPrecioRebajado() <= 0) {
                 throw new WebApplicationException(Response.Status.BAD_REQUEST);
             }
 
-            mensaje = PromocionDAO.editarPromocion(
-                    idPromocion, idCategoria, nombre, descripcion, fechaInicio, fechaFin,
-                    restriccion, tipoPromocion, porcentajeDescuento, precioRebajado,
-                    noCuponesMaximo, codigo, estatus);
+            mensaje = PromocionDAO.editarPromocion(promocion);
         }
-
+        
         return mensaje;
     }
 
@@ -222,26 +226,26 @@ public class PromocionWS {
 
         return PromocionDAO.buscarPromociones();
     }
-    
+
     @GET
     @Path("buscarPromocionesEmpresa/{idEmpresa}")
     @Produces(MediaType.APPLICATION_JSON)
     public Mensaje buscarPromocionesEmpresa(
-        @PathParam("idEmpresa") Integer idEmpresa) {
-        
+            @PathParam("idEmpresa") Integer idEmpresa) {
+
         if (idEmpresa == null || idEmpresa <= 0) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
         return PromocionDAO.buscarPromocionesEmpresa(idEmpresa);
     }
-    
+
     @GET
     @Path("buscarSucursalesEmpresa/{idEmpresa}")
     @Produces(MediaType.APPLICATION_JSON)
     public Mensaje buscarSucursalesEmpresa(
-        @PathParam("idEmpresa") Integer idEmpresa) {
-        
+            @PathParam("idEmpresa") Integer idEmpresa) {
+
         if (idEmpresa == null || idEmpresa <= 0) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
