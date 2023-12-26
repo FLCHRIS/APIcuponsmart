@@ -11,7 +11,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         p.tipoPromocion, p.porcentajeDescuento, p.precioRebajado, 
         p.noCuponesMaximo, p.codigo, p.estatus, c.categoria 
         FROM promocion p 
-        INNER JOIN categoria c ON c.idCategoria = p.idCategoria;
+        INNER JOIN categoria c ON c.idCategoria = p.idCategoria 
+        WHERE p.estatus = 'activo'
     </select>
     
     <select id="buscarCuponesComercial" resultType="modelo.pojo.Promocion" parameterType="int">
@@ -23,6 +24,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         INNER JOIN categoria c ON c.idCategoria = p.idCategoria 
         INNER JOIN promocionSucursal ps ON p.idPromocion = ps.idPromocion 
         INNER JOIN sucursal s ON s.idSucursal = ps.idSucursal 
-        WHERE s.idEmpresa = #{idEmpresa};
+        WHERE s.idEmpresa = #{idEmpresa} AND p.estatus = 'activo' 
     </select>
+    
+    <update id="canjearCupon" parameterType="String">
+        UPDATE promocion
+        SET noCuponesMaximo = noCuponesMaximo -1
+        WHERE codigo = #{codigo};
+    </update>
+    
+    <update id="canjearCuponComercial" parameterType="map">
+        UPDATE promocion p 
+        SET p.noCuponesMaximo = p.noCuponesMaximo - 1 
+        WHERE p.codigo = #{codigo}  
+        AND p.codigo IN ( 
+        SELECT p2.codigo 
+        FROM ( 
+        SELECT p3.codigo 
+        FROM promocion p3 
+        INNER JOIN categoria c ON c.idCategoria = p3.idCategoria 
+        INNER JOIN promocionSucursal ps ON p3.idPromocion = ps.idPromocion 
+        INNER JOIN sucursal s ON s.idSucursal = ps.idSucursal 
+        WHERE s.idEmpresa = #{idEmpresa} 
+        ) p2 
+        );
+    </update>
 </mapper>
