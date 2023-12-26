@@ -1,5 +1,6 @@
 package modelo;
 
+import java.util.HashMap;
 import java.util.List;
 import modelo.pojo.Mensaje;
 import modelo.pojo.Promocion;
@@ -74,6 +75,36 @@ public class CuponDAO {
                 }else{
                     respuesta.setError(true);
                     respuesta.setContenido("Canje del cupón invalido, verifique el código");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                respuesta.setError(true);
+                respuesta.setContenido("Error;"+e);
+                }finally {
+                conexionDB.close();
+            }
+        }
+        
+        return respuesta;
+    }
+
+    public static Mensaje canjearCuponComercial(String codigo, Integer idEmpresa) {
+        Mensaje respuesta = new Mensaje();
+        respuesta.setError(false);
+        SqlSession conexionDB = mybatis.MyBatisUtil.getSession();
+        if (conexionDB != null){
+            try {
+                HashMap<Object, Object> parametros = new HashMap<>();
+                parametros.put("codigo",codigo);
+                parametros.put("idEmpresa",idEmpresa);
+                int filasAfectadas = conexionDB.update("cupon.canjearCuponComercial", parametros);
+                
+                if (filasAfectadas != 0){
+                    respuesta.setContenido("Cupon canjeado con exito");
+                    conexionDB.commit();
+                }else{
+                    respuesta.setError(true);
+                    respuesta.setContenido("Cupón invalido para tú empresa o el código que ingresaste es incorrecto");
                 }
             } catch (Exception e) {
                 e.printStackTrace();

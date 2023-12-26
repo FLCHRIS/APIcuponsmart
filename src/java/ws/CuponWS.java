@@ -55,4 +55,25 @@ public class CuponWS {
         Mensaje mensaje = CuponDAO.canjearCupon(codigo);
         return mensaje;
     }
+    
+      @PUT
+    @Path("canjearCuponComercial")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje canjearCuponComercial(@FormParam("codigo") String codigo,
+        @FormParam("idEmpresa") Integer idEmpresa){
+        
+        if (codigo.length() != 8){
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        
+        if (idEmpresa < 0 || idEmpresa == null){
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        Mensaje mensaje = CuponDAO.canjearCuponComercial(codigo, idEmpresa);
+        return mensaje;
+    }
+    
+    
 }
