@@ -54,6 +54,54 @@ public class PromocionDAO {
 
         return mensaje;
     }
+    
+    public static Mensaje editarPromocion(Promocion promocion) {
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(Boolean.TRUE);
+
+        try (SqlSession conexionDB = MyBatisUtil.getSession()) {
+            if (conexionDB == null) {
+                mensaje.setContenido("No hay conexión a la base de datos.");
+                return mensaje;
+            }
+            
+            Promocion codigoExiste = conexionDB.selectOne("promocion.buscarCodigo", promocion.getCodigo());
+
+            if (codigoExiste != null && !codigoExiste.getIdPromocion().equals(promocion.getIdPromocion())) {
+                mensaje.setContenido("No se puede editar porque el código ya existe para otra promoción.");
+                return mensaje;
+            }
+            
+            int filasAfectadas = conexionDB.update("promocion.editar", promocion);
+            int promocionSucursalEliminada = conexionDB.delete("promocion.eliminarPromocionSucursal", promocion.getIdPromocion());
+            
+            for (int idSucursal : promocion.getIdSucursales()) {
+                HashMap<String, Object> parametros = new HashMap<>();
+                parametros.put("idPromocion", promocion.getIdPromocion());
+                parametros.put("idSucursal", idSucursal);
+                
+                int filasAfectadasSucursal = conexionDB.insert("promocion.registrarPromocionSucursal", parametros);
+                if (filasAfectadasSucursal <= 0) {
+                    mensaje.setContenido("No se pudieron registrar todas las sucursales.");
+                    return mensaje;
+                }
+            }
+            
+            conexionDB.commit();
+            
+            if (filasAfectadas > 0 || promocionSucursalEliminada > 0) {
+                mensaje.setError(Boolean.FALSE);
+                mensaje.setContenido("Promoción actualizada con éxito.");
+            } else {
+                mensaje.setContenido("No se pudo actualizar la promoción.");
+            }
+            
+        } catch (Exception e) {
+            mensaje.setContenido("Error: " + e.getMessage());
+        }
+        
+        return mensaje;
+    }
 
     public static Mensaje eliminarPromocion(Integer idPromocion) {
         Mensaje mensaje = new Mensaje();
@@ -74,57 +122,6 @@ public class PromocionDAO {
                 mensaje.setContenido("Promocion eliminada con éxito.");
             } else {
                 mensaje.setContenido("Hubo un error en la operación de eliminar la promocion.");
-            }
-        } catch (Exception e) {
-            mensaje.setContenido("Error: " + e.getMessage());
-        }
-
-        return mensaje;
-    }
-
-    public static Mensaje editarPromocion(
-            Integer idPromocion, Integer idCategoria, String nombre, String descripcion, String fechaInicio,
-            String fechaFin, String restriccion, String tipoPromocion, Float porcentajeDescuento,
-            Float precioRebajado, Integer noCuponesMaximo, String codigo, String estatus) {
-        Mensaje mensaje = new Mensaje();
-        mensaje.setError(Boolean.TRUE);
-
-        Promocion promocion = new Promocion();
-        promocion.setIdPromocion(idPromocion);
-        promocion.setIdCategoria(idCategoria);
-        promocion.setNombre(nombre);
-        promocion.setDescripcion(descripcion);
-        promocion.setFechaInicio(fechaInicio);
-        promocion.setFechaFin(fechaFin);
-        promocion.setRestriccion(restriccion);
-        promocion.setTipoPromocion(tipoPromocion);
-        promocion.setPorcentajeDescuento(porcentajeDescuento);
-        promocion.setPrecioRebajado(precioRebajado);
-        promocion.setNoCuponesMaximo(noCuponesMaximo);
-        promocion.setCodigo(codigo);
-        promocion.setEstatus(estatus);
-
-        try (SqlSession conexionDB = MyBatisUtil.getSession()) {
-            if (conexionDB == null) {
-                mensaje.setContenido("No hay conexión a la base de datos.");
-                return mensaje;
-            }
-
-            Promocion codigoExiste = conexionDB.selectOne("promocion.buscarCodigo", codigo);
-
-            if (codigoExiste != null && !codigoExiste.getIdPromocion().equals(promocion.getIdPromocion())) {
-                mensaje.setContenido("No se puede editar porque el código ya existe para otra promoción.");
-                return mensaje;
-            }
-
-            int filasAfectadas = conexionDB.update("promocion.editar", promocion);
-            conexionDB.commit();
-
-            if (filasAfectadas > 0) {
-                mensaje.setError(Boolean.FALSE);
-                mensaje.setContenido("Promoción actualizada con éxito.");
-            } else {
-                mensaje.setContenido("No se pudo actualizar la promoción.");
             }
         } catch (Exception e) {
             mensaje.setContenido("Error: " + e.getMessage());
