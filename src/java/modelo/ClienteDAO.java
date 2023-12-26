@@ -8,13 +8,13 @@ import org.apache.ibatis.session.SqlSession;
 public class ClienteDAO {
 
     public static Mensaje registrarCliente(
-            String nombre, String apellidoPaterno, String apellidoMaterno, 
-            String telefono, String correo, String calle, Integer numero, 
+            String nombre, String apellidoPaterno, String apellidoMaterno,
+            String telefono, String correo, String calle, Integer numero,
             String contrasenia, String fechaNacimiento) {
-        
+
         Mensaje mensaje = new Mensaje();
         mensaje.setError(Boolean.TRUE);
-        
+
         Cliente cliente = new Cliente();
         cliente.setNombre(nombre);
         cliente.setApellidoPaterno(apellidoPaterno);
@@ -25,36 +25,41 @@ public class ClienteDAO {
         cliente.setNumero(numero);
         cliente.setContrasenia(contrasenia);
         cliente.setFechaNacimiento(fechaNacimiento);
-        
+
         try (SqlSession conexionDB = MyBatisUtil.getSession()) {
             if (conexionDB == null) {
                 mensaje.setContenido("No hay conexión a la base de datos.");
             }
+            Cliente clienteVerificacion = conexionDB.selectOne("cliente.verificarCorreo",cliente);
+            //System.out.println(clienteVerificacion.getCorreo());
+            if (clienteVerificacion == null) {
+                int filasAfectadas = conexionDB.insert("cliente.registrar", cliente);
+                conexionDB.commit();
 
-            int filasAfectadas = conexionDB.insert("cliente.registrar", cliente);
-            conexionDB.commit();
-
-            if (filasAfectadas > 0) {
-                mensaje.setError(Boolean.FALSE);
-                mensaje.setContenido("Cliente registrado con éxito.");
+                if (filasAfectadas > 0) {
+                    mensaje.setError(Boolean.FALSE);
+                    mensaje.setContenido("Cliente registrado con éxito.");
+                } else {
+                    mensaje.setContenido("No se pudo registrar el cliente.");
+                }
             } else {
-                mensaje.setContenido("No se pudo registrar el cliente.");
+                mensaje.setContenido("Correo ya existente, favor de ingresar otro");
             }
         } catch (Exception e) {
             mensaje.setContenido("Error: " + e.getMessage());
         }
-        
+
         return mensaje;
     }
-    
+
     public static Mensaje editarCliente(
-            String nombre, String apellidoPaterno, String apellidoMaterno, 
-            String telefono, String calle, Integer numero, 
+            String nombre, String apellidoPaterno, String apellidoMaterno,
+            String telefono, String calle, Integer numero,
             String contrasenia, String fechaNacimiento, Integer idCliente) {
-        
+
         Mensaje mensaje = new Mensaje();
         mensaje.setError(Boolean.TRUE);
-        
+
         Cliente cliente = new Cliente();
         cliente.setIdCliente(idCliente);
         cliente.setNombre(nombre);
@@ -65,7 +70,7 @@ public class ClienteDAO {
         cliente.setNumero(numero);
         cliente.setContrasenia(contrasenia);
         cliente.setFechaNacimiento(fechaNacimiento);
-        
+
         try (SqlSession conexionDB = MyBatisUtil.getSession()) {
             if (conexionDB == null) {
                 mensaje.setContenido("No hay conexión a la base de datos.");
@@ -83,7 +88,7 @@ public class ClienteDAO {
         } catch (Exception e) {
             mensaje.setContenido("Error: " + e.getMessage());
         }
-        
+
         return mensaje;
     }
 }
