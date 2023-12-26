@@ -67,4 +67,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="buscarSucursalesEmpresa" resultType="modelo.pojo.Sucursal" parameterType="int" >
         SELECT idSucursal, nombre FROM sucursal WHERE idEmpresa = #{idEmpresa};
     </select>
+    
+    <select id="buscarPromocionSucursales" resultType="modelo.pojo.PromocionSucursal" parameterType="int" >
+        SELECT idSucursal FROM promocionSucursal WHERE idPromocion = #{idPromocion};
+    </select>
+    <select id="buscarSucursales" resultType="modelo.pojo.Sucursal" parameterType="int">
+        SELECT idSucursal, nombre FROM sucursal WHERE idSucursal = #{idSucursal};
+    </select>
 </mapper>
