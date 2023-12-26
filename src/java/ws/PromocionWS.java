@@ -260,5 +260,18 @@ public class PromocionWS {
 
         return PromocionDAO.buscarCategorias();
     }
+    
+    @GET
+    @Path("buscarSucursalesValidas/{idPromocion}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje buscarSucursalesValidas(
+            @PathParam("idPromocion") Integer idPromocion) {
+        
+        if (idPromocion == null || idPromocion <= 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        return PromocionDAO.buscarSucursalesValidas(idPromocion);
+    }
 
 }
