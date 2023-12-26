@@ -14,4 +14,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         telefono = #{telefono}, calle = #{calle}, numero = #{numero}, contrasenia = #{contrasenia}, fechaNacimiento = #{fechaNacimiento} 
         WHERE idCliente = #{idCliente}
     </update>
+    <select id="verificarCorreo" parameterType="modelo.pojo.Cliente" resultType="modelo.pojo.Cliente">
+        SELECT * FROM cliente 
+        WHERE correo = #{correo}              
+    </select>
 </mapper>
