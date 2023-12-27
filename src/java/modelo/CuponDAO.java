@@ -16,9 +16,9 @@ public class CuponDAO {
         if (conexionDB != null) {
             try {
                 List<Promocion> promociones = conexionDB.selectList("cupon.buscarTodosLosCupones");
+                respuesta.setPromociones(promociones);
                 if (promociones.size() > 0) {
                     respuesta.setContenido("Exito el la busqueda de los cupones");
-                    respuesta.setPromociones(promociones);
                 } else {
                     respuesta.setError(true);
                     respuesta.setContenido("Error al obtener los cupones");
@@ -42,9 +42,10 @@ public class CuponDAO {
         if (conexionDB != null) {
             try {
                 List<Promocion> promociones = conexionDB.selectList("cupon.buscarCuponesComercial", idEmpresa);
+                respuesta.setPromociones(promociones);
                 if (promociones.size() > 0) {
                     respuesta.setContenido("Exito el la busqueda de los cupones");
-                    respuesta.setPromociones(promociones);
+                    
                 } else {
                     respuesta.setError(true);
                     respuesta.setContenido("Error al obtener los cupones");
