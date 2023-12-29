@@ -80,4 +80,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ON s.idUbicacion = u.idUbicacion 
         WHERE idSucursal = #{idSucursal};
     </select>
+    
+    <select id="buscarPromocionesPorCategoria" parameterType="int" resultType="modelo.pojo.Promocion">
+        SELECT DISTINCT p.idPromocion, p.nombre, p.tipoPromocion, p.porcentajeDescuento, P.precioRebajado, p.noCuponesMaximo, p.fechaFin, e.nombre AS nombreEmpresa
+        FROM promocion p 
+        INNER JOIN promocionSucursal ps 
+        ON p.idPromocion = ps.idPromocion 
+        INNER JOIN sucursal s 
+        ON ps.idSucursal = s.idSucursal 
+        INNER JOIN empresa e 
+        ON s.idEmpresa = e.idEmpresa 
+        INNER JOIN categoria c 
+        ON p.idCategoria = c.idCategoria 
+        WHERE c.idCategoria = #{idCategoria} AND p.noCuponesMaximo > 0 AND p.estatus = 'activo';
+    </select>
 </mapper>

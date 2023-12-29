@@ -28,24 +28,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     
     <update id="canjearCupon" parameterType="String">
-        UPDATE promocion
-        SET noCuponesMaximo = noCuponesMaximo -1
-        WHERE codigo = #{codigo};
+        UPDATE promocion 
+        SET noCuponesMaximo = noCuponesMaximo -1 
+        WHERE codigo = #{codigo} AND promocion.estatus = 'activo';
     </update>
     
     <update id="canjearCuponComercial" parameterType="map">
         UPDATE promocion p
         SET p.noCuponesMaximo = p.noCuponesMaximo - 1
-        WHERE p.codigo = #{codigo}
-        AND p.codigo IN (
-        SELECT p2.codigo
-        FROM (
-        SELECT p3.codigo
-        FROM promocion p3
+        WHERE p.codigo = #{codigo} AND promocion.estatus = 'activo' 
+        AND p.codigo IN ( 
+        SELECT p2.codigo 
+        FROM ( 
+        SELECT p3.codigo 
+        FROM promocion p3 
         INNER JOIN promocionSucursal ps ON p3.idPromocion = ps.idPromocion 
         INNER JOIN sucursal s ON s.idSucursal = ps.idSucursal 
-        WHERE s.idEmpresa = #{idEmpresa}
-        ) p2
+        WHERE s.idEmpresa = #{idEmpresa} 
+        ) p2 
         );
     </update>
 </mapper>

@@ -3,7 +3,7 @@ package modelo.pojo;
 import java.util.List;
 
 public class Promocion {
-    
+
     private Integer idPromocion;
     private Integer idCategoria;
     private String nombre;
@@ -21,11 +21,12 @@ public class Promocion {
     private String fotografiaBase64;
     private String categoria;
     private List<Integer> idSucursales;
+    private String nombreEmpresa;
 
     public Promocion() {
     }
 
-    public Promocion(Integer idPromocion, Integer idCategoria, String nombre, String descripcion, byte[] fotografia, String fechaInicio, String fechaFin, String restriccion, String tipoPromocion, Float porcentajeDescuento, Float precioRebajado, Integer noCuponesMaximo, String codigo, String estatus, String fotografiaBase64, String categoria, List<Integer> idSucursales) {
+    public Promocion(Integer idPromocion, Integer idCategoria, String nombre, String descripcion, byte[] fotografia, String fechaInicio, String fechaFin, String restriccion, String tipoPromocion, Float porcentajeDescuento, Float precioRebajado, Integer noCuponesMaximo, String codigo, String estatus, String fotografiaBase64, String categoria, List<Integer> idSucursales, String nombreEmpresa) {
         this.idPromocion = idPromocion;
         this.idCategoria = idCategoria;
         this.nombre = nombre;
@@ -43,6 +44,15 @@ public class Promocion {
         this.fotografiaBase64 = fotografiaBase64;
         this.categoria = categoria;
         this.idSucursales = idSucursales;
+        this.nombreEmpresa = nombreEmpresa;
+    }
+
+    public String getNombreEmpresa() {
+        return nombreEmpresa;
+    }
+
+    public void setNombreEmpresa(String nombreEmpresa) {
+        this.nombreEmpresa = nombreEmpresa;
     }
 
     public String getCategoria() {
@@ -180,5 +190,5 @@ public class Promocion {
     public void setIdSucursales(List<Integer> idSucursales) {
         this.idSucursales = idSucursales;
     }
-    
+
 }

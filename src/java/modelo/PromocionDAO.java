@@ -332,4 +332,29 @@ public class PromocionDAO {
         return mensaje;
     }
 
+    public static Mensaje buscarPromocionesPorCategoria(Integer idCategoria) {
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(true);
+        SqlSession conexionDB = mybatis.MyBatisUtil.getSession();
+       
+        if (conexionDB != null){
+            try {
+                List promociones =   conexionDB.selectList("promocion.buscarPromocionesPorCategoria", idCategoria);
+                 mensaje.setPromociones(promociones);
+                if (!promociones.isEmpty()){
+                    mensaje.setError(false);
+                    mensaje.setContenido("Promociones encontradas");
+                }else{
+                    mensaje.setContenido("Error en la petición");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                mensaje.setContenido("Error:"+e);
+            }finally{
+                conexionDB.close();
+            }
+        } 
+        return mensaje;
+    }
+
 }
