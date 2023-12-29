@@ -72,6 +72,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT idSucursal FROM promocionSucursal WHERE idPromocion = #{idPromocion};
     </select>
     <select id="buscarSucursales" resultType="modelo.pojo.Sucursal" parameterType="int">
-        SELECT idSucursal, idEmpresa, nombre FROM sucursal WHERE idSucursal = #{idSucursal};
+        SELECT s.idSucursal, s.idEmpresa, s.nombre, s.telefono, 
+        CONCAT('Ciudad: ',u.ciudad,' calle: ', u.calle,' NO.', u.numero) AS direccion, 
+        u.codigoPostal 
+        FROM sucursal s 
+        INNER JOIN ubicacion u 
+        ON s.idUbicacion = u.idUbicacion 
+        WHERE idSucursal = #{idSucursal};
     </select>
 </mapper>
