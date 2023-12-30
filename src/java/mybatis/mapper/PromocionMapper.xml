@@ -94,4 +94,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ON p.idCategoria = c.idCategoria 
         WHERE c.idCategoria = #{idCategoria} AND p.noCuponesMaximo > 0 AND p.estatus = 'activo';
     </select>
+    
+    <select id="buscarPromocion" parameterType="int" resultType="modelo.pojo.Promocion">
+        SELECT nombre, descripcion, fechaInicio, fechaFin, restriccion, 
+        tipoPromocion, porcentajeDescuento, precioRebajado, noCuponesMaximo, codigo 
+        FROM promocion 
+        WHERE idPromocion = #{idPromocion};
+    </select>
+    
 </mapper>
