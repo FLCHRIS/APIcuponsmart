@@ -336,25 +336,51 @@ public class PromocionDAO {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(true);
         SqlSession conexionDB = mybatis.MyBatisUtil.getSession();
-       
-        if (conexionDB != null){
+
+        if (conexionDB != null) {
             try {
-                List promociones =   conexionDB.selectList("promocion.buscarPromocionesPorCategoria", idCategoria);
-                 mensaje.setPromociones(promociones);
-                if (!promociones.isEmpty()){
+                List promociones = conexionDB.selectList("promocion.buscarPromocionesPorCategoria", idCategoria);
+                mensaje.setPromociones(promociones);
+                if (!promociones.isEmpty()) {
                     mensaje.setError(false);
                     mensaje.setContenido("Promociones encontradas");
-                }else{
+                } else {
                     mensaje.setContenido("Error en la petición");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                mensaje.setContenido("Error:"+e);
-            }finally{
+                mensaje.setContenido("Error:" + e);
+            } finally {
                 conexionDB.close();
             }
-        } 
+        }
         return mensaje;
+    }
+    
+    public static Mensaje buscarPromocion(Integer idPromocion) {
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(Boolean.TRUE);
+        
+        try (SqlSession conexionDB = MyBatisUtil.getSession()) {
+            if (conexionDB == null) {
+                mensaje.setContenido("No hay conexion con la base de datos.");
+                return mensaje;
+            }
+            
+            Promocion promocion = conexionDB.selectOne("promocion.buscarPromocion", idPromocion);
+            mensaje.setPromocion(promocion);
+            
+            if (promocion != null) {
+                mensaje.setError(Boolean.FALSE);
+                mensaje.setContenido("Respuesta exitosa.");
+            } else {
+                mensaje.setContenido("La promoción no tiene una fotografía registrada.");
+            }
+        }  catch (Exception e) {
+            mensaje.setContenido("Error: " + e.getMessage());
+        }
+
+        return mensaje; 
     }
 
 }
