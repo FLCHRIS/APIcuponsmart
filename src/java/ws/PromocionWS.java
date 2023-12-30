@@ -111,7 +111,7 @@ public class PromocionWS {
         if (promocion == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        
+
         if (promocion.getIdPromocion() == null || promocion.getIdPromocion() <= 0) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
@@ -127,11 +127,11 @@ public class PromocionWS {
         if (promocion.getDescripcion() == null || promocion.getDescripcion().isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        
+
         if (Utilidades.validarFechas(promocion.getFechaInicio(), promocion.getFechaFin())) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        
+
         if (promocion.getRestriccion() == null || promocion.getRestriccion().isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
@@ -143,7 +143,7 @@ public class PromocionWS {
         if (promocion.getCodigo() == null || !Utilidades.validarCadena(promocion.getCodigo(), Utilidades.CODIGO_PATTERN)) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        
+
         if (promocion.getEstatus() == null || promocion.getEstatus().isEmpty() || (!Constantes.ESTADO_ACTIVO.equals(promocion.getEstatus()) && !Constantes.ESTADO_INACTIVO.equals(promocion.getEstatus()))) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
@@ -172,7 +172,7 @@ public class PromocionWS {
 
             mensaje = PromocionDAO.editarPromocion(promocion);
         }
-        
+
         return mensaje;
     }
 
@@ -260,29 +260,44 @@ public class PromocionWS {
 
         return PromocionDAO.buscarCategorias();
     }
-    
+
     @GET
     @Path("buscarSucursalesValidas/{idPromocion}")
     @Produces(MediaType.APPLICATION_JSON)
     public Mensaje buscarSucursalesValidas(
             @PathParam("idPromocion") Integer idPromocion) {
+
+        if (idPromocion == null || idPromocion <= 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        return PromocionDAO.buscarSucursalesValidas(idPromocion);
+    }
+
+    @GET
+    @Path("buscarPromocionesPorCategoria/{idCategoria}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje buscarPromocionesPorCategoria(
+            @PathParam("idCategoria") Integer idCategoria) {
+
+        if (idCategoria == null || idCategoria < 1) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
         
+        return PromocionDAO.buscarPromocionesPorCategoria(idCategoria);
+    }
+
+    @GET
+    @Path("buscarPromocion/{idPromocion}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje buscarPromocion(
+            @PathParam("idPromocion") Integer idPromocion) {
+
         if (idPromocion == null || idPromocion <= 0) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         
-        return PromocionDAO.buscarSucursalesValidas(idPromocion);
+        return PromocionDAO.buscarPromocion(idPromocion);
     }
     
-    @GET
-    @Path("buscarPromocionesPorCategoria/{idCategoria}")
-    @Produces (MediaType.APPLICATION_JSON)
-    public Mensaje buscarPromocionesPorCategoria(@PathParam ("idCategoria") Integer idCategoria){
-    
-        if (idCategoria == null ||idCategoria < 1){
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-    }
-       return PromocionDAO.buscarPromocionesPorCategoria(idCategoria);
-       
-     }
 }
