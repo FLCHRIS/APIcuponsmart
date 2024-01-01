@@ -303,14 +303,27 @@ public class PromocionWS {
     @GET
     @Path("buscarPromocionesPorIdEmpresa/{idEmpresa}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje buscarPromocionesPorNombreEmpresa(
+    public Mensaje buscarPromocionesPorIdEmpresa(
             @PathParam("idEmpresa") Integer idEmpresa) {
 
         if (idEmpresa == null || idEmpresa <= 0) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        return PromocionDAO.buscarPromocionesPorNombre(idEmpresa);
+        return PromocionDAO.buscarPromocionesPorIdEmpresa(idEmpresa);
+    }
+    
+    @GET
+    @Path("buscarPromocionesPorFechaFin/{fechaFin}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje buscarPromocionesPorFechaFin(
+            @PathParam("fechaFin") String fechaFin) {
+
+        if (fechaFin == null || fechaFin.isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        return PromocionDAO.buscarPromocionesPorFechaFin(fechaFin);
     }
     
 }
