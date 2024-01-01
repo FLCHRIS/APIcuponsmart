@@ -383,7 +383,7 @@ public class PromocionDAO {
         return mensaje; 
     }
     
-    public static Mensaje buscarPromocionesPorNombre(int idEmpresa) {
+    public static Mensaje buscarPromocionesPorIdEmpresa(Integer idEmpresa) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(true);
         SqlSession conexionDB = mybatis.MyBatisUtil.getSession();
@@ -406,6 +406,32 @@ public class PromocionDAO {
             }
         }
         return mensaje;
+    }
+    
+    public static Mensaje buscarPromocionesPorFechaFin(String fechaFin) {
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(Boolean.TRUE);
+        
+        try (SqlSession conexionDB = MyBatisUtil.getSession()) {
+            if (conexionDB == null) {
+                mensaje.setContenido("No hay conexion con la base de datos.");
+                return mensaje;
+            }
+            
+            List<Promocion> promociones = conexionDB.selectList("promocion.buscarPromocionPorFechaFin", fechaFin);
+            mensaje.setPromociones(promociones);
+            
+            if (!promociones.isEmpty()) {
+                mensaje.setError(Boolean.FALSE);
+                mensaje.setContenido("Respuesta exitosa.");
+            } else {
+                mensaje.setContenido("No hay promociones con dicha fecha.");
+            }
+        }  catch (Exception e) {
+            mensaje.setContenido("Error: " + e.getMessage());
+        }
+
+        return mensaje; 
     }
 
 }
