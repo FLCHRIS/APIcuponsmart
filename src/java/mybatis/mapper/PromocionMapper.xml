@@ -82,7 +82,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     
     <select id="buscarPromocionesPorCategoria" parameterType="int" resultType="modelo.pojo.Promocion">
-        SELECT DISTINCT p.idPromocion, p.nombre, p.tipoPromocion, p.porcentajeDescuento, P.precioRebajado, p.noCuponesMaximo, p.fechaFin, e.nombre AS nombreEmpresa
+        SELECT DISTINCT p.idPromocion, p.nombre, p.tipoPromocion, p.porcentajeDescuento, P.precioRebajado, p.noCuponesMaximo, p.fechaFin, e.nombre AS nombreEmpresa 
         FROM promocion p 
         INNER JOIN promocionSucursal ps 
         ON p.idPromocion = ps.idPromocion 
@@ -103,13 +103,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     
     <select id="buscarPromocionesPorIdEmpresa" resultType="modelo.pojo.Promocion" parameterType="int" >
-        SELECT DISTINCT p.idPromocion, p.nombre, p.tipoPromocion, p.porcentajeDescuento, P.precioRebajado, p.noCuponesMaximo, p.fechaFin, e.nombre AS nombreEmpresa
+        SELECT DISTINCT p.idPromocion, p.nombre, p.tipoPromocion, p.porcentajeDescuento, P.precioRebajado, p.noCuponesMaximo, p.fechaFin, e.nombre AS nombreEmpresa 
         FROM promocion p 
         INNER JOIN categoria c ON c.idCategoria = p.idCategoria 
         INNER JOIN promocionSucursal ps ON p.idPromocion = ps.idPromocion 
         INNER JOIN sucursal s ON s.idSucursal = ps.idSucursal 
-        INNER JOIN empresa e ON e.idEmpresa = s.idEmpresa
+        INNER JOIN empresa e ON e.idEmpresa = s.idEmpresa 
         WHERE e.idEmpresa = #{idEmpresa};
+    </select>
+    
+    <select id="buscarPromocionPorFechaFin" resultType="modelo.pojo.Promocion" parameterType="string" >
+        SELECT DISTINCT p.idPromocion, p.nombre, p.tipoPromocion, p.porcentajeDescuento, P.precioRebajado, p.noCuponesMaximo, p.fechaFin, e.nombre AS nombreEmpresa 
+        FROM promocion p 
+        INNER JOIN promocionSucursal ps 
+        ON p.idPromocion = ps.idPromocion 
+        INNER JOIN sucursal s 
+        ON ps.idSucursal = s.idSucursal 
+        INNER JOIN empresa e 
+        ON s.idEmpresa = e.idEmpresa 
+        INNER JOIN categoria c 
+        ON p.idCategoria = c.idCategoria 
+        WHERE p.fechaFin = #{fechaFin};
     </select>
     
 </mapper>
