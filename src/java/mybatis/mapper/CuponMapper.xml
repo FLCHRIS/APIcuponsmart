@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="canjearCuponComercial" parameterType="map">
         UPDATE promocion p
         SET p.noCuponesMaximo = p.noCuponesMaximo - 1
-        WHERE p.codigo = #{codigo} AND promocion.estatus = 'activo' 
+        WHERE p.codigo = #{codigo} AND p.estatus = 'activo' 
         AND p.codigo IN ( 
         SELECT p2.codigo 
         FROM ( 

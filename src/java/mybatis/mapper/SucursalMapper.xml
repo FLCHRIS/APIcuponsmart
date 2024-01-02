@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
     <select id="buscarSucursales" resultType="modelo.pojo.Sucursal">
         SELECT s.*, 
-        CONCAT('Ciudad: ',u.ciudad,' calle: ', u.calle,' NO.', u.numero) AS direccion, 
+        CONCAT('calle ', u.calle,' NO.', u.numero) AS direccion, 
         u.codigoPostal, u.calle, u.numero 
         FROM sucursal s 
         INNER JOIN ubicacion u 
@@ -29,7 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     <select id="buscarSucursalesUsuario" resultType="modelo.pojo.Sucursal" parameterType="int">
         SELECT s.*, 
-        CONCAT('Ciudad: ',ub.ciudad,' calle: ', ub.calle,' NO.', ub.numero) AS direccion, 
+        CONCAT('calle ', ub.calle,' NO.', ub.numero) AS direccion, 
         ub.codigoPostal, ub.calle, ub.numero 
         FROM sucursal s 
         INNER JOIN usuario us 

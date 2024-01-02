@@ -94,8 +94,10 @@ public class UsuarioDAO {
                 conexionDB.commit();
 
                 if (filasAfectadas != 0) {
+                    
                     msj.setError(Boolean.FALSE);
                     msj.setContenido("Se actualizó correctamente el usuario.");
+                    
                 } else {
                     msj.setContenido("No se pudo actualizar el usuario.");
                 }

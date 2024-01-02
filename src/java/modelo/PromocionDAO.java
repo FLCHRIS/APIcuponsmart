@@ -51,7 +51,8 @@ public class PromocionDAO {
                 mensaje.setContenido("No se pudo registrar la promoción.");
             }
         } catch (Exception e) {
-            mensaje.setContenido("Error: " + e.getMessage());
+            e.printStackTrace();
+            mensaje.setContenido("No se pudieron registrar todas las sucursales.");
         }
 
         return mensaje;
