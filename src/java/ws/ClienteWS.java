@@ -65,7 +65,7 @@ public class ClienteWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        if (fechaNacimiento == null || fechaNacimiento.isEmpty() || !Utilidades.validarCadena(fechaNacimiento, Utilidades.FECHA_PATTERN)) {
+        if (fechaNacimiento == null || fechaNacimiento.isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
