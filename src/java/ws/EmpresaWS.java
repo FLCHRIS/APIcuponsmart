@@ -64,10 +64,6 @@ public class EmpresaWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        if (paginaWeb == null || paginaWeb.isEmpty()) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-
         if (RFC == null || RFC.isEmpty() || !Utilidades.validarCadena(RFC, Utilidades.RFC_EMPRESA_PATTERN)) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
@@ -116,9 +112,6 @@ public class EmpresaWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        if (paginaWeb == null || paginaWeb.isEmpty()) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
 
         if (estatus == null || estatus.isEmpty() || (!Constantes.ESTADO_ACTIVO.equals(estatus) && !Constantes.ESTADO_INACTIVO.equals(estatus))) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
