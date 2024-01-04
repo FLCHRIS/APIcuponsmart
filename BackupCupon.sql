@@ -198,3 +198,34 @@ CREATE TABLE `usuario` (
 create user 'adminusercupon'@'%' identified by 'ewd2q123';
 grant all privileges on smartcupon.* to 'adminusercupon'@'%';
 flush privileges;
+
+--
+-- CREACIÓN DE TRIGGERS
+--
+
+DELIMITER //
+
+CREATE TRIGGER actualizar_estatus_cupon BEFORE UPDATE ON promocion
+FOR EACH ROW
+BEGIN
+    IF NEW.noCuponesMaximo <= 0 AND NEW.estatus <> 'inactivo' THEN
+        SET NEW.estatus = 'inactivo';
+    END IF;
+END //
+
+DELIMITER ;
+
+
+DROP TRIGGER actualizar_estatus_cupon_fecha;
+
+DELIMITER //
+
+CREATE TRIGGER actualizar_estatus_cupon_fecha BEFORE UPDATE ON promocion
+FOR EACH ROW
+BEGIN
+    IF NEW.fechaFin < NOW() AND NEW.estatus <> 'inactivo' THEN
+        SET NEW.estatus = 'inactivo';
+    END IF;
+END //
+
+DELIMITER ;
